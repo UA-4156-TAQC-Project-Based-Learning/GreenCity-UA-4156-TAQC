@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class LoggedUserComponent extends HeaderComponent {
+public class HeaderLoggedUserComponent extends HeaderComponent {
 
     @Getter
     @FindBy(className = "nav-global-button")
