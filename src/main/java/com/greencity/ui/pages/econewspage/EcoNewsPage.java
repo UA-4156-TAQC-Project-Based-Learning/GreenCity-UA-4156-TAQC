@@ -12,7 +12,7 @@ public class EcoNewsPage extends BasePage {
 
     @Getter
     @FindBy(xpath = ".//h1[contains(@class, 'main-header')]")
-    private WebElement tittle;
+    private WebElement title;
 
     @Getter
     @FindBy(xpath = ".//button[contains(@class, 'tag-button')]")
