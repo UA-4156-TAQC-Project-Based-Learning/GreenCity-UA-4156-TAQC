@@ -11,13 +11,13 @@ public class CreateEditNewsPage extends BasePage {
         super(driver);
     }
 
-    @FindBy(xpath = "//label/textarea")
+    @FindBy(css = "textarea[formcontrolname='title']")
     private WebElement titleInput;
 
-    @FindBy(xpath = "//input[@placeholder='Посилання на зовнішнє джерело']")
+    @FindBy(css = "input[formcontrolname='source']")
     private WebElement sourceInput;
 
-    @FindBy(xpath = "//input[@type='file']")
+    @FindBy(xpath = "//input[@id='upload']")
     private WebElement browserLink;
 
     @FindBy(xpath = "//button[@class='primary-global-button s-btn']")
@@ -29,13 +29,13 @@ public class CreateEditNewsPage extends BasePage {
     @FindBy(xpath = "//div[contains(@class, 'ql-editor')]")
     private WebElement contentInput;
 
-    @FindBy(xpath = "//button[@type='submit']")
+    @FindBy(xpath = "//button[@type='submit' and contains(@class,'primary-global-button')]")
     private WebElement publishButton;
 
-    @FindBy(xpath = ".//button[@class='tertiary-global-button']")
+    @FindBy(xpath = "//button[@class='tertiary-global-button']")
     private WebElement cancelButton;
 
-    @FindBy(xpath = ".//button[@class='secondary-global-button']")
+    @FindBy(xpath = "//button[@class='secondary-global-button']")
     private WebElement previewButton;
 
     public void enterTitle(String title) {
@@ -49,7 +49,27 @@ public class CreateEditNewsPage extends BasePage {
     }
 
     public void enterContent(String content) {
+        contentInput.clear();
         contentInput.sendKeys(content);
+    }
+
+    public void uploadImage(String filePath) {
+        browserLink.sendKeys(filePath);
+    }
+
+    public void clickSubmitImage() {
+        waitUntilElementClickable(submitImgButton);
+        submitImgButton.click();
+    }
+
+    public void clickCancelImgButton() {
+        waitUntilElementClickable(cancelImgButton);
+        cancelImgButton.click();
+    }
+
+    public void clickCancel() {
+        waitUntilElementClickable(cancelButton);
+        cancelButton.click();
     }
 
     public void clickPreview(){
