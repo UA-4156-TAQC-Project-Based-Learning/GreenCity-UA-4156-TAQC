@@ -24,7 +24,4 @@ public class NewsComponent extends BaseComponent {
     private List<WebElement> tags;
 
 
-
-
-
 }

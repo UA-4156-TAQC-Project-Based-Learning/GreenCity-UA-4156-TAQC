@@ -11,7 +11,7 @@ public class HeaderLoggedUserComponent extends HeaderComponent {
     @FindBy(className = "nav-global-button")
     private WebElement loggedUserDropdown;
 
-    public LoggedUserComponent(WebDriver driver, WebElement rootElement) {
+    public HeaderLoggedUserComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 

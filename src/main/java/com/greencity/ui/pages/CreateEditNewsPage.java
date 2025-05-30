@@ -72,7 +72,7 @@ public class CreateEditNewsPage extends BasePage {
         cancelButton.click();
     }
 
-    public void clickPreview(){
+    public void clickPreview() {
         waitUntilElementClickable(previewButton);
         previewButton.click();
 

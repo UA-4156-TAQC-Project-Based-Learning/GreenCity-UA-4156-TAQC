@@ -59,6 +59,7 @@ public class FooterComponent extends BaseComponent {
     @Getter
     @FindBy(xpath = "//app-footer//img[@alt='YouTube link']")
     private WebElement youTubeLink;
+
     public FooterComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
