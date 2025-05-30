@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class GuestUserComponent extends HeaderComponent{
+public class HeaderGuestUserComponent extends HeaderComponent{
 
     @Getter
     @FindBy(className = "header_sign-in-link")
