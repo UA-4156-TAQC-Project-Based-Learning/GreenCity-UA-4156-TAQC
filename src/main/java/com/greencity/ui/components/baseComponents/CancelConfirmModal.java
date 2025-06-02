@@ -9,24 +9,23 @@ import org.openqa.selenium.support.PageFactory;
 @Getter
 public class CancelConfirmModal extends BaseComponent {
 
-    @FindBy(css = ".warning-title")
+    @FindBy(xpath = "//div[contains(@class,'warning-title')]")
     private WebElement titleText;
 
-    @FindBy(css = ".warning-subtitle")
+    @FindBy(xpath = "//div[contains(@class,'warning-subtitle')]")
     private WebElement subtitleText;
 
-    @FindBy(css = "button.m-btn.secondary-global-button")
+    @FindBy(xpath = "//button[contains(@class,'m-btn') and contains(@class,'secondary-global-button')]")
     private WebElement continueEditingButton;
 
     @FindBy(xpath = "button.m-btn.primary-global-button")
     private WebElement yesCancelButton;
 
-    @FindBy(css = "button.close")
+    @FindBy(xpath = "//button[contains(@class,'close')]")
     private WebElement closeButton;
 
     public CancelConfirmModal(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        PageFactory.initElements(new org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory(rootElement), this);
     }
 
     public void clickContinueEditing() {
