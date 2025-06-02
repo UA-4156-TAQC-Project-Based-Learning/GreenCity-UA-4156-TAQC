@@ -6,7 +6,7 @@ import org.openqa.selenium.support.FindBy;
 
 public class PreviewNewsPage extends AbstractNewsPage {
 
-    @FindBy(css = ".create-news-text")
+    @FindBy(xpath = "//*[contains(@class,'create-news-text')]")
     private WebElement createNewsTitle;
 
     @FindBy(xpath = "//div[@class='button-text' and text()='Back to editing']")
