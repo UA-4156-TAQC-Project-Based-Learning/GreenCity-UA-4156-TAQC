@@ -8,16 +8,16 @@ import org.openqa.selenium.support.FindBy;
 
 @Getter
 public class NewsCommentItem extends BaseComponent {
-    @FindBy(xpath = "//*[contains(@class,'author-name')]")
+    @FindBy(xpath = ".//*[@class='author-name']")
     private WebElement authorName;
 
-    @FindBy(xpath = "//*[contains(@class,'comment-date-month')]")
+    @FindBy(xpath = ".//*[contains(@class,'comment-date-month')]")
     private WebElement commentDate;
 
-    @FindBy(xpath = "//*[contains(@class,'comment-text')]")
+    @FindBy(xpath = ".//*[contains(@class,'comment-text')]")
     private WebElement commentText;
 
-    @FindBy(xpath = "//*[contains(@class,'comment-likes')]//img")
+    @FindBy(xpath = ".//*[contains(@class,'comment-likes')]//img")
     private WebElement likeCommentIcon;
 
     @FindBy(xpath = "//span[contains(@class,'like-amount')]")
