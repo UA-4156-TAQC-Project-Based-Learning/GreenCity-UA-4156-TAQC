@@ -1,42 +1,35 @@
 package com.greencity.ui.pages.abstractNewsPage;
 
-import com.greencity.ui.components.newsComponents.NewsCommentsComponent;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import java.util.List;
 
 @Getter
 public class NewsPage extends AbstractNewsPage {
 
-    @FindBy(css = "div.back-button a.button-link")
+    @FindBy(xpath = "//div[contains(@class,'back-button')]//a[contains(@class,'button-link')]")
     private WebElement backButton;
 
-    @FindBy(css = "img.news_like")
+    @FindBy(xpath = "//img[contains(@class,'news_like')]")
     protected WebElement likeIcon;
 
-    @FindBy(css = "span.numerosity_likes")
+    @FindBy(xpath = "//span[contains(@class,'numerosity_likes')]")
     protected WebElement likesCount;
 
     @FindBy(xpath = "//p[contains(text(),'May be interesting for you')]")
     private WebElement interestingForYouTitle;
 
-    @FindBy(css = "app-news-list-gallery-view")
+    @FindBy(xpath = "//app-news-list-gallery-view")
     private List<WebElement> recommendedNewsCards;
 
-    @FindBy(css = "app-comments-list")
+    @FindBy(xpath = "//app-comments-list")
     private WebElement commentsRoot;
-
-    private final NewsCommentsComponent commentsComponent;
 
     public NewsPage(WebDriver driver) {
         super(driver);
-        PageFactory.initElements(driver, this);
-        this.commentsComponent = new NewsCommentsComponent(driver, commentsRoot);
     }
-
 
     public void clickBackButton() {
         backButton.click();
@@ -47,7 +40,11 @@ public class NewsPage extends AbstractNewsPage {
     }
 
     public int getLikesCountValue() {
-        return Integer.parseInt(likesCount.getText().trim());
+        try {
+            return Integer.parseInt(likesCount.getText().trim());
+        } catch (NumberFormatException e) {
+            return 0;
+        }
     }
 
     public boolean isLikeIconDisplayed() {
