@@ -3,7 +3,6 @@ package com.greencity.ui.pages.abstractNewsPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 public class PreviewNewsPage extends AbstractNewsPage {
 
@@ -15,11 +14,10 @@ public class PreviewNewsPage extends AbstractNewsPage {
 
     public PreviewNewsPage(WebDriver driver) {
         super(driver);
-        PageFactory.initElements(driver, this);
     }
 
     public String getCreateNewsTitle() {
-        return createNewsTitle.getText();
+        return createNewsTitle.getText().trim();
     }
 
     public void clickBackToEditing() {
