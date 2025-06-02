@@ -5,14 +5,18 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 @Getter
 public class CancelConfirmModal extends BaseComponent {
 
-    @FindBy(xpath = "//div[contains(@class,'warning-title')]")
+    @FindBy(xpath = ".//div[contains(@class,'warning-title')]")
     private WebElement titleText;
 
-    @FindBy(xpath = "//div[contains(@class,'warning-subtitle')]")
+    @FindBy(xpath = ".//div[contains(@class,'warning-subtitle')]")
     private WebElement subtitleText;
 
     @FindBy(xpath = "//button[contains(@class,'m-btn') and contains(@class,'secondary-global-button')]")
@@ -21,7 +25,7 @@ public class CancelConfirmModal extends BaseComponent {
     @FindBy(xpath = "button.m-btn.primary-global-button")
     private WebElement yesCancelButton;
 
-    @FindBy(xpath = "//button[contains(@class,'close')]")
+    @FindBy(xpath = "//button[@data-testid='modal-close' or contains(@class,'close')]")
     private WebElement closeButton;
 
     public CancelConfirmModal(WebDriver driver, WebElement rootElement) {
@@ -29,18 +33,39 @@ public class CancelConfirmModal extends BaseComponent {
     }
 
     public void clickContinueEditing() {
-        continueEditingButton.click();
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.elementToBeClickable(continueEditingButton));
+            continueEditingButton.click();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to click continue editing button", e);
+        }
     }
 
     public void clickYesCancel() {
-        yesCancelButton.click();
+            try {
+                WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+                wait.until(ExpectedConditions.elementToBeClickable(yesCancelButton));
+                yesCancelButton.click();
+            } catch (Exception e) {
+                throw new RuntimeException("Failed to click yes cancel button", e);
+            }
     }
 
     public void closeModal() {
-        closeButton.click();
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.elementToBeClickable(closeButton));
+            closeButton.click();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to click close button", e);
+        }
     }
 
     public boolean isDisplayed() {
-        return rootElement.isDisplayed();
+        try {
+            return rootElement != null && rootElement.isDisplayed();
+        } catch (Exception e) {
+            return false; }
     }
 }
