@@ -1,4 +1,4 @@
-package com.greencity.ui.components;
+package com.greencity.ui.components.baseComponents;
 
 import com.greencity.ui.Base;
 import lombok.Getter;
