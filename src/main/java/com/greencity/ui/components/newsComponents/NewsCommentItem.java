@@ -8,28 +8,28 @@ import org.openqa.selenium.support.FindBy;
 
 @Getter
 public class NewsCommentItem extends BaseComponent {
-    @FindBy(css = ".author-name")
+    @FindBy(xpath = "//*[contains(@class,'author-name')]")
     private WebElement authorName;
 
-    @FindBy(css = ".comment-date-month")
+    @FindBy(xpath = "//*[contains(@class,'comment-date-month')]")
     private WebElement commentDate;
 
-    @FindBy(css = ".comment-text")
+    @FindBy(xpath = "//*[contains(@class,'comment-text')]")
     private WebElement commentText;
 
-    @FindBy(css = ".comment-likes img")
+    @FindBy(xpath = "//*[contains(@class,'comment-likes')]//img")
     private WebElement likeCommentIcon;
 
-    @FindBy(css = "span.like-amount")
+    @FindBy(xpath = "//span[contains(@class,'like-amount')]")
     private WebElement likeCount;
 
-    @FindBy(css = "button.edit")
+    @FindBy(xpath = "//button[contains(@class,'edit')]")
     private WebElement editButton;
 
-    @FindBy(css = "button.delete")
+    @FindBy(xpath = "//button[contains(@class,'delete')]")
     private WebElement deleteButton;
 
-    @FindBy(css = "button.reply")
+    @FindBy(xpath = "//button[contains(@class,'reply')]")
     private WebElement replyButton;
 
     public NewsCommentItem(WebDriver driver, WebElement rootElement) {
@@ -53,7 +53,12 @@ public class NewsCommentItem extends BaseComponent {
     }
 
     public int getLikeCount() {
-        return Integer.parseInt(likeCount.getText().trim());
+        try {
+            String countText = likeCount.getText().trim();
+            return countText.isEmpty() ? 0 : Integer.parseInt(countText);
+            } catch (NumberFormatException e) {
+            return 0;
+            }
     }
 
     public void clickEdit() {

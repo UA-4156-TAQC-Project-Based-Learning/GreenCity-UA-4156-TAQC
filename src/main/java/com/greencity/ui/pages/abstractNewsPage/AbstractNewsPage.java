@@ -5,40 +5,34 @@ import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-
 import java.util.List;
 
 @Getter
 public abstract class AbstractNewsPage extends BasePage {
 
-    protected WebDriver driver;
-
-    @FindBy(css = ".news-title")
+    @FindBy(xpath = "//div[contains(@class,'news-title-container')]")
     protected WebElement title;
 
-    @FindBy(css = ".news-info-date")
+    @FindBy(xpath = "//div[contains(@class,'news-info-date')]")
     protected WebElement publicationDate;
 
-    @FindBy(css = ".news-info-author")
+    @FindBy(xpath = "//div[contains(@class,'news-info-author')]")
     protected WebElement author;
 
-    @FindBy(css = "img.news-image-img")
+    @FindBy(xpath = "//img[contains(@class,'news-image-img')]")
     protected WebElement newsImage;
 
-    @FindBy(css = ".news-text")
+    @FindBy(xpath = "//div[@class='news-text-content word-wrap ql-snow']")
     protected WebElement contentText;
 
-    @FindBy(css = ".news-links-images .news-links-img")
+    @FindBy(xpath = "//img[contains(@class,'news-links-img')]")
     protected List<WebElement> socialMediaIcons;
 
-    @FindBy(css = ".source-text")
-    protected WebElement socialShareSection;
+    @FindBy(xpath = "//div[@class='source-text word-wrap']")
+    protected List<WebElement> socialShareSections;
 
     public AbstractNewsPage(WebDriver driver) {
         super(driver);
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
     }
 
     public String getTitleText() {
@@ -62,6 +56,6 @@ public abstract class AbstractNewsPage extends BasePage {
     }
 
     public boolean isSocialShareVisible() {
-        return socialShareSection.isDisplayed();
+        return socialShareSections.stream().anyMatch(WebElement::isDisplayed);
     }
 }
