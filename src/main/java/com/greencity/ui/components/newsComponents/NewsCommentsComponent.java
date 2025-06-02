@@ -15,22 +15,21 @@ public class NewsCommentsComponent extends BaseComponent {
 
     public NewsCommentsComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
-        PageFactory.initElements(new DefaultElementLocatorFactory(rootElement), this);
     }
 
-    @FindBy(css = ".comment-textarea")
+    @FindBy(xpath = "//*[contains(@class,'comment-textarea')]")
     private WebElement commentInput;
 
-    @FindBy(css = "button.primary-global-button")
+    @FindBy(xpath = "//button[contains(@class,'primary-global-button')]")
     private WebElement commentButton;
 
-    @FindBy(css = "app-comments-list > div.comment-body-wrapper")
+    @FindBy(xpath = "//app-comments-list//div[contains(@class,'comment-body-wrapper')]")
     private List<WebElement> commentItems;
 
     @FindBy(xpath = "//p[text()='Comments']")
     private WebElement commentsTitle;
 
-    @FindBy(css = ".total-count")
+    @FindBy(xpath = "//*[contains(@class,'total-count')]")
     private WebElement totalCommentsCount;
 
     public void addComment(String text) {
