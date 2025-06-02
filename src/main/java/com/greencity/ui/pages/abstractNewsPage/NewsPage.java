@@ -13,10 +13,10 @@ public class NewsPage extends AbstractNewsPage {
     private WebElement backButton;
 
     @FindBy(xpath = "//img[contains(@class,'news_like')]")
-    protected WebElement likeIcon;
+    private WebElement likeIcon;
 
     @FindBy(xpath = "//span[contains(@class,'numerosity_likes')]")
-    protected WebElement likesCount;
+    private WebElement likesCount;
 
     @FindBy(xpath = "//p[contains(text(),'May be interesting for you')]")
     private WebElement interestingForYouTitle;
