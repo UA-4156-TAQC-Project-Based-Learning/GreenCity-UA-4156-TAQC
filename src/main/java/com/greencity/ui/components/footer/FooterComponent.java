@@ -1,6 +1,7 @@
 package com.greencity.ui.components.footer;
 
-import com.greencity.ui.components.BaseComponent;
+
+import com.greencity.ui.components.baseComponents.BaseComponent;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

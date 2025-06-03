@@ -1,5 +1,6 @@
 package com.greencity.ui.components;
 
+import com.greencity.ui.components.baseComponents.BaseComponent;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
