@@ -8,20 +8,28 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
+
+@Getter
 public class EcoNewsPage extends BasePage {
 
-    @Getter
     @FindBy(xpath = ".//h1[contains(@class, 'main-header')]")
     private WebElement title;
 
-    @Getter
     @FindBy(xpath = ".//button[contains(@class, 'tag-button')]")
     private List<WebElement> tags;
 
-//    @Getter
-//    private List<NewsComponent> news;
+    @FindBy(xpath = "//div[@id='create-button']")
+    private WebElement createNewsButton;
+
 
     public EcoNewsPage(WebDriver driver) {
         super(driver);
     }
+
+    public void clickCreateNewsButton() {
+        createNewsButton.click();
+    }
+
+
+
 }
