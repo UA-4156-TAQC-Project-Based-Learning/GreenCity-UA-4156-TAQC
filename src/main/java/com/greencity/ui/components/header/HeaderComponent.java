@@ -12,8 +12,17 @@ public class HeaderComponent extends BaseComponent {
     @Getter
     @FindBy(xpath = ".//img[@src='assets/img/logo.svg']")
     private WebElement logo;
+    @Getter
+    @FindBy(css = "ul[role='tablist'] a[href='#/news']")
+    private WebElement ecoNewsLink;
+
 
     public HeaderComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
+    }
+
+    public void goToEcoNews() {
+        waitUntilElementClickable(ecoNewsLink);
+        ecoNewsLink.click();
     }
 }

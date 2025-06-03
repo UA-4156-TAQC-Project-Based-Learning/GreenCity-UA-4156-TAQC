@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 public abstract class AbstractNewsPage extends BasePage {
 
-    @FindBy(xpath = "//div[@class='news-title-container']/div[@class='news-title word-wrap']")
+    @FindBy(xpath = "//div[contains(@class,'news-title-container')]")
     protected WebElement title;
 
     @FindBy(xpath = "//div[contains(@class,'news-info-date')]")
