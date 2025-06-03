@@ -30,17 +30,13 @@ public class EcoNewsPage extends BasePage {
 
     public EcoNewsPage(WebDriver driver) {
         super(driver);
-        HeaderLoggedUserComponent headerComponent = new HeaderLoggedUserComponent(driver, header.getRootElement());
-        if (headerComponent.getLoggedUserDropdown().isDisplayed()){
-            initCreateButton();
-        }
-    }
-
-    public void initCreateButton() {
-        this.createButton = driver.findElement(By.xpath(".//span[contains(@id, 'create-button-text')]"));
     }
 
     public void clickCreateButton() {
-        createButton.click();
+        this.createButton = driver.findElement(By.xpath(".//span[contains(@id, 'create-button-text')]"));
+
+        if (createButton.isDisplayed()) {
+            createButton.click();
+        }
     }
 }
