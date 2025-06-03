@@ -1,6 +1,7 @@
 package com.greencity.ui.components.baseComponents;
 
 import lombok.Getter;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -21,7 +22,7 @@ public class CancelConfirmModal extends BaseComponent {
     @FindBy(xpath = "//button[contains(@class,'m-btn') and contains(@class,'secondary-global-button')]")
     private WebElement continueEditingButton;
 
-    @FindBy(xpath = "button.m-btn.primary-global-button")
+    @FindBy(xpath = "//button[@class='m-btn primary-global-button']")
     private WebElement yesCancelButton;
 
     @FindBy(xpath = "//button[@data-testid='modal-close' or contains(@class,'close')]")
@@ -39,6 +40,13 @@ public class CancelConfirmModal extends BaseComponent {
         } catch (Exception e) {
             throw new RuntimeException("Failed to click continue editing button", e);
         }
+    }
+
+    public static CancelConfirmModal waitForModal(WebDriver driver) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement modalRoot = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//div[@class='mdc-dialog__container']")));
+        return new CancelConfirmModal(driver, modalRoot);
     }
 
     public void clickYesCancel() {

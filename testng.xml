@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="GreenCitySuite">
+    <test name="UITests">
+        <classes>
+            <class name="com.greencity.ui.testrunners.BaseTestRunner"/>
+            <class name="com.greencity.ui.testrunners.TestRunnerWithUser"/>
+            <class name="com.greencity.ui.testrunners.CancelEditingTest"/>
+        </classes>
+    </test>
+</suite>

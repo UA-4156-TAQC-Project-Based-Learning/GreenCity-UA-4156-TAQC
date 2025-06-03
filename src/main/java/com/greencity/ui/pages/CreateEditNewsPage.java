@@ -81,6 +81,7 @@ public class CreateEditNewsPage extends BasePage {
     public void clickPublish() {
         waitUntilElementClickable(publishButton);
         publishButton.click();
-
     }
+
+
 }
