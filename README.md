@@ -66,6 +66,8 @@ admin.password=${ADMIN_PASSWORD}
 JDBCGreenCityUsername=${JDBC_GREENCITY_USERNAME}
 JDBCGreenCityPassword=${JDBC_GREENCITY_PASSWORD}
 JDBCGreenCityURL=${JDBC_GREENCITY_URL}
+ls.accessToken=${LS_ACCESS_TOKEN}
+ls.userId=${LS_USER_ID}
 ```
 ### 2️⃣ Install dependencies
 Run the following command to install all necessary dependencies:

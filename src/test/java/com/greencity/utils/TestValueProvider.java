@@ -66,4 +66,10 @@ public class TestValueProvider {
     public String getJDBCGreenCityURL() {
         return properties != null ? properties.getProperty("JDBCGreenCityURL") : System.getenv("JDBC_GREENCITY_URL");
     }
+    public String getLocalStorageAccessToken() {
+        return properties != null ? properties.getProperty("ls.accessToken") : System.getenv("LS_ACCESS_TOKEN");
+    }
+    public String getLocalStorageUserId() {
+        return properties != null ? properties.getProperty("ls.userId") : System.getenv("LS_USER_ID");
+    }
 }

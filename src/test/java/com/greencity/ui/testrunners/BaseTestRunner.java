@@ -1,6 +1,7 @@
 package com.greencity.ui.testrunners;
 
 import com.greencity.ui.pages.homepage.HomePage;
+import com.greencity.utils.LocalStorageJS;
 import com.greencity.utils.TestValueProvider;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Step;
@@ -14,6 +15,7 @@ import java.time.Duration;
 
 public class BaseTestRunner {
     protected WebDriver driver;
+    protected LocalStorageJS localStorageJS;
     protected static TestValueProvider testValueProvider;
     protected HomePage homePage;
 
@@ -35,6 +37,7 @@ public class BaseTestRunner {
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(testValueProvider.getImplicitlyWait()));
+        localStorageJS = new LocalStorageJS(driver);
     }
 
 
@@ -59,4 +62,6 @@ public class BaseTestRunner {
             driver.quit();
         }
     }
+
+
 }

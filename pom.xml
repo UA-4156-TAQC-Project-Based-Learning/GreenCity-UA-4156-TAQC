@@ -16,7 +16,7 @@
         <selenium-java.version>4.30.0</selenium-java.version>
         <lombok.version>1.18.36</lombok.version>
         <testng.version>7.10.2</testng.version>
-        <webdrivermanager.version>6.0.0</webdrivermanager.version>
+        <webdrivermanager.version>6.1.0</webdrivermanager.version>
         <allure.version>2.24.0</allure.version>
         <aspectj.version>1.9.22.1</aspectj.version>
         <org.slf4j.version>2.0.13</org.slf4j.version>
