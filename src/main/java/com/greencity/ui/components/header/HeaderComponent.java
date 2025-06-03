@@ -13,7 +13,7 @@ public class HeaderComponent extends BaseComponent {
     @FindBy(xpath = ".//img[@src='assets/img/logo.svg']")
     private WebElement logo;
     @Getter
-    @FindBy(css = "ul[role='tablist'] a[href='#/news']")
+    @FindBy(css = "ul[role='tablist'] a[href='#/greenCity/news']")
     private WebElement ecoNewsLink;
 
 

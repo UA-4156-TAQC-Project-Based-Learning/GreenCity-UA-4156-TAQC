@@ -11,6 +11,9 @@ public class CreateEditNewsPage extends BasePage {
         super(driver);
     }
 
+    @FindBy(xpath = ".//h2[contains(@class, 'title-header')]")
+    private WebElement titleHeader;
+
     @FindBy(css = "textarea[formcontrolname='title']")
     private WebElement titleInput;
 
