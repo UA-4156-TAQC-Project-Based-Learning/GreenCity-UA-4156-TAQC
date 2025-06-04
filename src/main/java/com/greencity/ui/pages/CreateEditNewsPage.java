@@ -1,5 +1,6 @@
 package com.greencity.ui.pages;
 
+import com.greencity.ui.pages.abstractNewsPage.PreviewNewsPage;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -72,10 +73,10 @@ public class CreateEditNewsPage extends BasePage {
         cancelButton.click();
     }
 
-    public void clickPreview() {
+    public PreviewNewsPage clickPreview() {
         waitUntilElementClickable(previewButton);
         previewButton.click();
-
+        return new PreviewNewsPage(driver);
     }
 
     public void clickPublish() {

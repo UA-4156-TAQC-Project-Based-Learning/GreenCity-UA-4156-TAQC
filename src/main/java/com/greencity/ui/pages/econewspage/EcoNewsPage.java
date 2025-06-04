@@ -1,6 +1,7 @@
 package com.greencity.ui.pages.econewspage;
 
 import com.greencity.ui.pages.BasePage;
+import com.greencity.ui.pages.CreateEditNewsPage;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -20,6 +21,14 @@ public class EcoNewsPage extends BasePage {
 
 //    @Getter
 //    private List<NewsComponent> news;
+
+    @FindBy(xpath = "//span[@id='create-button-text']")
+    private WebElement createNewsButton;
+
+    public CreateEditNewsPage clickCreateNewsButton() {
+        createNewsButton.click();
+        return new CreateEditNewsPage(driver);
+    }
 
     public EcoNewsPage(WebDriver driver) {
         super(driver);
