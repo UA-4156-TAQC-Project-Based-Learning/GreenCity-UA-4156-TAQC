@@ -18,13 +18,13 @@ public class CancelConfirmModal extends BaseComponent {
     @FindBy(xpath = ".//div[contains(@class,'warning-subtitle')]")
     private WebElement subtitleText;
 
-    @FindBy(xpath = "//button[contains(@class,'m-btn') and contains(@class,'secondary-global-button')]")
+    @FindBy(xpath = ".//button[contains(@class,'m-btn') and contains(@class,'secondary-global-button')]")
     private WebElement continueEditingButton;
 
-    @FindBy(xpath = "button.m-btn.primary-global-button")
+    @FindBy(xpath =  ".//button[contains(@class,'m-btn') and contains(@class,'primary-global-button')]")
     private WebElement yesCancelButton;
 
-    @FindBy(xpath = "//button[@data-testid='modal-close' or contains(@class,'close')]")
+    @FindBy(xpath = ".//button[@data-testid='modal-close' or contains(@class,'close')]")
     private WebElement closeButton;
 
     public CancelConfirmModal(WebDriver driver, WebElement rootElement) {
@@ -36,6 +36,7 @@ public class CancelConfirmModal extends BaseComponent {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             wait.until(ExpectedConditions.elementToBeClickable(continueEditingButton));
             continueEditingButton.click();
+            wait.until(ExpectedConditions.invisibilityOf(rootElement));
         } catch (Exception e) {
             throw new RuntimeException("Failed to click continue editing button", e);
         }
@@ -46,6 +47,7 @@ public class CancelConfirmModal extends BaseComponent {
                 WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
                 wait.until(ExpectedConditions.elementToBeClickable(yesCancelButton));
                 yesCancelButton.click();
+                wait.until(ExpectedConditions.invisibilityOf(rootElement));
             } catch (Exception e) {
                 throw new RuntimeException("Failed to click yes cancel button", e);
             }
@@ -56,6 +58,7 @@ public class CancelConfirmModal extends BaseComponent {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             wait.until(ExpectedConditions.elementToBeClickable(closeButton));
             closeButton.click();
+            wait.until(ExpectedConditions.invisibilityOf(rootElement));
         } catch (Exception e) {
             throw new RuntimeException("Failed to click close button", e);
         }

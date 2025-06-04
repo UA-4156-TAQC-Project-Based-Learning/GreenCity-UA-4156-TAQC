@@ -1,15 +1,24 @@
 package com.greencity.ui.pages;
 
+import com.greencity.ui.components.baseComponents.CancelConfirmModal;
 import lombok.Getter;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 @Getter
 public class CreateEditNewsPage extends BasePage {
+
     public CreateEditNewsPage(WebDriver driver) {
         super(driver);
     }
+
+    private static final By CANCEL_CONFIRM_MODAL = By.xpath("//app-warning-pop-up");
 
     @FindBy(css = "textarea[formcontrolname='title']")
     private WebElement titleInput;
@@ -67,9 +76,16 @@ public class CreateEditNewsPage extends BasePage {
         cancelImgButton.click();
     }
 
-    public void clickCancel() {
+    public CancelConfirmModal clickCancel() {
         waitUntilElementClickable(cancelButton);
         cancelButton.click();
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement modalRoot = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(CANCEL_CONFIRM_MODAL)
+        );
+
+        return new CancelConfirmModal(driver, modalRoot);
     }
 
     public void clickPreview() {
@@ -82,5 +98,17 @@ public class CreateEditNewsPage extends BasePage {
         waitUntilElementClickable(publishButton);
         publishButton.click();
 
+    }
+
+    public boolean isFormDisplayed() {
+        return titleInput.isDisplayed() && contentInput.isDisplayed();
+    }
+
+    public String getTitleText() {
+        return titleInput.getAttribute("value");
+    }
+
+    public String getContentText() {
+        return contentInput.getText();
     }
 }
