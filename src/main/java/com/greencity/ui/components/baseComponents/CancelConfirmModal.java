@@ -1,7 +1,6 @@
 package com.greencity.ui.components.baseComponents;
 
 import lombok.Getter;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -40,13 +39,6 @@ public class CancelConfirmModal extends BaseComponent {
         } catch (Exception e) {
             throw new RuntimeException("Failed to click continue editing button", e);
         }
-    }
-
-    public static CancelConfirmModal waitForModal(WebDriver driver) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement modalRoot = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath("//div[@class='mdc-dialog__container']")));
-        return new CancelConfirmModal(driver, modalRoot);
     }
 
     public void clickYesCancel() {

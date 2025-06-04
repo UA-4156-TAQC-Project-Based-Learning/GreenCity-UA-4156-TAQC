@@ -1,32 +1,34 @@
 package com.greencity.ui.testrunners;
 
-import com.greencity.ui.components.baseComponents.CancelConfirmModal;
-import com.greencity.ui.pages.CreateEditNewsPage;
+import com.greencity.ui.pages.abstractNewsPage.NewsPage;
 import com.greencity.ui.pages.econewspage.EcoNewsPage;
+import com.greencity.ui.pages.homepage.HomePage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class CancelEditingTest extends TestRunnerWithUser {
     @Test
-    public void declineModifyTitle() {
-        driver.get("http://localhost:4205/#/greenCity/news");
-        EcoNewsPage ecoNewsPage = new EcoNewsPage(driver);
-        String originalNewsTitle = ecoNewsPage.getTitle().getText();
+    public void declineEditTitle() {
+        driver.get(testValueProvider.getBaseUIUrl() + "/profile");
+        HomePage homePage = new HomePage(driver);
 
-        ecoNewsPage.clickCreateNewsButton();
+        EcoNewsPage ecoNewsPage = homePage.getHeader().goToEcoNews();
 
-        CreateEditNewsPage createEditNewsPage = new CreateEditNewsPage(driver);
-        createEditNewsPage.enterTitle("New temporary title");
+        String originalNewsTitle = ecoNewsPage.getNewsCards().getFirst().getText();
 
-        createEditNewsPage.clickCancel();
+        NewsPage newsPage = ecoNewsPage.clickFirstNewsPage();
 
-        CancelConfirmModal cancelConfirmModal = CancelConfirmModal.waitForModal(driver);
-        cancelConfirmModal.clickYesCancel();
+        newsPage
+                .clickEditNewsButton()
+                .enterTitle("New temporary title")
+                .clickCancelButton()
+                .clickYesCancel();
 
-        String currentNewsTitle = ecoNewsPage.getTitle().getText();
 
+        String currentTitle = ecoNewsPage.getNewsCards().getFirst().getText();
 
-        Assert.assertEquals(originalNewsTitle,currentNewsTitle, "New title is changed after decline editing");
+       Assert.assertEquals(currentTitle, originalNewsTitle, "Title was changed after canceling editing.");
+
 
     }
 }

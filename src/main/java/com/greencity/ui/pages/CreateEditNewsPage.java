@@ -1,5 +1,6 @@
 package com.greencity.ui.pages;
 
+import com.greencity.ui.components.baseComponents.CancelConfirmModal;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -38,9 +39,16 @@ public class CreateEditNewsPage extends BasePage {
     @FindBy(xpath = "//button[@class='secondary-global-button']")
     private WebElement previewButton;
 
-    public void enterTitle(String title) {
+    @FindBy(xpath = "//div[@class='mdc-dialog__container']")
+    private WebElement cancelConfirmModule;
+
+    @FindBy(xpath = "//div[@class='mdc-dialog__container']")
+    private WebElement modalRoot;
+
+    public CreateEditNewsPage enterTitle(String title) {
         titleInput.clear();
         titleInput.sendKeys(title);
+        return this;
     }
 
     public void enterSource(String source) {
@@ -67,13 +75,12 @@ public class CreateEditNewsPage extends BasePage {
         cancelImgButton.click();
     }
 
-    public void clickCancel() {
-        waitUntilElementClickable(cancelButton);
+    public CancelConfirmModal clickCancelButton() {
         cancelButton.click();
+        return new CancelConfirmModal(driver, modalRoot );
     }
 
     public void clickPreview() {
-        waitUntilElementClickable(previewButton);
         previewButton.click();
 
     }
@@ -82,6 +89,5 @@ public class CreateEditNewsPage extends BasePage {
         waitUntilElementClickable(publishButton);
         publishButton.click();
     }
-
 
 }

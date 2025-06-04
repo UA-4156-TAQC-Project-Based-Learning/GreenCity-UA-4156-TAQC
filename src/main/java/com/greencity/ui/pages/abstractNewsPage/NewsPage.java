@@ -1,5 +1,6 @@
 package com.greencity.ui.pages.abstractNewsPage;
 
+import com.greencity.ui.pages.CreateEditNewsPage;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -28,12 +29,23 @@ public class NewsPage extends AbstractNewsPage {
     @FindBy(xpath = "//app-comments-list")
     private WebElement commentsRoot;
 
+    @FindBy(xpath = "//div[@class='edit-news']")
+    private WebElement editNewsButton;
+
+    @FindBy(xpath = "//div[@class='news-title word-wrap']")
+    private WebElement newsTitle;
+
     public NewsPage(WebDriver driver) {
         super(driver);
     }
 
     public void clickBackButton() {
         backButton.click();
+    }
+
+    public CreateEditNewsPage clickEditNewsButton() {
+        editNewsButton.click();
+        return new CreateEditNewsPage(driver);
     }
 
     public void clickLikeIcon() {
