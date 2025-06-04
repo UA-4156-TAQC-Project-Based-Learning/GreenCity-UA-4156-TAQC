@@ -18,13 +18,6 @@ public class CancelEditingTest extends TestRunnerWithUser {
         CreateEditNewsPage createEditNewsPage = new CreateEditNewsPage(driver);
         createEditNewsPage.enterTitle("New temporary title");
 
-        try {
-            Thread.sleep(2000); // 2 секунды, чтобы ты успела увидеть заголовок
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-
         createEditNewsPage.clickCancel();
 
         CancelConfirmModal cancelConfirmModal = CancelConfirmModal.waitForModal(driver);
