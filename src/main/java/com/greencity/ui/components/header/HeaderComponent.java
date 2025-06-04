@@ -1,6 +1,7 @@
 package com.greencity.ui.components.header;
 
 import com.greencity.ui.components.baseComponents.BaseComponent;
+import com.greencity.ui.pages.econewspage.EcoNewsPage;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,8 +22,9 @@ public class HeaderComponent extends BaseComponent {
         super(driver, rootElement);
     }
 
-    public void goToEcoNews() {
+    public EcoNewsPage goToEcoNews() {
         waitUntilElementClickable(ecoNewsLink);
         ecoNewsLink.click();
+        return new EcoNewsPage(driver);
     }
 }

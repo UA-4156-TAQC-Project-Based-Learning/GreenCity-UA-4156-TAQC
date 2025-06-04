@@ -38,6 +38,21 @@ public class CreateEditNewsPage extends BasePage {
     @FindBy(xpath = "//button[@class='secondary-global-button']")
     private WebElement previewButton;
 
+    @FindBy(xpath = ".//span[@class='span span-title']")
+    private WebElement tittleCharterCounter;
+
+    @FindBy(xpath = ".//p[@class='textarea-description warning']")
+    private WebElement contentCharterCounter;
+
+    @FindBy(xpath = ".//div[@class='date']/p/span[contains(text(),'Date')]")
+    private WebElement dateLabel;
+
+    @FindBy(xpath = ".//div[@class='date']/p/span[contains(text(),'Author')]")
+    private WebElement authorLabel;
+
+    @FindBy(xpath = ".//div/span[@class='span']")
+    private WebElement sourcePlaceholder;
+
     public void enterTitle(String title) {
         titleInput.clear();
         titleInput.sendKeys(title);
