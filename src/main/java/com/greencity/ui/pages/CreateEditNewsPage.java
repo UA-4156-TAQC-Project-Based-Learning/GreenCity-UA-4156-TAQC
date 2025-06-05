@@ -1,6 +1,7 @@
 package com.greencity.ui.pages;
 
 import com.greencity.ui.components.baseComponents.CancelConfirmModal;
+import com.greencity.ui.elements.NewsTags;
 import com.greencity.ui.pages.abstractNewsPage.PreviewNewsPage;
 import com.greencity.ui.pages.econewspage.EcoNewsPage;
 import lombok.Getter;
@@ -65,6 +66,9 @@ public class CreateEditNewsPage extends BasePage {
     @FindBy(xpath = "//div[@class='mdc-dialog__container']")
     private WebElement modalRoot;
 
+    @FindBy(xpath = "//p[contains(@class,'field-info')]")
+    private WebElement contentInfoMessage;
+
     public CreateEditNewsPage enterTitle(String title) {
         titleInput.clear();
         titleInput.sendKeys(title);
@@ -115,4 +119,10 @@ public class CreateEditNewsPage extends BasePage {
         publishButton.click();
        return new EcoNewsPage(driver);
     }
+
+    public CreateEditNewsPage clickTag(NewsTags tag) {
+        driver.findElement(tag.getLocator()).click();
+        return this;
+    }
+
 }

@@ -36,11 +36,11 @@ public class EcoNewsPage extends BasePage {
         return new CreateEditNewsPage(driver);
     }
 
-    public NewsPage clickFirstNewsPage() {
-        WebElement firstCard = newsCards.getFirst();
-        firstCard.click();
-        return new NewsPage(driver);
-    }
+//    public NewsPage clickFirstNewsPage() {
+//        WebElement firstCard = newsCards.getFirst();
+//        firstCard.click();
+//        return new NewsPage(driver);
+//    }
 
 
 
