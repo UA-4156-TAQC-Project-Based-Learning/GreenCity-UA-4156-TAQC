@@ -30,9 +30,7 @@ public class EcoNewsPage extends BasePage {
         super(driver);
     }
     public CreateEditNewsPage clickCreateNews() {
-        if (createNews.isDisplayed()) {
             createNews.click();
-        }
         return new CreateEditNewsPage(driver);
     }
 }

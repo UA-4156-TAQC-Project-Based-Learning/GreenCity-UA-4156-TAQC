@@ -1,5 +1,8 @@
 package com.greencity.ui.pages;
 
+import com.greencity.ui.components.baseComponents.CancelConfirmModal;
+import com.greencity.ui.pages.abstractNewsPage.PreviewNewsPage;
+import com.greencity.ui.pages.econewspage.EcoNewsPage;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -39,10 +42,10 @@ public class CreateEditNewsPage extends BasePage {
     private WebElement previewButton;
 
     @FindBy(xpath = ".//span[@class='span span-title']")
-    private WebElement tittleCharterCounter;
+    private WebElement titleCharacterCounter;
 
-    @FindBy(xpath = ".//p[@class='textarea-description warning']")
-    private WebElement contentCharterCounter;
+    @FindBy(xpath = ".//p[@class='textarea-description']")
+    private WebElement contentCharacterCounter;
 
     @FindBy(xpath = ".//div[@class='date']/p/span[contains(text(),'Date')]")
     private WebElement dateLabel;
@@ -53,33 +56,41 @@ public class CreateEditNewsPage extends BasePage {
     @FindBy(xpath = ".//div/span[@class='span']")
     private WebElement sourcePlaceholder;
 
-    public void enterTitle(String title) {
+    @FindBy(xpath = ".//div[@class='centered']")
+    private WebElement browserLabel;
+
+    public CreateEditNewsPage enterTitle(String title) {
         titleInput.clear();
         titleInput.sendKeys(title);
+        return this;
     }
 
-    public void enterSource(String source) {
+    public CreateEditNewsPage enterSource(String source) {
         sourceInput.clear();
         sourceInput.sendKeys(source);
+        return this;
     }
 
-    public void enterContent(String content) {
+    public CreateEditNewsPage enterContent(String content) {
         contentInput.clear();
         contentInput.sendKeys(content);
+        return this;
     }
 
     public void uploadImage(String filePath) {
         browserLink.sendKeys(filePath);
     }
 
-    public void clickSubmitImage() {
+    public CreateEditNewsPage clickSubmitImage() {
         waitUntilElementClickable(submitImgButton);
         submitImgButton.click();
+        return this;
     }
 
-    public void clickCancelImgButton() {
+    public CreateEditNewsPage clickCancelImgButton() {
         waitUntilElementClickable(cancelImgButton);
         cancelImgButton.click();
+        return this;
     }
 
     public void clickCancel() {
@@ -87,15 +98,15 @@ public class CreateEditNewsPage extends BasePage {
         cancelButton.click();
     }
 
-    public void clickPreview() {
+    public PreviewNewsPage clickPreview() {
         waitUntilElementClickable(previewButton);
         previewButton.click();
-
+       return new PreviewNewsPage(driver);
     }
 
-    public void clickPublish() {
+    public EcoNewsPage clickPublish() {
         waitUntilElementClickable(publishButton);
         publishButton.click();
-
+       return new EcoNewsPage(driver);
     }
 }
