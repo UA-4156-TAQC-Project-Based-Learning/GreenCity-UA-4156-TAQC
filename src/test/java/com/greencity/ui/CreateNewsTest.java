@@ -12,7 +12,7 @@ public class CreateNewsTest extends TestRunnerWithUser {
 
         CreateEditNewsPage createEditNewsPage = homePage.getHeader()
                 .goToEcoNews()
-                .clickCreateNews();
+                .clickCreateNewsButton();
 
         String contentEditableAttr = createEditNewsPage.getAuthorLabel().getAttribute("contenteditable");
         boolean isAuthorEditable  = contentEditableAttr != null && contentEditableAttr.equals("true");

@@ -59,6 +59,12 @@ public class CreateEditNewsPage extends BasePage {
     @FindBy(xpath = ".//div[@class='centered']")
     private WebElement browserLabel;
 
+    @FindBy(xpath = "//div[@class='mdc-dialog__container']")
+    private WebElement cancelConfirmModule;
+
+    @FindBy(xpath = "//div[@class='mdc-dialog__container']")
+    private WebElement modalRoot;
+
     public CreateEditNewsPage enterTitle(String title) {
         titleInput.clear();
         titleInput.sendKeys(title);
@@ -93,9 +99,9 @@ public class CreateEditNewsPage extends BasePage {
         return this;
     }
 
-    public void clickCancel() {
-        waitUntilElementClickable(cancelButton);
+    public CancelConfirmModal clickCancelButton() {
         cancelButton.click();
+        return new CancelConfirmModal(driver, modalRoot );
     }
 
     public PreviewNewsPage clickPreview() {
