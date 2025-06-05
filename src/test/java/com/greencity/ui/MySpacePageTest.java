@@ -12,7 +12,7 @@ public class MySpacePageTest extends TestRunnerWithUser {
     @Test
     public void firstTest() {
 
-        driver.get("http://localhost:4205/#/greenCity/profile");
+        driver.get(testValueProvider.getBaseUIUrl() + "/profile");
         MySpacePage mySpacePage = new MySpacePage(driver);
         WebElement mySpaceDescription = mySpacePage.getMySpaceDescription();
         SoftAssert softAssert = new SoftAssert();
