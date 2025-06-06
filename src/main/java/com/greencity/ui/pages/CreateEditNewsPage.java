@@ -1,5 +1,8 @@
 package com.greencity.ui.pages;
 
+import com.greencity.ui.components.baseComponents.CancelConfirmModal;
+import com.greencity.ui.pages.abstractNewsPage.PreviewNewsPage;
+import com.greencity.ui.pages.econewspage.EcoNewsPage;
 import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -42,56 +45,84 @@ public class CreateEditNewsPage extends BasePage {
     @FindBy(xpath = "//button[@class='secondary-global-button']")
     private WebElement previewButton;
 
-    private By cropperBy = By.xpath(".//div[contains(@class, 'ngx-ic-cropper')]");
+    @FindBy(xpath = ".//span[@class='span span-title']")
+    private WebElement titleCharacterCounter;
 
-    private By imageWarningBy = By.xpath(".//p[contains(@class, 'warning')]");
+    @FindBy(xpath = ".//p[@class='textarea-description']")
+    private WebElement contentCharacterCounter;
 
-    public void enterTitle(String title) {
+    @FindBy(xpath = ".//div[@class='date']/p/span[contains(text(),'Date')]")
+    private WebElement dateLabel;
+
+    @FindBy(xpath = ".//div[@class='date']/p/span[contains(text(),'Author')]")
+    private WebElement authorLabel;
+
+    @FindBy(xpath = ".//div/span[@class='span']")
+    private WebElement sourcePlaceholder;
+
+    @FindBy(xpath = ".//div[@class='centered']")
+    private WebElement browserLabel;
+
+    @FindBy(xpath = "//div[@class='mdc-dialog__container']")
+    private WebElement cancelConfirmModule;
+
+    @FindBy(xpath = "//div[@class='mdc-dialog__container']")
+    private WebElement modalRoot;
+
+    private final By cropperBy = By.xpath(".//div[contains(@class, 'ngx-ic-cropper')]");
+
+    private final By imageWarningBy = By.xpath(".//p[contains(@class, 'warning')]");
+
+    public CreateEditNewsPage enterTitle(String title) {
         titleInput.clear();
         titleInput.sendKeys(title);
+        return this;
     }
 
-    public void enterSource(String source) {
+    public CreateEditNewsPage enterSource(String source) {
         sourceInput.clear();
         sourceInput.sendKeys(source);
+        return this;
     }
 
-    public void enterContent(String content) {
+    public CreateEditNewsPage enterContent(String content) {
         contentInput.clear();
         contentInput.sendKeys(content);
+        return this;
     }
 
     public void uploadImage(String filePath) {
         browserLink.sendKeys(filePath);
     }
 
-    public void clickSubmitImage() {
+    public CreateEditNewsPage clickSubmitImage() {
         waitUntilElementClickable(submitImgButton);
         submitImgButton.click();
+        return this;
     }
 
-    public void clickCancelImgButton() {
+    public CreateEditNewsPage clickCancelImgButton() {
         waitUntilElementClickable(cancelImgButton);
         cancelImgButton.click();
+        return this;
     }
 
-    public void clickCancel() {
-        waitUntilElementClickable(cancelButton);
+    public CancelConfirmModal clickCancelButton() {
         cancelButton.click();
+        return new CancelConfirmModal(driver, modalRoot );
     }
 
-    public void clickPreview() {
+    public PreviewNewsPage clickPreview() {
         waitUntilElementClickable(previewButton);
         previewButton.click();
-
+        return new PreviewNewsPage(driver);
     }
 
-    public void clickPublish() {
+    public EcoNewsPage clickPublish() {
         waitUntilElementClickable(publishButton);
         publishButton.click();
-
+        return new EcoNewsPage(driver);
     }
-
     public WebElement getCropper() {
         return driver.findElement(cropperBy);
     }

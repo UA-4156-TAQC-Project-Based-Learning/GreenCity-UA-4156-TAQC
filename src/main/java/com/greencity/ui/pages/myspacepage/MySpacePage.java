@@ -6,9 +6,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+@Getter
 public class MySpacePage extends BasePage {
 
-    @Getter
     @FindBy(xpath = "//div[@class='description']/div[2]")
     WebElement mySpaceDescription;
 

@@ -23,5 +23,14 @@ public class PreviewNewsPage extends AbstractNewsPage {
     public void clickBackToEditing() {
         backToEditingButton.click();
     }
+
+    public boolean isBackToEditButtonVisible() {
+        try {
+            return backToEditingButton.isDisplayed();
+        } catch (org.openqa.selenium.NoSuchElementException e) {
+            return false;
+        }
+    }
+
 }
 

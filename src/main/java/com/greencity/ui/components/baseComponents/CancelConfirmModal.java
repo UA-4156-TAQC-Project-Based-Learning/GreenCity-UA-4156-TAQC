@@ -21,7 +21,7 @@ public class CancelConfirmModal extends BaseComponent {
     @FindBy(xpath = "//button[contains(@class,'m-btn') and contains(@class,'secondary-global-button')]")
     private WebElement continueEditingButton;
 
-    @FindBy(xpath = "button.m-btn.primary-global-button")
+    @FindBy(xpath = "//button[@class='m-btn primary-global-button']")
     private WebElement yesCancelButton;
 
     @FindBy(xpath = "//button[@data-testid='modal-close' or contains(@class,'close')]")
