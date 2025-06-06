@@ -2,9 +2,14 @@ package com.greencity.ui.pages.abstractNewsPage;
 
 import com.greencity.ui.pages.BasePage;
 import lombok.Getter;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 import java.util.List;
 
 @Getter
@@ -22,7 +27,7 @@ public abstract class AbstractNewsPage extends BasePage {
     @FindBy(xpath = "//img[contains(@class,'news-image-img')]")
     protected WebElement newsImage;
 
-    @FindBy(xpath = "//div[@class='news-text-content word-wrap ql-snow']")
+    @FindBy(xpath = "//div[contains(@class,'news-text-content')]")
     protected WebElement contentText;
 
     @FindBy(xpath = "//img[contains(@class,'news-links-img')]")
@@ -44,7 +49,11 @@ public abstract class AbstractNewsPage extends BasePage {
     }
 
     public String getAuthorText() {
-        return author.getText().trim();
+        String rawText = author.getText().trim();
+        if (rawText.toLowerCase().startsWith("by ")) {
+            return rawText.substring(3).trim();  // прибирає "by "
+        }
+        return rawText;
     }
 
     public boolean isNewsImageDisplayed() {
@@ -52,7 +61,12 @@ public abstract class AbstractNewsPage extends BasePage {
     }
 
     public String getContentText() {
-        return contentText.getText().trim();
+        scrollToElement(contentText);
+        return contentText.getText();
+    }
+
+    public void scrollToElement(WebElement element) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
     public boolean isSocialShareVisible() {

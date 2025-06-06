@@ -27,7 +27,6 @@ public class EcoNewsPage extends BasePage {
     @FindBy(xpath = "//li[contains(@class,'gallery-view-li')]")
     private List<WebElement> newsCards;
 
-
     public EcoNewsPage(WebDriver driver) {
         super(driver);
     }

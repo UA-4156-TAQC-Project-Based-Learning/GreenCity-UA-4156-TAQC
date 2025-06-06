@@ -19,6 +19,13 @@ public class HeaderComponent extends BaseComponent {
     @FindBy(xpath = "//div[@class = 'header_navigation-menu']")
     private WebElement modalRoot;
 
+    @FindBy(xpath = "//li[contains(@class,'user-name')]")
+    private WebElement loggedInUserName;
+
+    public String getLoggedInUserName() {
+        return loggedInUserName.getText().trim();
+    }
+
     public HeaderComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }

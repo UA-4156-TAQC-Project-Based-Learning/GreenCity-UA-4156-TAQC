@@ -81,7 +81,6 @@ public class CreateEditNewsPage extends BasePage {
         return this;
     }
 
-
     public CreateEditNewsPage enterContent(String content) {
         contentInput.clear();
         contentInput.sendKeys(content);
