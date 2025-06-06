@@ -73,7 +73,7 @@ public class TestValueProvider {
         return properties != null ? properties.getProperty("ls.userId") : System.getenv("LS_USER_ID");
     }
     public String getLocalStorageRefreshToken() {
-        return properties != null ? properties.getProperty("ls.refreshToken") : System.getenv("LS_refresh_TOKEN");
+        return properties != null ? properties.getProperty("ls.refreshToken") : System.getenv("LS_REFRESH_TOKEN");
     }
     public String getLocalStorageName() {
         return properties != null ? properties.getProperty("ls.name") : System.getenv("LS_NAME");
