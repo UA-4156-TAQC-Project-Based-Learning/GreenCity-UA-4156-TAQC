@@ -5,6 +5,7 @@ import com.greencity.ui.pages.econewspage.EcoNewsPage;
 import com.greencity.ui.testrunners.TestRunnerWithUser;
 import org.openqa.selenium.By;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -13,28 +14,35 @@ import java.io.File;
 
 public class ImageUploadValidationTest extends TestRunnerWithUser {
 
+    private EcoNewsPage ecoNewsPage;
+
+    @BeforeMethod
+    public void navigateToEcoNews(){
+        ecoNewsPage = homePage.getHeader().goToEcoNews();
+    }
+
     @Test
     public void navigateToCreateNewsPageTest() {
-        homePage.getHeader().goToEcoNews();
-        EcoNewsPage ecoNewsPage = new EcoNewsPage(driver);
-        ecoNewsPage.clickCreateButton();
-        CreateEditNewsPage createEditNewsPage = new CreateEditNewsPage(driver);
-        String headerText = createEditNewsPage.getTitleHeader().getText().toLowerCase();
+        String headerText = ecoNewsPage
+                .clickCreateButton()
+                .getTitleHeader()
+                .getText()
+                .toLowerCase();
+
         Assert.assertTrue(headerText.contains("create") || headerText.contains("створити"),
                 "The headline text does not contain the expected word to create a news story: " + headerText);
     }
 
     @Test
     public void imageUploadSuccessfullyTest() {
-        navigateToCreateNewsPageTest();
-        CreateEditNewsPage createEditNewsPage = new CreateEditNewsPage(driver);
-
         File image = new File("src/test/resources/imagesForTests/5mb.png");
-        String path = image.getAbsolutePath();
 
-        createEditNewsPage.uploadImage(path);
+        CreateEditNewsPage createEditNewsPage = ecoNewsPage
+                .clickCreateButton();
 
-        Assert.assertTrue(driver.findElement(By.xpath(".//div[contains(@class, 'ngx-ic-cropper')]")).isDisplayed());
+        createEditNewsPage.uploadImage(image.getAbsolutePath());
+
+        Assert.assertTrue(createEditNewsPage.getCropper().isDisplayed());
     }
 
     @DataProvider(name = "invalidImageFiles")
@@ -47,14 +55,14 @@ public class ImageUploadValidationTest extends TestRunnerWithUser {
 
     @Test(dataProvider = "invalidImageFiles")
     public void imageUploadNegativeTest(File imageFile) {
-        navigateToCreateNewsPageTest();
-        CreateEditNewsPage createEditNewsPage = new CreateEditNewsPage(driver);
+        CreateEditNewsPage createEditNewsPage = ecoNewsPage
+                .clickCreateButton();
 
         createEditNewsPage.uploadImage(imageFile.getAbsolutePath());
 
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertTrue(driver.findElement(By.xpath(".//p[contains(@class, 'warning')]")).isDisplayed());
-        softAssert.assertEquals(driver.findElement(By.xpath(".//p[contains(@class, 'warning')]")).getText(),
+        softAssert.assertTrue(createEditNewsPage.getImageWarning().isDisplayed());
+        softAssert.assertEquals(createEditNewsPage.getImageWarning().getText(),
                 "Upload only PNG or JPG. File size must be less than 10MB");
         softAssert.assertAll();
     }

@@ -1,6 +1,7 @@
 package com.greencity.ui.pages;
 
 import lombok.Getter;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -40,6 +41,10 @@ public class CreateEditNewsPage extends BasePage {
 
     @FindBy(xpath = "//button[@class='secondary-global-button']")
     private WebElement previewButton;
+
+    private By cropperBy = By.xpath(".//div[contains(@class, 'ngx-ic-cropper')]");
+
+    private By imageWarningBy = By.xpath(".//p[contains(@class, 'warning')]");
 
     public void enterTitle(String title) {
         titleInput.clear();
@@ -85,5 +90,13 @@ public class CreateEditNewsPage extends BasePage {
         waitUntilElementClickable(publishButton);
         publishButton.click();
 
+    }
+
+    public WebElement getCropper() {
+        return driver.findElement(cropperBy);
+    }
+
+    public WebElement getImageWarning(){
+        return driver.findElement(imageWarningBy);
     }
 }
