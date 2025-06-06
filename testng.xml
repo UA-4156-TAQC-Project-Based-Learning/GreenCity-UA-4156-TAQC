@@ -6,7 +6,7 @@
         <classes>
             <class name="com.greencity.ui.testrunners.BaseTestRunner"/>
             <class name="com.greencity.ui.testrunners.TestRunnerWithUser"/>
-            <class name="com.greencity.ui.testrunners.CancelEditingTest"/>
+            <class name="com.greencity.ui.CancelEditingTest"/>
         </classes>
     </test>
 </suite>
