@@ -107,12 +107,12 @@ public class CreateEditNewsPage extends BasePage {
     public PreviewNewsPage clickPreview() {
         waitUntilElementClickable(previewButton);
         previewButton.click();
-       return new PreviewNewsPage(driver);
+        return new PreviewNewsPage(driver);
     }
 
     public EcoNewsPage clickPublish() {
         waitUntilElementClickable(publishButton);
         publishButton.click();
-       return new EcoNewsPage(driver);
+        return new EcoNewsPage(driver);
     }
 }

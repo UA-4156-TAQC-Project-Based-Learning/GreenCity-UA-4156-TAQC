@@ -26,7 +26,6 @@ public class EcoNewsPage extends BasePage {
     @FindBy(xpath = "//ul[contains(@class,'list gallery-view-active ng-star-inserted')]")
     private List<WebElement> newsCards;
 
-
     public EcoNewsPage(WebDriver driver) {
         super(driver);
     }
@@ -41,7 +40,6 @@ public class EcoNewsPage extends BasePage {
         firstCard.click();
         return new NewsPage(driver);
     }
-
 
 
 }

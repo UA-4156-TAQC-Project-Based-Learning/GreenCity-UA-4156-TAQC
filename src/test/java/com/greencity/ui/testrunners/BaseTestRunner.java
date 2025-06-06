@@ -47,6 +47,7 @@ public class BaseTestRunner {
             initDriver();
         }
         driver.get(testValueProvider.getBaseUIUrl());
+        localStorageJS.setItemLocalStorage("language", "en");
         homePage = new HomePage(driver);
     }
 
