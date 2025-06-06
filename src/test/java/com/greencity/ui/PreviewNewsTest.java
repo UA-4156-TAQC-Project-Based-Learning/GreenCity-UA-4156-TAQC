@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class PreviewNewsTest extends TestRunnerWithUser {
 
@@ -18,7 +19,7 @@ public class PreviewNewsTest extends TestRunnerWithUser {
                 {
                         "Test Preview",
                         "This is a test preview content",
-                        LocalDate.now().format(DateTimeFormatter.ofPattern("MMM d, yyyy"))
+                        LocalDate.now().format(DateTimeFormatter.ofPattern("MMM d, yyyy", Locale.ENGLISH))
                 }
         };
     }
