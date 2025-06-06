@@ -15,7 +15,7 @@ public class AuthorCanEditNewsTest extends TestRunnerWithUser {
         EcoNewsPage ecoNewsPage = new HomePage(driver)
                 .getHeader()
                 .goToEcoNews();
-        String originalNewsTitle = ecoNewsPage.getNewsCards().getFirst().getText();
+        String originalNewsTitle = ecoNewsPage.getNewsComponents().getFirst().getTitle().getText();
 
         ecoNewsPage
                 .clickFirstNewsPage()
@@ -23,7 +23,7 @@ public class AuthorCanEditNewsTest extends TestRunnerWithUser {
                 .enterTitle("New title")
                 .clickPublish();
 
-        String currentTitle = new EcoNewsPage(driver).getNewsCards().getFirst().getText();
+        String currentTitle = new EcoNewsPage(driver).getNewsComponents().getFirst().getTitle().getText();
 
         Assert.assertEquals(currentTitle,"New title", "Title is not as expected." + "Expected: New title. But displayed: " + currentTitle);
     }
