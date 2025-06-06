@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 public class CancelEditingTest extends TestRunnerWithUser {
     @Test
     public void declineEditTitle() {
+
         driver.get(testValueProvider.getBaseUIUrl() + "/profile");
 
 
@@ -27,6 +28,6 @@ public class CancelEditingTest extends TestRunnerWithUser {
 
         String currentTitle = new EcoNewsPage(driver).getNewsCards().getFirst().getText();
 
-       Assert.assertEquals(currentTitle, originalNewsTitle, "Title was changed after canceling editing.");
+       Assert.assertEquals(currentTitle,originalNewsTitle,"Title was changed after cancel editing. Original title was: " + originalNewsTitle + "Current title is: " + currentTitle);
     }
 }

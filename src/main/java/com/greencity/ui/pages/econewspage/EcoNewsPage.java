@@ -1,5 +1,6 @@
 package com.greencity.ui.pages.econewspage;
 
+import com.greencity.ui.components.NewsComponent;
 import com.greencity.ui.pages.BasePage;
 import com.greencity.ui.pages.CreateEditNewsPage;
 import com.greencity.ui.pages.abstractNewsPage.NewsPage;
@@ -23,9 +24,8 @@ public class EcoNewsPage extends BasePage {
     @FindBy(xpath = "//div[@id='create-button']")
     private WebElement createNewsButton;
 
-    @FindBy(xpath = "//ul[contains(@class,'list gallery-view-active ng-star-inserted')]")
+    @FindBy(xpath = "//li[contains(@class,'gallery-view-li')]")
     private List<WebElement> newsCards;
-
 
     public EcoNewsPage(WebDriver driver) {
         super(driver);
@@ -42,6 +42,10 @@ public class EcoNewsPage extends BasePage {
         return new NewsPage(driver);
     }
 
-
+    public List<NewsComponent> getNewsComponents() {
+        return newsCards.stream()
+                .map(el -> new NewsComponent(driver, el))
+                .toList();
+    }
 
 }
