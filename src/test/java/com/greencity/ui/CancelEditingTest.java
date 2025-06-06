@@ -17,7 +17,7 @@ public class CancelEditingTest extends TestRunnerWithUser {
                 .getHeader()
                 .goToEcoNews();
 
-        String originalNewsTitle = ecoNewsPage.getNewsCards().getFirst().getText();
+        String originalNewsTitle = ecoNewsPage.getNewsComponents().getFirst().getTitle().getText();
 
         ecoNewsPage
                 .clickFirstNewsPage()
@@ -26,7 +26,7 @@ public class CancelEditingTest extends TestRunnerWithUser {
                 .clickCancelButton()
                 .clickYesCancel();
 
-        String currentTitle = new EcoNewsPage(driver).getNewsCards().getFirst().getText();
+        String currentTitle = new EcoNewsPage(driver).getNewsComponents().getFirst().getTitle().getText();
 
        Assert.assertEquals(currentTitle,originalNewsTitle,"Title was changed after cancel editing. Original title was: " + originalNewsTitle + "Current title is: " + currentTitle);
     }
