@@ -4,6 +4,7 @@ import com.greencity.ui.components.baseComponents.CancelConfirmModal;
 import com.greencity.ui.pages.abstractNewsPage.PreviewNewsPage;
 import com.greencity.ui.pages.econewspage.EcoNewsPage;
 import lombok.Getter;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,6 +14,9 @@ public class CreateEditNewsPage extends BasePage {
     public CreateEditNewsPage(WebDriver driver) {
         super(driver);
     }
+
+    @FindBy(xpath = ".//h2[contains(@class, 'title-header')]")
+    private WebElement titleHeader;
 
     @FindBy(css = "textarea[formcontrolname='title']")
     private WebElement titleInput;
@@ -65,6 +69,10 @@ public class CreateEditNewsPage extends BasePage {
     @FindBy(xpath = "//div[@class='mdc-dialog__container']")
     private WebElement modalRoot;
 
+    private final By cropperBy = By.xpath(".//div[contains(@class, 'ngx-ic-cropper')]");
+
+    private final By imageWarningBy = By.xpath(".//p[contains(@class, 'warning')]");
+
     public CreateEditNewsPage enterTitle(String title) {
         titleInput.clear();
         titleInput.sendKeys(title);
@@ -114,5 +122,12 @@ public class CreateEditNewsPage extends BasePage {
         waitUntilElementClickable(publishButton);
         publishButton.click();
         return new EcoNewsPage(driver);
+    }
+    public WebElement getCropper() {
+        return driver.findElement(cropperBy);
+    }
+
+    public WebElement getImageWarning(){
+        return driver.findElement(imageWarningBy);
     }
 }
