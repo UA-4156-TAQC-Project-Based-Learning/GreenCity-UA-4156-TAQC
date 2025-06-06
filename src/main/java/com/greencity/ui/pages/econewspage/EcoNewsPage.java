@@ -23,7 +23,7 @@ public class EcoNewsPage extends BasePage {
     @FindBy(xpath = "//div[@id='create-button']")
     private WebElement createNewsButton;
 
-    @FindBy(xpath = "//ul[contains(@class,'list gallery-view-active ng-star-inserted')]")
+    @FindBy(xpath = "//ul[contains(@class,'list gallery-view-active')]")
     private List<WebElement> newsCards;
 
 
