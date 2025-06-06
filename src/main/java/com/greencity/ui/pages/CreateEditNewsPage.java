@@ -59,11 +59,31 @@ public class CreateEditNewsPage extends BasePage {
     @FindBy(xpath = ".//div[@class='centered']")
     private WebElement browserLabel;
 
+    @FindBy(xpath = ".//button[@class='primary-global-button']")
+    private WebElement editButton;
+
     @FindBy(xpath = "//div[@class='mdc-dialog__container']")
     private WebElement cancelConfirmModule;
 
     @FindBy(xpath = "//div[@class='mdc-dialog__container']")
     private WebElement modalRoot;
+
+    public boolean isAuthorEditable() {
+        return "true".equals(getAuthorLabel().getAttribute("contenteditable"));
+    }
+
+    public boolean isDateEditable() {
+        return "true".equals(getDateLabel().getAttribute("contenteditable"));
+    }
+
+    public boolean isTitleFieldHighlightedInRed() {
+        String classAttr = titleInput.getAttribute("class");
+        return classAttr.contains("ng-invalid");
+    }
+
+    public boolean isStillOnEditPage() {
+        return driver.getCurrentUrl().contains("#/news/create-news");
+    }
 
     public CreateEditNewsPage enterTitle(String title) {
         titleInput.clear();
@@ -113,6 +133,12 @@ public class CreateEditNewsPage extends BasePage {
     public EcoNewsPage clickPublish() {
         waitUntilElementClickable(publishButton);
         publishButton.click();
+        return new EcoNewsPage(driver);
+    }
+
+    public EcoNewsPage clickEdit() {
+        waitUntilElementVisible(editButton);
+        editButton.click();
         return new EcoNewsPage(driver);
     }
 }
