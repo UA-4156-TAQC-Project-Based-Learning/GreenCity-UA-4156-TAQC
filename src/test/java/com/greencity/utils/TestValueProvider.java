@@ -78,4 +78,17 @@ public class TestValueProvider {
     public String getLocalStorageName() {
         return properties != null ? properties.getProperty("ls.name") : System.getenv("LS_NAME");
     }
+
+    public String getLocalStorageAccessTokenUserB() {
+        return properties != null ? properties.getProperty("ls.accessTokenUserB") : System.getenv("LS_ACCESS_TOKEN");
+    }
+    public String getLocalStorageUserIdUserB() {
+        return properties != null ? properties.getProperty("ls.userIdUserB") : System.getenv("LS_USER_ID");
+    }
+    public String getLocalStorageRefreshTokenUserB() {
+        return properties != null ? properties.getProperty("ls.refreshTokenUserB") : System.getenv("LS_REFRESH_TOKEN");
+    }
+    public String getLocalStorageNameUserB() {
+        return properties != null ? properties.getProperty("ls.nameUserB") : System.getenv("LS_NAME");
+    }
 }
