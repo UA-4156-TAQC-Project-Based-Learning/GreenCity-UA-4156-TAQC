@@ -3,7 +3,6 @@ package com.greencity.ui.ecoNewsTests.createNewsTests;
 import com.greencity.ui.pages.CreateEditNewsPage;
 import com.greencity.ui.pages.econewspage.EcoNewsPage;
 import com.greencity.ui.testrunners.TestRunnerWithUser;
-import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;

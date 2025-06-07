@@ -21,10 +21,10 @@ import java.util.List;
 @Getter
 public class EcoNewsPage extends BasePage {
 
-    @FindBy(xpath = ".//h1[contains(@class, 'main-header')]")
+    @FindBy(xpath = "//h1[contains(@class, 'main-header')]")
     private WebElement title;
 
-    @FindBy(xpath = ".//button[contains(@class, 'tag-button')]")
+    @FindBy(xpath = "//button[contains(@class, 'tag-button')]")
     private List<WebElement> tags;
 
     @FindBy(xpath = "//div[@id='create-button']")
@@ -36,7 +36,7 @@ public class EcoNewsPage extends BasePage {
     @Getter
     private List<NewsComponent> news;
 
-    private By createButtonBy = By.xpath(".//span[contains(@id, 'create-button-text')]");
+    private final By createButtonBy = By.xpath("//span[contains(@id, 'create-button-text')]");
 
 
     public EcoNewsPage(WebDriver driver) {
