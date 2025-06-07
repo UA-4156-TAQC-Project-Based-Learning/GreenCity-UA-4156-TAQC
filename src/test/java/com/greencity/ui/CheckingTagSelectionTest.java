@@ -48,6 +48,7 @@ public class CheckingTagSelectionTest extends TestRunnerWithUser {
 
         List<String> actualTags4 = ecoNewsPage2.getNewsComponents().getFirst().getTagTexts();
         softAssert.assertEquals(actualTags4.size(), 3, "Expected 3 tags on the news card.");
+        softAssert.assertAll();
 
     }
 }
