@@ -5,9 +5,12 @@ import com.greencity.ui.elements.NewsTags;
 import com.greencity.ui.pages.abstractNewsPage.PreviewNewsPage;
 import com.greencity.ui.pages.econewspage.EcoNewsPage;
 import lombok.Getter;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import java.util.Random;
 
 @Getter
 public class CreateEditNewsPage extends BasePage {
@@ -68,6 +71,8 @@ public class CreateEditNewsPage extends BasePage {
 
     @FindBy(xpath = "//p[contains(@class,'field-info')]")
     private WebElement contentInfoMessage;
+
+    private final By titleWarningCounterBy=By.xpath("//div[@class='title-wrapper']/span[contains(@class,'field-info')]");
 
     public CreateEditNewsPage enterTitle(String title) {
         titleInput.clear();
@@ -136,12 +141,22 @@ public class CreateEditNewsPage extends BasePage {
     }
 
     public static String generateText(int length) {
-        String loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ";
-        StringBuilder text = new StringBuilder();
 
-        while (text.length() < length) {
-            text.append(loremIpsum);
+        String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ";
+        StringBuilder result = new StringBuilder();
+        Random random = new Random();
+
+        for (int i = 0; i < length; i++) {
+            result.append(characters.charAt(random.nextInt(characters.length())));
         }
-        return text.substring(0, length);
+
+        return result.toString();
     }
+
+
+    public WebElement getTitleCounter() {
+
+        return driver.findElement(titleWarningCounterBy);
+    }
+
 }

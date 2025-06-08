@@ -12,20 +12,6 @@ import java.util.List;
 @Getter
 public class NewsComponent extends BaseComponent {
 
-//    public NewsComponent(WebDriver driver, WebElement rootElement) {
-//        super(driver, rootElement);
-//    }
-
-//    @FindBy(xpath = "(.//div[@class='title-list word-wrap'])[1]")
-//    private WebElement title;
-//
-//    @FindBy(xpath = "(.//div[@class='list-image-content'])[1]")
-//    private WebElement image;
-//
-//    @FindBy(xpath = ".//div[@class='filter-tag']")
-//    private List<WebElement> tags;
-
-
     private final WebElement title;
 
     private final WebElement image;
@@ -38,8 +24,4 @@ public class NewsComponent extends BaseComponent {
         this.image = rootElement.findElement(By.xpath(".//img[@class='list-image-content']"));
         this.tags = rootElement.findElements(By.xpath(".//div[@class='filter-tag']"));
     }
-
-
-
-
 }
