@@ -17,6 +17,7 @@ public class EcoNewsSectionDisplayedUnregisteredUserTest extends BaseTestRunner 
         driver.get(testValueProvider.getBaseUIUrl());
         homePage.scrollToElement(homePage.getEcoNewsSection());
 
+//The "Eco news" title is centered on the page.
         int titleCenterX = homePage.getEcoNewsSectionTitle().getLocation().x + homePage.getEcoNewsSectionTitle().getSize().width / 2;
         int pageCenterX = driver.manage().window().getSize().getWidth() / 2;
 
@@ -25,6 +26,7 @@ public class EcoNewsSectionDisplayedUnregisteredUserTest extends BaseTestRunner 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertTrue(Math.abs(titleCenterX - pageCenterX) <= tolerance, "Title is not centered. Title center X: " + titleCenterX + ", Page center X: " + pageCenterX);
 
+//The "Read all news" button is present and correctly placed below the title.
         softAssert.assertTrue(homePage.getReadNewsLink().isDisplayed());
 
         int titleY = homePage.getEcoNewsSectionTitle().getLocation().getY();
@@ -32,8 +34,10 @@ public class EcoNewsSectionDisplayedUnregisteredUserTest extends BaseTestRunner 
 
         softAssert.assertTrue(ecoNewsReadLinkY > titleY, "Read all news link is not below the title.");
 
+//Clicking the "Read all news" button opens a new page with a list of articles.
         softAssert.assertTrue(!homePage.clickReadNewsLink().getNewsComponents().isEmpty(), "News list should not be empty after clicking 'Read all news'");
 
+//The articles are sorted in descending order by publication date (newest first).
         List<String> datesText = new EcoNewsPage(driver).getNewsDatesText();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
