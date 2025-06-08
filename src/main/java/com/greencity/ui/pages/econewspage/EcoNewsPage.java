@@ -10,6 +10,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Getter
@@ -26,6 +27,9 @@ public class EcoNewsPage extends BasePage {
 
     @FindBy(xpath = "//li[contains(@class,'gallery-view-li')]")
     private List<WebElement> newsCards;
+
+    @FindBy(css = ".news-date")
+    private List<WebElement> newsDates;
 
     public EcoNewsPage(WebDriver driver) {
         super(driver);
@@ -48,4 +52,7 @@ public class EcoNewsPage extends BasePage {
                 .toList();
     }
 
+    public List<String> getNewsDatesText() {
+        return newsDates.stream().map(WebElement::getText).collect(Collectors.toList());
+    }
 }
