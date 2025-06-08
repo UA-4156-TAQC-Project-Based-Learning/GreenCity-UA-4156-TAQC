@@ -2,11 +2,10 @@ package com.greencity.ui;
 
 import com.greencity.ui.pages.econewspage.EcoNewsPage;
 import com.greencity.ui.testrunners.TestRunnerWithUser;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-public class NevigateEcoNewsPageAndLayoutTest extends TestRunnerWithUser {
+public class NavigateEcoNewsPageAndLayoutTest extends TestRunnerWithUser {
 
     @Test
     public void verifyNavigateToEcoNewsPageAndLayoutAnauthorized() {
@@ -20,7 +19,7 @@ public class NevigateEcoNewsPageAndLayoutTest extends TestRunnerWithUser {
         SoftAssert softAssert = new SoftAssert();
 
 //Use assertions to verify that the current URL includes /news or expected route.
-        assert currentUrl != null;
+        softAssert.assertNotNull(currentUrl, "Current URL should not be null");
         softAssert.assertTrue(currentUrl.contains("/news"), "Current url does not contain '/news'");
 
 //Check presence of header, footer, and nav elements using known selectors.
@@ -46,11 +45,15 @@ public class NevigateEcoNewsPageAndLayoutTest extends TestRunnerWithUser {
     public void verifyNavigateToEcoNewsPageAndLayoutWithUser()  {
         driver.get(testValueProvider.getBaseUIUrl() + "/profile");
 
-        EcoNewsPage ecoNewsPage = new EcoNewsPage(driver).getHeader().goToEcoNews();
+        EcoNewsPage ecoNewsPage = homePage
+                .getHeader()
+                .goToEcoNews();
 
-        boolean isCreateButtonVisible = ecoNewsPage.getCreateNewsButton().isDisplayed();
-
-        Assert.assertTrue(isCreateButtonVisible, "Create button is not visible.");
+        String currentUrl = driver.getCurrentUrl();
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertTrue(currentUrl.contains("/news"), "Current url does not contain '/news'");
+        softAssert.assertTrue(ecoNewsPage.getCreateNewsButton().isDisplayed(), "Create button is not visible.");
+        softAssert.assertAll();
     }
 }
 
