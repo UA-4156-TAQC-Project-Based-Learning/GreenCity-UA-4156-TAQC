@@ -48,6 +48,8 @@ public class EcoNewsSectionDisplayedUnregisteredUserTest extends BaseTestRunner 
 
         softAssert.assertEquals(dates, sortedDates, "Articles are not sorted by date in descending order.");
 
+        softAssert.assertAll();
+
 
     }
 }
