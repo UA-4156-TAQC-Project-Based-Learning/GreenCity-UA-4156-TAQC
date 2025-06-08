@@ -42,6 +42,8 @@ public class EcoNewsPage extends BasePage {
     }
 
     public CreateEditNewsPage clickCreateNewsButton() {
+        scrollToElement(createNewsButton);
+        waitUntilElementClickable(createNewsButton);
         createNewsButton.click();
         return new CreateEditNewsPage(driver);
     }
