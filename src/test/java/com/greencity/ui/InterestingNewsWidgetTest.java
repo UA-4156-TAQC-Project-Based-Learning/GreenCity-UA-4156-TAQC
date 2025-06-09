@@ -32,9 +32,7 @@ public class InterestingNewsWidgetTest extends TestRunnerWithUser {
                 "There should be at least 4 news items to run this test. Found: " + allNewsComponents.size());
 
         if (allNewsComponents.size() < 4) {
-            System.out.println("Not enough news items to fully run the test, skipping further checks.");
-            softAssert.assertAll();
-            return;
+           throw new AssertionError("Not enough news items to run the test. Found: " + allNewsComponents.size() + ", required: 4");
         }
 
         List<String> allNewsTitles = allNewsComponents.stream()

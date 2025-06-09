@@ -50,9 +50,13 @@ public class NewsComponent extends BaseComponent {
     }
 
     public LocalDate getPublicationDate() {
-        String dateText = publicationDate.getText().trim();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, yyyy", Locale.ENGLISH);
-        return LocalDate.parse(dateText, formatter);
+        try {
+            String dateText = publicationDate.getText().trim();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, yyyy", Locale.ENGLISH);
+            return LocalDate.parse(dateText, formatter);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to parse publication date: " + publicationDate.getText(), e);
+        }
     }
 
     public void click() {
