@@ -79,13 +79,15 @@ public class CreateEditNewsPage extends BasePage {
     public CancelConfirmModal clickCancel() {
         waitUntilElementClickable(cancelButton);
         cancelButton.click();
-
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement modalRoot = wait.until(
-                ExpectedConditions.visibilityOfElementLocated(CANCEL_CONFIRM_MODAL)
-        );
-
-        return new CancelConfirmModal(driver, modalRoot);
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            WebElement modalRoot = wait.until(
+                    ExpectedConditions.visibilityOfElementLocated(CANCEL_CONFIRM_MODAL)
+            );
+            return new CancelConfirmModal(driver, modalRoot);
+        } catch (Exception e) {
+            throw new RuntimeException("Cancel confirmation modal did not appear after clicking cancel button", e);
+        }
     }
 
     public void clickPreview() {
@@ -101,7 +103,11 @@ public class CreateEditNewsPage extends BasePage {
     }
 
     public boolean isFormDisplayed() {
-        return titleInput.isDisplayed() && contentInput.isDisplayed();
+        try {
+            return titleInput != null && titleInput.isDisplayed() && contentInput != null && contentInput.isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public String getTitleText() {
@@ -109,6 +115,6 @@ public class CreateEditNewsPage extends BasePage {
     }
 
     public String getContentText() {
-        return contentInput.getText();
+        return contentInput.getText().trim();
     }
 }

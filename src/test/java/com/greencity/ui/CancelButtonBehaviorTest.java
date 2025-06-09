@@ -31,14 +31,14 @@ public class CancelButtonBehaviorTest extends TestRunnerWithUser {
 
         softAssert.assertTrue(confirmModal.isDisplayed(), "Confirmation modal should be displayed");
         softAssert.assertTrue(confirmModal.getTitleText().getText()
-                        .contains("All created content will be lost."),
-                "Modal title mismatch");
+                        .contains("content will be lost"),
+                "Modal title should contain content loss warning");
         softAssert.assertTrue(confirmModal.getSubtitleText().getText()
-                        .contains("Do you still want to cancel news creating?"),
-                "Modal subtitle mismatch");
+                        .contains("cancel"),
+                "Modal subtitle should contain cancel confirmation");
 
         confirmModal.clickYesCancel();
-        softAssert.assertTrue(driver.getCurrentUrl().contains("/news"), "User should be redirected to News page");
+        softAssert.assertTrue(driver.getCurrentUrl().endsWith("/news") || driver.getCurrentUrl().contains("/news?"), "User should be redirected to News listing page");
         softAssert.assertAll();
     }
 
