@@ -16,11 +16,11 @@ import java.util.stream.Collectors;
 @Getter
 public class EcoNewsPage extends BasePage {
 
-    @FindBy(xpath = ".//h1[contains(@class, 'main-header')]")
+    @FindBy(xpath = "//h1[contains(@class, 'main-header')]")
     private WebElement title;
 
-    @FindBy(xpath = ".//button[contains(@class, 'tag-button')]")
-    private List<WebElement> tags;
+    @FindBy(xpath = "//button[contains(@class, 'tag-button')]")
+    private List<WebElement> filteringOptions;
 
     @FindBy(xpath = "//div[@id='create-button']")
     private WebElement createNewsButton;
@@ -31,11 +31,23 @@ public class EcoNewsPage extends BasePage {
     @FindBy(css = ".news-date")
     private List<WebElement> newsDates;
 
+    @FindBy(xpath = "//div[@class='header_navigation-menu']")
+    private WebElement navigationPanel;
+
+    @FindBy(xpath = "//span[@aria-label='table view']")
+    private WebElement galleryView;
+
+    @FindBy(xpath = "//span[@aria-label='list view']")
+    private WebElement listView;
+
+
     public EcoNewsPage(WebDriver driver) {
         super(driver);
     }
 
     public CreateEditNewsPage clickCreateNewsButton() {
+        scrollToElement(createNewsButton);
+        waitUntilElementClickable(createNewsButton);
         createNewsButton.click();
         return new CreateEditNewsPage(driver);
     }
