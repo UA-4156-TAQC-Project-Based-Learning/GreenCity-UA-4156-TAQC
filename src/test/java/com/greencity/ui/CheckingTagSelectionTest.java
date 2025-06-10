@@ -3,9 +3,11 @@ package com.greencity.ui;
 import com.greencity.ui.elements.NewsTags;
 import com.greencity.ui.pages.econewspage.EcoNewsPage;
 import com.greencity.ui.testrunners.TestRunnerWithUser;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class CheckingTagSelectionTest extends TestRunnerWithUser {
@@ -13,41 +15,63 @@ public class CheckingTagSelectionTest extends TestRunnerWithUser {
     public void checkingNewsTagSelection() {
         driver.get(testValueProvider.getBaseUIUrl() + "/profile");
 
-        EcoNewsPage ecoNewsPage = new EcoNewsPage(driver)
+        String newsTag = new EcoNewsPage(driver)
                 .getHeader()
                 .goToEcoNews()
                 .clickCreateNewsButton()
                 .clickTag(NewsTags.NEWS_TAG)
                 .enterTitle("Test")
                 .enterContent("Test content with 20 chars")
-                .clickPublish();
+                .clickPublish()
+                .getNewsComponents()
+                .getFirst()
+                .getTags()
+                .getFirst()
+                .getText();
 
-        List<String> actualTags = ecoNewsPage.getNewsComponents().getFirst().getTagTexts();
 
         SoftAssert softAssert = new SoftAssert();
 
-        softAssert.assertEquals(actualTags.size(), 1, "Expected 2 tags on the news card.");
-        softAssert.assertTrue(actualTags.contains("НОВИНИ"), "Expected tags are missing.");
+        softAssert.assertEquals(newsTag, NewsTags.NEWS_TAG, "Expected News tag is missed.");
 
-        EcoNewsPage ecoNewsPage1 = new EcoNewsPage(driver)
+
+        List<String> updatedListOfTags3 = new EcoNewsPage(driver)
                 .clickFirstNewsPage()
                 .clickEditNewsButton()
                 .clickTag(NewsTags.EVENTS_TAG)
                 .clickTag(NewsTags.EDUCATION_TAG)
-                .clickPublish();
+                .clickPublish()
+                .getNewsComponents()
+                .getFirst()
+                .getTags()
+                .stream()
+                .map(WebElement::getText)
+                .map(String::trim)
+                .toList();
 
-        List<String> actualTags3 = ecoNewsPage1.getNewsComponents().getFirst().getTagTexts();
-        softAssert.assertEquals(actualTags3.size(), 3, "Expected 3 tags on the news card.");
-        softAssert.assertTrue(actualTags3.containsAll(List.of("НОВИНИ", "ПОДІЇ", "ОСВІТА")), "Expected tags are missing.");
+        List<String> expected = Arrays.asList(
+                NewsTags.NEWS_TAG.getUkrainianName(),
+                NewsTags.EVENTS_TAG.getUkrainianName(),
+                NewsTags.EDUCATION_TAG.getUkrainianName()
+        );
 
-        EcoNewsPage ecoNewsPage2 = new EcoNewsPage(driver)
+        softAssert.assertEquals(updatedListOfTags3.size(), expected.size(), "Expected 3 tags on the news card.");
+        softAssert.assertTrue(updatedListOfTags3.containsAll(expected), "Expected tags are missing.");
+
+        List<String> actualTags = new EcoNewsPage(driver)
                 .clickFirstNewsPage()
                 .clickEditNewsButton()
                 .clickTag(NewsTags.ADS_TAG)
-                .clickPublish();
+                .clickPublish()
+                .getNewsComponents()
+                .getFirst()
+                .getTags()
+                .stream()
+                .map(WebElement::getText)
+                .map(String::trim)
+                .toList();
 
-        List<String> actualTags4 = ecoNewsPage2.getNewsComponents().getFirst().getTagTexts();
-        softAssert.assertEquals(actualTags4.size(), 3, "Expected 3 tags on the news card.");
+        softAssert.assertEquals(actualTags.size(), 3, "Expected 3 tags on the news card.");
         softAssert.assertAll();
 
     }
