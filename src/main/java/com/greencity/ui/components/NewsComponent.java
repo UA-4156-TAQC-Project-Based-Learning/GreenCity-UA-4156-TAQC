@@ -31,19 +31,6 @@ public class NewsComponent extends BaseComponent {
         super(driver, rootElement);
     }
 
-//    private final WebElement title;
-//    private final WebElement image;
-//    @Getter
-//    private final List<WebElement> tags;
-//    private final WebElement publicationDate;
-//
-//    public NewsComponent(WebDriver driver, WebElement rootElement) {
-//        super(driver, rootElement);
-//        this.title = rootElement.findElement(By.xpath(".//div[@class='title-list word-wrap']"));
-//        this.image = rootElement.findElement(By.xpath(".//img[@class='list-image-content']"));
-//        this.tags = rootElement.findElements(By.xpath(".//div[@class='filter-tag']"));
-//        this.publicationDate = rootElement.findElement(By.xpath(".//p[contains(@class, 'user-data-text-date')]/span"));
-//    }
 
     public String getTitleText() {
         return title.getText().trim();

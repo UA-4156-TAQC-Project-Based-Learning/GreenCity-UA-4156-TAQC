@@ -20,7 +20,7 @@ public class InterestingNewsWidgetTest extends TestRunnerWithUser {
                 .getHeader()
                 .goToEcoNews();
 
-        boolean anyTagActive = ecoNewsPage.getTags().stream()
+        boolean anyTagActive = ecoNewsPage.getFilteringOptions().stream()
                 .anyMatch(tag -> tag.getAttribute("class").contains("active"));
         softAssert.assertFalse(anyTagActive, "No tag filter should be active.");
 
