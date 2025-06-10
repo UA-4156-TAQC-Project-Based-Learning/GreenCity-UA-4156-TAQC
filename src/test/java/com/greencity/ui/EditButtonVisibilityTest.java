@@ -15,7 +15,7 @@ public class EditButtonVisibilityTest extends TestRunnerWithUser {
 
         NewsPage newsPage = ecoNewsPage.clickFirstNewsPage();
 
-        boolean isEditButtonVisible = newsPage.getEditNewsButton().isDisplayed();
+        boolean isEditButtonVisible = newsPage.isEditNewsButtonVisible();
 
         Assert.assertTrue(isEditButtonVisible, "Edit button is not visible.");
     }
