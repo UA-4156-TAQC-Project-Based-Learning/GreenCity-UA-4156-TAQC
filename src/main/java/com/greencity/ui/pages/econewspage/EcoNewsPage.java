@@ -3,19 +3,18 @@ package com.greencity.ui.pages.econewspage;
 import com.greencity.ui.components.NewsComponent;
 import com.greencity.ui.components.header.HeaderComponent;
 import com.greencity.ui.components.header.HeaderLoggedUserComponent;
-import com.greencity.ui.components.NewsComponent;
 import com.greencity.ui.pages.BasePage;
 import com.greencity.ui.pages.CreateEditNewsPage;
 import com.greencity.ui.pages.abstractNewsPage.NewsPage;
 import com.greencity.ui.pages.CreateEditNewsPage;
 import lombok.Getter;
 import org.openqa.selenium.By;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Getter
@@ -25,13 +24,25 @@ public class EcoNewsPage extends BasePage {
     private WebElement title;
 
     @FindBy(xpath = "//button[contains(@class, 'tag-button')]")
-    private List<WebElement> tags;
+    private List<WebElement> filteringOptions;
 
     @FindBy(xpath = "//div[@id='create-button']")
     private WebElement createNewsButton;
 
-    @FindBy(xpath = "//ul[contains(@class,'list gallery-view-active ng-star-inserted')]")
+    @FindBy(xpath = "//li[contains(@class,'gallery-view-li')]")
     private List<WebElement> newsCards;
+
+    @FindBy(css = ".news-date")
+    private List<WebElement> newsDates;
+
+    @FindBy(xpath = "//div[@class='header_navigation-menu']")
+    private WebElement navigationPanel;
+
+    @FindBy(xpath = "//span[@aria-label='table view']")
+    private WebElement galleryView;
+
+    @FindBy(xpath = "//span[@aria-label='list view']")
+    private WebElement listView;
 
     @Getter
     private List<NewsComponent> news;
@@ -44,6 +55,8 @@ public class EcoNewsPage extends BasePage {
     }
 
     public CreateEditNewsPage clickCreateNewsButton() {
+        scrollToElement(createNewsButton);
+        waitUntilElementClickable(createNewsButton);
         createNewsButton.click();
         return new CreateEditNewsPage(driver);
     }
@@ -61,4 +74,13 @@ public class EcoNewsPage extends BasePage {
         return new CreateEditNewsPage(driver);
     }
 
+    public List<NewsComponent> getNewsComponents() {
+        return newsCards.stream()
+                .map(el -> new NewsComponent(driver, el))
+                .toList();
+    }
+
+    public List<String> getNewsDatesText() {
+        return newsDates.stream().map(WebElement::getText).collect(Collectors.toList());
+    }
 }

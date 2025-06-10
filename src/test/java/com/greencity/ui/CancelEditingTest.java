@@ -1,14 +1,15 @@
-package com.greencity.ui.testrunners;
+package com.greencity.ui;
 
-import com.greencity.ui.pages.abstractNewsPage.NewsPage;
 import com.greencity.ui.pages.econewspage.EcoNewsPage;
 import com.greencity.ui.pages.homepage.HomePage;
+import com.greencity.ui.testrunners.TestRunnerWithUser;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class CancelEditingTest extends TestRunnerWithUser {
     @Test
     public void declineEditTitle() {
+
         driver.get(testValueProvider.getBaseUIUrl() + "/profile");
 
 
@@ -16,7 +17,7 @@ public class CancelEditingTest extends TestRunnerWithUser {
                 .getHeader()
                 .goToEcoNews();
 
-        String originalNewsTitle = ecoNewsPage.getNewsCards().getFirst().getText();
+        String originalNewsTitle = ecoNewsPage.getNewsComponents().getFirst().getTitle().getText();
 
         ecoNewsPage
                 .clickFirstNewsPage()
@@ -25,8 +26,8 @@ public class CancelEditingTest extends TestRunnerWithUser {
                 .clickCancelButton()
                 .clickYesCancel();
 
-        String currentTitle = new EcoNewsPage(driver).getNewsCards().getFirst().getText();
+        String currentTitle = new EcoNewsPage(driver).getNewsComponents().getFirst().getTitle().getText();
 
-       Assert.assertEquals(currentTitle, originalNewsTitle, "Title was changed after canceling editing.");
+       Assert.assertEquals(currentTitle,originalNewsTitle,"Title was changed after cancel editing. Original title was: " + originalNewsTitle + "Current title is: " + currentTitle);
     }
 }

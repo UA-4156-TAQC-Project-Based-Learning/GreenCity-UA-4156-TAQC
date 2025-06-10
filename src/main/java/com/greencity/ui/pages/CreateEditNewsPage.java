@@ -1,6 +1,7 @@
 package com.greencity.ui.pages;
 
 import com.greencity.ui.components.baseComponents.CancelConfirmModal;
+import com.greencity.ui.elements.NewsTags;
 import com.greencity.ui.pages.abstractNewsPage.PreviewNewsPage;
 import com.greencity.ui.pages.econewspage.EcoNewsPage;
 import lombok.Getter;
@@ -33,7 +34,7 @@ public class CreateEditNewsPage extends BasePage {
     @FindBy(xpath = "//button[@class='secondary-global-button s-btn']")
     private WebElement cancelImgButton;
 
-    @FindBy(xpath = "//div[contains(@class, 'ql-editor')]")
+    @FindBy(xpath = "//div[contains(@class, 'ql-editor')]/p")
     private WebElement contentInput;
 
     @FindBy(xpath = "//button[@type='submit' and contains(@class,'primary-global-button')]")
@@ -69,6 +70,12 @@ public class CreateEditNewsPage extends BasePage {
     @FindBy(xpath = "//div[@class='mdc-dialog__container']")
     private WebElement modalRoot;
 
+    @FindBy(xpath = "//p[contains(@class,'field-info')]")
+    private WebElement contentInfoMessage;
+
+    @FindBy(xpath = "//span[@class = 'span field-info warning']")
+    private WebElement sourceErrorMessage;
+
     @FindBy(xpath = "//div[contains(@class, 'ngx-ic-cropper')]")
     private WebElement cropper;
 
@@ -93,6 +100,16 @@ public class CreateEditNewsPage extends BasePage {
         return this;
     }
 
+    public CreateEditNewsPage enterContentJS(String text) {
+        contentInput.clear();
+        threadJs.executeScript(
+                "arguments[0].innerText = arguments[1];" +
+                        "arguments[0].dispatchEvent(new Event('input', { bubbles: true }));",
+                getContentInput(), text
+        );
+        return this;
+    }
+
     public void uploadImage(String filePath) {
         browserLink.sendKeys(filePath);
     }
@@ -111,7 +128,7 @@ public class CreateEditNewsPage extends BasePage {
 
     public CancelConfirmModal clickCancelButton() {
         cancelButton.click();
-        return new CancelConfirmModal(driver, modalRoot );
+        return new CancelConfirmModal(driver, modalRoot);
     }
 
     public PreviewNewsPage clickPreview() {
@@ -124,5 +141,20 @@ public class CreateEditNewsPage extends BasePage {
         waitUntilElementClickable(publishButton);
         publishButton.click();
         return new EcoNewsPage(driver);
+    }
+
+    public CreateEditNewsPage clickTag(NewsTags tag) {
+        driver.findElement(tag.getLocator()).click();
+        return this;
+    }
+
+    public static String generateText(int length) {
+        String loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ";
+        StringBuilder text = new StringBuilder();
+
+        while (text.length() < length) {
+            text.append(loremIpsum);
+        }
+        return text.substring(0, length);
     }
 }
