@@ -1,10 +1,14 @@
 package com.greencity.ui.pages.econewspage;
 
 import com.greencity.ui.components.NewsComponent;
+import com.greencity.ui.components.header.HeaderComponent;
+import com.greencity.ui.components.header.HeaderLoggedUserComponent;
 import com.greencity.ui.pages.BasePage;
 import com.greencity.ui.pages.CreateEditNewsPage;
 import com.greencity.ui.pages.abstractNewsPage.NewsPage;
+import com.greencity.ui.pages.CreateEditNewsPage;
 import lombok.Getter;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -40,6 +44,11 @@ public class EcoNewsPage extends BasePage {
     @FindBy(xpath = "//span[@aria-label='list view']")
     private WebElement listView;
 
+    @Getter
+    private List<NewsComponent> news;
+
+    private final By createButtonBy = By.xpath("//span[contains(@id, 'create-button-text')]");
+
 
     public EcoNewsPage(WebDriver driver) {
         super(driver);
@@ -56,6 +65,13 @@ public class EcoNewsPage extends BasePage {
         WebElement firstCard = newsCards.getFirst();
         firstCard.click();
         return new NewsPage(driver);
+    }
+    public WebElement getCreateButton() {
+        return driver.findElement(createButtonBy);
+    }
+    public CreateEditNewsPage clickCreateButton() {
+        getCreateButton().click();
+        return new CreateEditNewsPage(driver);
     }
 
     public List<NewsComponent> getNewsComponents() {
