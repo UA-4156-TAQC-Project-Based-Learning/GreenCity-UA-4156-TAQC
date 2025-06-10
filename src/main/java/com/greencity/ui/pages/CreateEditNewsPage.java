@@ -69,6 +69,9 @@ public class CreateEditNewsPage extends BasePage {
     @FindBy(xpath = "//p[contains(@class,'field-info')]")
     private WebElement contentInfoMessage;
 
+    @FindBy(xpath = "//span[@class = 'span field-info warning']")
+    private WebElement sourceErrorMessage;
+
     public CreateEditNewsPage enterTitle(String title) {
         titleInput.clear();
         titleInput.sendKeys(title);
