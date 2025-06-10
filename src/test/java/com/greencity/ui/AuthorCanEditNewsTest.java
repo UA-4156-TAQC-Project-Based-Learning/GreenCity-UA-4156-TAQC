@@ -6,28 +6,25 @@ import com.greencity.ui.testrunners.TestRunnerWithUser;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class CancelEditingTest extends TestRunnerWithUser {
+public class AuthorCanEditNewsTest extends TestRunnerWithUser {
     @Test
-    public void declineEditTitle() {
-
+    public void authorCanEditOwnNews() {
         driver.get(testValueProvider.getBaseUIUrl() + "/profile");
 
 
         EcoNewsPage ecoNewsPage = new HomePage(driver)
                 .getHeader()
                 .goToEcoNews();
-
         String originalNewsTitle = ecoNewsPage.getNewsComponents().getFirst().getTitle().getText();
 
         ecoNewsPage
                 .clickFirstNewsPage()
                 .clickEditNewsButton()
-                .enterTitle("New temporary title")
-                .clickCancelButton()
-                .clickYesCancel();
+                .enterTitle("New title")
+                .clickPublish();
 
         String currentTitle = new EcoNewsPage(driver).getNewsComponents().getFirst().getTitle().getText();
 
-       Assert.assertEquals(currentTitle,originalNewsTitle,"Title was changed after cancel editing. Original title was: " + originalNewsTitle + "Current title is: " + currentTitle);
+        Assert.assertEquals(currentTitle,"New title", "Title is not as expected." + "Expected: New title. But displayed: " + currentTitle);
     }
 }
