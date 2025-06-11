@@ -29,18 +29,16 @@ public class PreFilledEditFormTest extends TestRunnerWithUser {
                 .createNews(title, source, NewsTags.EDUCATION_TAG, content)
                 .findNewsByTitleAndClick(title)
                 .clickEditNewsButton();
+        createEditNewsPage.refreshPage();
 
-        String actualTitle=createEditNewsPage.getTitleInput().getText();
-        String actualSource=createEditNewsPage.getSourceInput().getText();
+        String actualTitle=createEditNewsPage.getTitleInput().getAttribute("value");
+        String actualSource=createEditNewsPage.getSourceInput().getAttribute("value");
         String actualContent=createEditNewsPage.getContentInput().getText();
 
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertTrue(actualTitle.equals(title), "Expected title is:"+title+", actual title is: "+actualTitle);
-        softAssert.assertTrue(actualSource.equals(source), "Expected source is:"+source+", actual title is: "+actualSource);
-        softAssert.assertTrue(actualContent.equals(content), "Expected content is:"+content+", actual title is: "+actualContent);
+        softAssert.assertEquals(actualTitle, title, "Expected title is:"+title+", actual title is: "+actualTitle);
+        softAssert.assertEquals(actualSource, source, "Expected source is:"+source+", actual title is: "+actualSource);
+        softAssert.assertEquals(actualContent, content, "Expected content is:"+content+", actual title is: "+actualContent);
         softAssert.assertAll();
-        System.out.println(5);
-
-
     }
 }

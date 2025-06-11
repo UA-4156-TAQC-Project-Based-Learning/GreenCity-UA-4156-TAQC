@@ -164,10 +164,6 @@ public class CreateEditNewsPage extends BasePage {
         return text.substring(0, length);
     }
 
-    public EcoNewsPage publishNews(){
-        this.getPublishButton().click();
-        return new EcoNewsPage(driver);
-    }
 
     public EcoNewsPage createNews( String title, String source, NewsTags tag, String content){
         return this
@@ -175,7 +171,7 @@ public class CreateEditNewsPage extends BasePage {
                 .enterSource(source)
                 .clickTag(tag)
                 .enterContent(content)
-                .publishNews();
+                .clickPublish();
     }
 
 }
