@@ -110,8 +110,9 @@ public class CreateEditNewsPage extends BasePage {
         return this;
     }
 
-    public void uploadImage(String filePath) {
+    public CreateEditNewsPage uploadImage(String filePath) {
         browserLink.sendKeys(filePath);
+        return this;
     }
 
     public CreateEditNewsPage clickSubmitImage() {

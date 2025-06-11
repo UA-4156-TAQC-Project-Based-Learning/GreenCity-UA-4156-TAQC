@@ -39,6 +39,9 @@ public class NewsPage extends AbstractNewsPage {
 
     private final By dialogPopUpRoot = By.xpath("//app-dialog-pop-up");
 
+    @FindBy(xpath = "//img[contains(@class, 'news-image-img')]")
+    private WebElement newsImage;
+
     public NewsPage(WebDriver driver) {
         super(driver);
     }
