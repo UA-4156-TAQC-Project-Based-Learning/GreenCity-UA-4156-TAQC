@@ -168,9 +168,10 @@ public class CreateEditNewsPage extends BasePage {
         return new EcoNewsPage(driver);
     }
 
-    public EcoNewsPage createNews( String title, NewsTags tag, String content){
+    public EcoNewsPage createNews( String title, String source, NewsTags tag, String content){
         return this
                 .enterTitle(title)
+                .enterSource(source)
                 .clickTag(tag)
                 .enterContent(content)
                 .publishNews();

@@ -52,6 +52,8 @@ public class NewsPage extends AbstractNewsPage {
     }
 
     public CreateEditNewsPage clickEditNewsButton() {
+
+        waitUntilElementVisible(driver.findElement(editNewsButton));
         driver.findElement(editNewsButton).click();
         return new CreateEditNewsPage(driver);
     }

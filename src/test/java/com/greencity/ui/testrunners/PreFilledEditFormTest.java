@@ -2,6 +2,7 @@ package com.greencity.ui.testrunners;
 
 import com.greencity.ui.components.NewsComponent;
 import com.greencity.ui.elements.NewsTags;
+import com.greencity.ui.pages.CreateEditNewsPage;
 import com.greencity.ui.pages.abstractNewsPage.NewsPage;
 import com.greencity.ui.pages.econewspage.EcoNewsPage;
 import com.greencity.ui.pages.homepage.HomePage;
@@ -12,44 +13,33 @@ import java.util.List;
 
 import static com.greencity.ui.pages.CreateEditNewsPage.generateText;
 
-public class PreFilledEditFormTest extends TestRunnerWithUser{
+public class PreFilledEditFormTest extends TestRunnerWithUser {
 
     @Test
-    public void verifyPreFilledEditForm(){
+    public void verifyPreFilledEditForm() {
 
-        String title = generateText(25)+"888";
+        String title = generateText(25);
+        String source="http://www.validSource.com";
         String content = generateText(25);
 
-        EcoNewsPage ecoNewsPage= new HomePage(driver)
+        CreateEditNewsPage createEditNewsPage = new HomePage(driver)
                 .getHeader()
                 .goToEcoNews()
                 .clickCreateNewsButton()
-                .createNews(title, NewsTags.EDUCATION_TAG, content);                ;
+                .createNews(title, source, NewsTags.EDUCATION_TAG, content)
+                .findNewsByTitleAndClick(title)
+                .clickEditNewsButton();
 
-      //  ecoNewsPage.getNewsComponents().get(0).getTitle().click();
+        String actualTitle=createEditNewsPage.getTitleInput().getText();
+        String actualSource=createEditNewsPage.getSourceInput().getText();
+        String actualContent=createEditNewsPage.getContentInput().getText();
 
-        List<NewsComponent> newsList=ecoNewsPage.getNewsComponents();
-        for (NewsComponent news:newsList){
-            System.out.println(news.getTitle().getText());
-            System.out.println(news.getTitle().getText().trim()==title);
-            if( news.getTitle().getText().trim()==title){
-                news.getTitle().click();
-                break;
-            }
-        }
-
-      //  String actualTitleOfFirstNews=ecoNewsPage.getNewsComponents().get(0).getTitle().getText()
-
-
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertTrue(actualTitle.equals(title), "Expected title is:"+title+", actual title is: "+actualTitle);
+        softAssert.assertTrue(actualSource.equals(source), "Expected source is:"+source+", actual title is: "+actualSource);
+        softAssert.assertTrue(actualContent.equals(content), "Expected content is:"+content+", actual title is: "+actualContent);
+        softAssert.assertAll();
         System.out.println(5);
-
-//        String actualTitleOfFirstNews=ecoNewsPage.getNewsComponents().get(0).getTitle().getText();
-//
-//        SoftAssert softAssert = new SoftAssert();
-//        softAssert.assertTrue(driver.getCurrentUrl().contains("/news"), "EcoNews Page is not opened");
-//
-//        softAssert.assertEquals(actualTitleOfFirstNews, title);
-//        softAssert.assertAll();
 
 
     }
