@@ -10,6 +10,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Getter
 public class MySpacePage extends BasePage {
@@ -39,8 +40,10 @@ public class MySpacePage extends BasePage {
     }
 
     public NewsPage clickFirstNew(){
-        listOfNews = driver.findElements(newsListInMyNewsTab);
-        listOfNews.getFirst().click();
+        if (listOfNews.isEmpty()) {
+            throw new NoSuchElementException("No news found in 'My news' tab");
+        }
+        listOfNews.get(0).click();
         return new NewsPage(driver);
     }
 }
