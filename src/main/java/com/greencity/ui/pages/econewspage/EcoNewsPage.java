@@ -83,4 +83,16 @@ public class EcoNewsPage extends BasePage {
     public List<String> getNewsDatesText() {
         return newsDates.stream().map(WebElement::getText).collect(Collectors.toList());
     }
+
+    public NewsPage findNewsByTitleAndClick(String title){
+        List<NewsComponent> newsList = this.getNewsComponents();
+        for (NewsComponent news : newsList) {
+            if (news.getTitleText().equals(title)) {
+                news.getTitle().click();
+                break;
+            }
+        }
+        return new NewsPage(driver);
+    }
+
 }

@@ -1,14 +1,19 @@
 package com.greencity.ui.pages;
 
+import com.greencity.ui.components.NewsComponent;
 import com.greencity.ui.components.baseComponents.CancelConfirmModal;
 import com.greencity.ui.elements.NewsTags;
+import com.greencity.ui.pages.abstractNewsPage.NewsPage;
 import com.greencity.ui.pages.abstractNewsPage.PreviewNewsPage;
 import com.greencity.ui.pages.econewspage.EcoNewsPage;
+import com.greencity.ui.pages.homepage.HomePage;
 import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import java.util.List;
 
 @Getter
 public class CreateEditNewsPage extends BasePage {
@@ -158,4 +163,15 @@ public class CreateEditNewsPage extends BasePage {
         }
         return text.substring(0, length);
     }
+
+
+    public EcoNewsPage createNews( String title, String source, NewsTags tag, String content){
+        return this
+                .enterTitle(title)
+                .enterSource(source)
+                .clickTag(tag)
+                .enterContent(content)
+                .clickPublish();
+    }
+
 }
