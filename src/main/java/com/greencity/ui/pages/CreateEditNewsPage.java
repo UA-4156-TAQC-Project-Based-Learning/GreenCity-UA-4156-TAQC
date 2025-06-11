@@ -14,9 +14,8 @@ import java.util.Random;
 
 @Getter
 public class CreateEditNewsPage extends BasePage {
-    public CreateEditNewsPage(WebDriver driver) {
-        super(driver);
-    }
+    @FindBy(xpath = "//h2[contains(@class, 'title-header')]")
+    private WebElement titleHeader;
 
     @FindBy(css = "textarea[formcontrolname='title']")
     private WebElement titleInput;
@@ -45,23 +44,26 @@ public class CreateEditNewsPage extends BasePage {
     @FindBy(xpath = "//button[@class='secondary-global-button']")
     private WebElement previewButton;
 
-    @FindBy(xpath = ".//span[@class='span span-title']")
+    @FindBy(xpath = "//span[@class='span span-title']")
     private WebElement titleCharacterCounter;
 
-    @FindBy(xpath = ".//p[@class='textarea-description']")
+    @FindBy(xpath = "//p[@class='textarea-description']")
     private WebElement contentCharacterCounter;
 
-    @FindBy(xpath = ".//div[@class='date']/p/span[contains(text(),'Date')]")
+    @FindBy(xpath = "//div[@class='date']/p/span[contains(text(),'Date')]")
     private WebElement dateLabel;
 
-    @FindBy(xpath = ".//div[@class='date']/p/span[contains(text(),'Author')]")
+    @FindBy(xpath = "//div[@class='date']/p/span[contains(text(),'Author')]")
     private WebElement authorLabel;
 
-    @FindBy(xpath = ".//div/span[@class='span']")
+    @FindBy(xpath = "//div/span[@class='span']")
     private WebElement sourcePlaceholder;
 
-    @FindBy(xpath = ".//div[@class='centered']")
+    @FindBy(xpath = "//div[@class='centered']")
     private WebElement browserLabel;
+
+    @FindBy(xpath = "//button[@class='primary-global-button']")
+    private WebElement editButton;
 
     @FindBy(xpath = "//div[@class='mdc-dialog__container']")
     private WebElement cancelConfirmModule;
@@ -72,7 +74,50 @@ public class CreateEditNewsPage extends BasePage {
     @FindBy(xpath = "//p[contains(@class,'field-info')]")
     private WebElement contentInfoMessage;
 
+    @FindBy(xpath = "//span[@class = 'span field-info warning']")
+    private WebElement sourceErrorMessage;
+
+    @FindBy(xpath = "//div[contains(@class, 'ngx-ic-cropper')]")
+    private WebElement cropper;
+
+    @FindBy(xpath = "//p[contains(@class, 'warning')]")
+    private WebElement imageWarning;
+
     private final By titleWarningCounterBy=By.xpath("//div[@class='title-wrapper']/span[contains(@class,'field-info')]");
+
+    public CreateEditNewsPage(WebDriver driver) {
+        super(driver);
+    }
+
+    public static String generateText(int length) {
+
+        String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ";
+        StringBuilder result = new StringBuilder();
+        Random random = new Random();
+
+        for (int i = 0; i < length; i++) {
+            result.append(characters.charAt(random.nextInt(characters.length())));
+        }
+
+        return result.toString();
+    }
+
+    public boolean isAuthorEditable() {
+        return "true".equals(getAuthorLabel().getAttribute("contenteditable"));
+    }
+
+    public boolean isDateEditable() {
+        return "true".equals(getDateLabel().getAttribute("contenteditable"));
+    }
+
+    public boolean isTitleFieldHighlightedInRed() {
+        String classAttr = titleInput.getAttribute("class");
+        return classAttr.contains("ng-invalid");
+    }
+
+    public boolean isStillOnEditPage() {
+        return driver.getCurrentUrl().contains("#/news/create-news");
+    }
 
     public CreateEditNewsPage enterTitle(String title) {
         titleInput.clear();
@@ -94,16 +139,16 @@ public class CreateEditNewsPage extends BasePage {
 
     public CreateEditNewsPage enterContentJS(String text) {
         contentInput.clear();
-        threadJs.executeScript(
-                "arguments[0].innerText = arguments[1];" +
-                        "arguments[0].dispatchEvent(new Event('input', { bubbles: true }));",
-                getContentInput(), text
-        );
+        threadJs.executeScript("arguments[0].innerText = arguments[1];"
+                                    + "arguments[0].dispatchEvent(new Event('input', { bubbles: true }));",
+                                getContentInput(),
+                                text);
         return this;
     }
 
-    public void uploadImage(String filePath) {
+    public CreateEditNewsPage uploadImage(String filePath) {
         browserLink.sendKeys(filePath);
+        return this;
     }
 
     public CreateEditNewsPage clickSubmitImage() {
@@ -140,19 +185,19 @@ public class CreateEditNewsPage extends BasePage {
         return this;
     }
 
-    public static String generateText(int length) {
-
-        String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ";
-        StringBuilder result = new StringBuilder();
-        Random random = new Random();
-
-        for (int i = 0; i < length; i++) {
-            result.append(characters.charAt(random.nextInt(characters.length())));
-        }
-
-        return result.toString();
+    public EcoNewsPage createNews(String title, String source, NewsTags tag, String content) {
+        return this.enterTitle(title)
+                .enterSource(source)
+                .clickTag(tag)
+                .enterContent(content)
+                .clickPublish();
     }
 
+    public EcoNewsPage clickEdit() {
+        waitUntilElementVisible(editButton);
+        editButton.click();
+        return new EcoNewsPage(driver);
+    }
 
     public WebElement getTitleCounter() {
 

@@ -7,7 +7,6 @@ public class TestRunnerWithUser extends BaseTestRunner {
 
     @BeforeClass
     public void login() {
-
         localStorageJS.setItemLocalStorage("accessToken", testValueProvider.getLocalStorageAccessToken());
         localStorageJS.setItemLocalStorage("userId", testValueProvider.getLocalStorageUserId());
         localStorageJS.setItemLocalStorage("refreshToken", testValueProvider.getLocalStorageRefreshToken());
