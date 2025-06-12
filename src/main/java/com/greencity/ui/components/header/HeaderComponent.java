@@ -3,6 +3,7 @@ package com.greencity.ui.components.header;
 import com.greencity.ui.components.baseComponents.BaseComponent;
 import com.greencity.ui.pages.econewspage.EcoNewsPage;
 import com.greencity.ui.pages.myspacepage.MySpacePage;
+import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -45,6 +46,7 @@ public class HeaderComponent extends BaseComponent {
         return new EcoNewsPage(driver);
     }
 
+    @Step("Click My Space link in the header")
     public MySpacePage goToMySpace() {
         try {
             waitUntilElementClickable(mySpaceLink);

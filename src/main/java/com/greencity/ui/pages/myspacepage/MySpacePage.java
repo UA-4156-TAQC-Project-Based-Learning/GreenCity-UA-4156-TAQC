@@ -3,6 +3,7 @@ package com.greencity.ui.pages.myspacepage;
 import com.greencity.ui.pages.BasePage;
 import com.greencity.ui.pages.CreateEditNewsPage;
 import com.greencity.ui.pages.abstractNewsPage.NewsPage;
+import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -29,6 +30,7 @@ public class MySpacePage extends BasePage {
         super(driver);
     }
 
+    @Step("Click on {name} tab")
     public MySpacePage clickTabsByText(String name){
         for (WebElement tab : matTabs) {
             if (tab.getText().contains(name)){
