@@ -1,6 +1,7 @@
 package com.greencity.ui.components;
 
 import com.greencity.ui.components.baseComponents.BaseComponent;
+import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -31,11 +32,12 @@ public class NewsComponent extends BaseComponent {
         super(driver, rootElement);
     }
 
-
+    @Step("Retrieve news title text")
     public String getTitleText() {
         return title.getText().trim();
     }
 
+    @Step("Retrieve publication date of the news")
     public LocalDate getPublicationDate() {
         try {
             String dateText = publicationDate.getText().trim();
@@ -46,6 +48,7 @@ public class NewsComponent extends BaseComponent {
         }
     }
 
+    @Step("Click on news with title '{getTitleText()}'")
     public void click() {
         title.click();
     }
