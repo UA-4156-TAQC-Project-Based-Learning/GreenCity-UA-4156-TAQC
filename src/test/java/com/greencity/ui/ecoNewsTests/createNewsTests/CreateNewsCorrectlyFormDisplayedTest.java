@@ -1,11 +1,11 @@
-package com.greencity.ui;
+package com.greencity.ui.ecoNewsTests.createNewsTests;
 
 import com.greencity.ui.pages.CreateEditNewsPage;
 import com.greencity.ui.testrunners.TestRunnerWithUser;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-public class CreateNewsTest extends TestRunnerWithUser {
+public class CreateNewsCorrectlyFormDisplayedTest extends TestRunnerWithUser {
 
     @Test
     public void testCreateNewsFormElementsAreDisplayedCorrectly() {
