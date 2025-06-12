@@ -19,7 +19,7 @@ public class EcoNewsSectionDisplayedUnregisteredUserTest extends BaseTestRunner 
     @Issue("93")
     @Owner("Yuliia Terentieva")
     @Description("Verify that the Eco news section is displayed correctly for unregistered users on the main page.")
-    @Feature("")
+    @Feature("Home Page")
     @Test
     public void verifyEcoNewsSectionDisplayedUnregisteredUser(){
         driver.get(testValueProvider.getBaseUIUrl());

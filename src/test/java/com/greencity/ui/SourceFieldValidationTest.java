@@ -15,7 +15,7 @@ public class SourceFieldValidationTest extends TestRunnerWithUser {
     @Issue("18")
     @Owner("Yuliia Terentieva")
     @Description("Verify the validation of the Source field (optional, must be a valid URL).")
-    @Feature("")
+    @Feature("Create News")
     @Test
     public void sourceFieldValidation() {
         driver.get(testValueProvider.getBaseUIUrl() + "/profile");

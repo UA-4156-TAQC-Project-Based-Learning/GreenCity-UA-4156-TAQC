@@ -14,7 +14,7 @@ public class AuthorCanEditNewsTest extends TestRunnerWithUser {
     @Issue("36")
     @Owner("Yuliia Terentieva")
     @Description("Verify that the author can edit their own news and the changes are saved.")
-    @Feature("")
+    @Feature("Edit News")
     @Test
     public void authorCanEditOwnNews() {
         driver.get(testValueProvider.getBaseUIUrl() + "/profile");

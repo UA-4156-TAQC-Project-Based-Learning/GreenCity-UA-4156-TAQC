@@ -18,7 +18,7 @@ public class CheckingTagSelectionTest extends TestRunnerWithUser {
     @Issue("15")
     @Owner("Yuliia Terentieva")
     @Description("Verify that the user can select between 1 and 3 tags from the predefined list.")
-    @Feature("")
+    @Feature("Create News")
     @Test
     public void checkingNewsTagSelection() {
         driver.get(testValueProvider.getBaseUIUrl() + "/profile");

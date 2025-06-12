@@ -14,7 +14,7 @@ public class EditButtonVisibilityTest extends TestRunnerWithUser {
     @Issue("34")
     @Owner("Yuliia Terentieva")
     @Description("Verify that only the author of the news can see the Edit new sbutton.")
-    @Feature("")
+    @Feature("Edit News")
     @Test
     public void verifyEditButtonVisibleOnlyForAuthor() {
         driver.get(testValueProvider.getBaseUIUrl() + "/profile");

@@ -13,7 +13,7 @@ public class NavigateEcoNewsPageAndLayoutTest extends TestRunnerWithUser {
     @Issue("94")
     @Owner("Yuliia Terentieva")
     @Description("Verify that clicking the Eco news tab or the Read all button on the Home page correctly navigates the user to the Eco news landing page, and that the landing page displays all required components.")
-    @Feature("")
+    @Feature("Home Page")
     @Test
     public void verifyNavigateToEcoNewsPageAndLayoutAnauthorized() {
         driver.get(testValueProvider.getBaseUIUrl());

@@ -14,7 +14,7 @@ public class CancelEditingTest extends TestRunnerWithUser {
     @Issue("41")
     @Owner("Yuliia Terentieva")
     @Description("Verify that clicking Cancel discards changes and returns to the original view.")
-    @Feature("")
+    @Feature("Edit News")
     @Test
     public void declineEditTitle() {
 
