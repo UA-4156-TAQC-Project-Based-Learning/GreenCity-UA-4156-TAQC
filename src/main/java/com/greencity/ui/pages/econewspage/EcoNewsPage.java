@@ -4,6 +4,7 @@ import com.greencity.ui.components.NewsComponent;
 import com.greencity.ui.pages.BasePage;
 import com.greencity.ui.pages.CreateEditNewsPage;
 import com.greencity.ui.pages.abstractNewsPage.NewsPage;
+import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -42,6 +43,7 @@ public class EcoNewsPage extends BasePage {
         super(driver);
     }
 
+    @Step("Click Create News button")
     public CreateEditNewsPage clickCreateNewsButton() {
         scrollToElement(createNewsButton);
         waitUntilElementClickable(createNewsButton);
@@ -49,6 +51,7 @@ public class EcoNewsPage extends BasePage {
         return new CreateEditNewsPage(driver);
     }
 
+    @Step("Click first News page")
     public NewsPage clickFirstNewsPage() {
         WebElement firstCard = newsCards.getFirst();
         firstCard.click();
@@ -63,6 +66,7 @@ public class EcoNewsPage extends BasePage {
         getCreateButton().click();
         return new CreateEditNewsPage(driver);
     }
+
 
     public List<NewsComponent> getNewsComponents() {
         return newsCards.stream().map(el -> new NewsComponent(driver, el)).toList();

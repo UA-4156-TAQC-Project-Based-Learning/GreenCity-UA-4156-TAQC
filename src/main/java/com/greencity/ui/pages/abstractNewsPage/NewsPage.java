@@ -1,6 +1,7 @@
 package com.greencity.ui.pages.abstractNewsPage;
 
 import com.greencity.ui.pages.CreateEditNewsPage;
+import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -46,6 +47,7 @@ public class NewsPage extends AbstractNewsPage {
         super(driver);
     }
 
+    @Step("Verify Edit News button is visible")
     public boolean isEditNewsButtonVisible() {
         return !driver.findElements(editNewsButton).isEmpty();
     }
@@ -54,6 +56,7 @@ public class NewsPage extends AbstractNewsPage {
         backButton.click();
     }
 
+    @Step("Click EditNews page")
     public CreateEditNewsPage clickEditNewsButton() {
 
         waitUntilElementVisible(driver.findElement(editNewsButton));
