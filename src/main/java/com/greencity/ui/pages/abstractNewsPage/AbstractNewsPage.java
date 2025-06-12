@@ -1,6 +1,7 @@
 package com.greencity.ui.pages.abstractNewsPage;
 
 import com.greencity.ui.pages.BasePage;
+import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -40,14 +41,17 @@ public abstract class AbstractNewsPage extends BasePage {
         super(driver);
     }
 
+    @Step("Retrieve title text")
     public String getTitleText() {
         return title.getText().trim();
     }
 
+    @Step("Retrieve publication date text")
     public String getPublicationDateText() {
         return publicationDate.getText().trim();
     }
 
+    @Step("Retrieve author name")
     public String getAuthorText() {
         String rawText = author.getText().trim();
         if (rawText.toLowerCase().startsWith("by ")) {
@@ -60,6 +64,7 @@ public abstract class AbstractNewsPage extends BasePage {
         return newsImage.isDisplayed();
     }
 
+    @Step("Retrieve content text")
     public String getContentText() {
         scrollToElement(contentText);
         return contentText.getText();

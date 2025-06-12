@@ -4,11 +4,13 @@ import com.greencity.ui.pages.CreateEditNewsPage;
 import com.greencity.ui.pages.abstractNewsPage.PreviewNewsPage;
 import com.greencity.ui.pages.homepage.HomePage;
 import com.greencity.ui.testrunners.TestRunnerWithUser;
+import io.qameta.allure.*;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class PreviewNewsTest extends TestRunnerWithUser {
 
@@ -18,10 +20,15 @@ public class PreviewNewsTest extends TestRunnerWithUser {
                 {
                         "Test Preview",
                         "This is a test preview content",
-                        LocalDate.now().format(DateTimeFormatter.ofPattern("MMM d, yyyy"))
+                        LocalDate.now().format(DateTimeFormatter.ofPattern("MMM d, yyyy", Locale.ENGLISH))
                 }
         };
     }
+
+    @Issue("33")
+    @Feature("News Preview")
+    @Description("Verifies that a user can preview title, content, author, and date of the news before publishing")
+    @Owner("Svitlana Kovalova")
 
     @Test(dataProvider = "newsData")
     public void testUserCanPreviewNewsContent(String expectedTitle, String expectedContent, String expectedDate) {
