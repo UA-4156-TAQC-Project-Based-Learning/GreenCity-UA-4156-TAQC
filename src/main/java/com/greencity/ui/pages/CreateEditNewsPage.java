@@ -10,6 +10,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 import java.util.Random;
 
@@ -17,6 +21,8 @@ import java.util.Random;
 public class CreateEditNewsPage extends BasePage {
     @FindBy(xpath = "//h2[contains(@class, 'title-header')]")
     private WebElement titleHeader;
+
+    private static final By CANCEL_CONFIRM_MODAL = By.xpath("//app-warning-pop-up");
 
     @FindBy(css = "textarea[formcontrolname='title']")
     private WebElement titleInput;
@@ -212,6 +218,22 @@ public class CreateEditNewsPage extends BasePage {
     public WebElement getTitleCounter() {
 
         return driver.findElement(titleWarningCounterBy);
+    }
+
+    public boolean isFormDisplayed() {
+        try {
+            return titleInput != null && titleInput.isDisplayed() && contentInput != null && contentInput.isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public String getTitleText() {
+        return titleInput.getAttribute("value");
+    }
+
+    public String getContentText() {
+        return contentInput.getText().trim();
     }
 
 }
