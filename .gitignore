@@ -62,3 +62,8 @@ build/
 
 ##Project
 config.properties
+
+# Allure build artifacts
+.allure/
+allure-report/
+allure-results
