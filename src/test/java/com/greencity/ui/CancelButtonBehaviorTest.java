@@ -4,11 +4,18 @@ import com.greencity.ui.components.baseComponents.CancelConfirmModal;
 import com.greencity.ui.pages.CreateEditNewsPage;
 import com.greencity.ui.pages.homepage.HomePage;
 import com.greencity.ui.testrunners.TestRunnerWithUser;
+import io.qameta.allure.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.time.Duration;
+
+@Feature("Cancel Button Functionality")
 public class CancelButtonBehaviorTest extends TestRunnerWithUser {
 
+    @Step("Open Create News Page and enter test data")
     private CreateEditNewsPage prepareCreateNewsPageWithTestData() {
         CreateEditNewsPage createNewsPage = new HomePage(driver)
                 .getHeader()
@@ -21,6 +28,9 @@ public class CancelButtonBehaviorTest extends TestRunnerWithUser {
         return createNewsPage;
     }
 
+    @Issue("19")
+    @Description("Verify that clicking Cancel and confirming redirects user to the News page, discarding changes")
+    @Owner("Svitlana Kovalova")
     @Test
     public void testCancelNewsCreationAndConfirmCancel() {
         CreateEditNewsPage createNewsPage = prepareCreateNewsPageWithTestData();
@@ -42,6 +52,9 @@ public class CancelButtonBehaviorTest extends TestRunnerWithUser {
         softAssert.assertAll();
     }
 
+    @Issue("19")
+    @Description("Verify that clicking Cancel and choosing to continue editing keeps the filled form intact")
+    @Owner("Svitlana Kovalova")
     @Test
     public void testCancelNewsCreationAndContinueEditing() {
         CreateEditNewsPage createNewsPage = prepareCreateNewsPageWithTestData();
