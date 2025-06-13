@@ -17,7 +17,6 @@ public class HeaderComponent extends BaseComponent {
     @FindBy(xpath = ".//img[@src='assets/img/logo.svg']")
     private WebElement logo;
 
-//    @FindBy(css = "a[href='#/greenCity/news'].url-name")
     @FindBy(css = "ul[role='tablist'] a[href='#/greenCity/news']")
     private WebElement ecoNewsLink;
 

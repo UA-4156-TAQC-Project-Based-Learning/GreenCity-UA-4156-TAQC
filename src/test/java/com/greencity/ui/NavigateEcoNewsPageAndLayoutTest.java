@@ -2,11 +2,18 @@ package com.greencity.ui;
 
 import com.greencity.ui.pages.econewspage.EcoNewsPage;
 import com.greencity.ui.testrunners.TestRunnerWithUser;
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Owner;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 public class NavigateEcoNewsPageAndLayoutTest extends TestRunnerWithUser {
-
+    @Issue("94")
+    @Owner("Yuliia Terentieva")
+    @Description("Verify that clicking the Eco news tab or the Read all button on the Home page correctly navigates the user to the Eco news landing page, and that the landing page displays all required components.")
+    @Feature("Home Page")
     @Test
     public void verifyNavigateToEcoNewsPageAndLayoutAnauthorized() {
         driver.get(testValueProvider.getBaseUIUrl());
@@ -18,19 +25,16 @@ public class NavigateEcoNewsPageAndLayoutTest extends TestRunnerWithUser {
 
         SoftAssert softAssert = new SoftAssert();
 
-//Use assertions to verify that the current URL includes /news or expected route.
+
         softAssert.assertNotNull(currentUrl, "Current URL should not be null");
         softAssert.assertTrue(currentUrl.contains("/news"), "Current url does not contain '/news'");
 
-//Check presence of header, footer, and nav elements using known selectors.
         softAssert.assertTrue(ecoNewsPage.getHeader().getRootElement().isDisplayed(), "Header is not visible");
         softAssert.assertTrue(ecoNewsPage.getFooter().getRootElement().isDisplayed(), "Footer is not visible");
         softAssert.assertTrue(ecoNewsPage.getNavigationPanel().isDisplayed(), "Navigation panel is not visible");
 
-//Assert that page title text equals "Eco news".
         softAssert.assertEquals(ecoNewsPage.getTitle().getText(),"Eco news", "Page title is not as expected. Expected: Eco News. But Actual tile is: " + ecoNewsPage.getTitle().getText());
 
-//Locate and verify visibility of the filter controls, "Create" button, and toggle options for gallery and list view.
         softAssert.assertTrue(!ecoNewsPage.getFilteringOptions().isEmpty(), "Filtering options are not visible or empty.");
         softAssert.assertTrue(ecoNewsPage.getListView().isDisplayed(), "List view button is not visible");
         softAssert.assertTrue(ecoNewsPage.getGalleryView().isDisplayed(), "Gallery view button is not visible");

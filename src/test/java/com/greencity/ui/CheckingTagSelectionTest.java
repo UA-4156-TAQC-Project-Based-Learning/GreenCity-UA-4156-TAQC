@@ -3,6 +3,10 @@ package com.greencity.ui;
 import com.greencity.ui.elements.NewsTags;
 import com.greencity.ui.pages.econewspage.EcoNewsPage;
 import com.greencity.ui.testrunners.TestRunnerWithUser;
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Owner;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -11,6 +15,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CheckingTagSelectionTest extends TestRunnerWithUser {
+    @Issue("15")
+    @Owner("Yuliia Terentieva")
+    @Description("Verify that the user can select between 1 and 3 tags from the predefined list.")
+    @Feature("Create News")
     @Test
     public void checkingNewsTagSelection() {
         driver.get(testValueProvider.getBaseUIUrl() + "/profile");

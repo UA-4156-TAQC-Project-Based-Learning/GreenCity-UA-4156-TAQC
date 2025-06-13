@@ -1,12 +1,20 @@
-package com.greencity.ui;
+package com.greencity.ui.ecoNewsTests.createNewsTests;
 
 import com.greencity.ui.pages.CreateEditNewsPage;
 import com.greencity.ui.testrunners.TestRunnerWithUser;
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Owner;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-public class CreateNewsTest extends TestRunnerWithUser {
+public class CreateNewsCorrectlyFormDisplayedTest extends TestRunnerWithUser {
 
+    @Feature("Create news")
+    @Owner("kokun.v")
+    @Issue("7C13")
+    @Description("Verify that an element in the form is displayed correctly.")
     @Test
     public void testCreateNewsFormElementsAreDisplayedCorrectly() {
 

@@ -2,6 +2,10 @@ package com.greencity.ui;
 
 import com.greencity.ui.pages.econewspage.EcoNewsPage;
 import com.greencity.ui.testrunners.BaseTestRunner;
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Owner;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -12,6 +16,10 @@ import java.util.Comparator;
 import java.util.List;
 
 public class EcoNewsSectionDisplayedUnregisteredUserTest extends BaseTestRunner {
+    @Issue("93")
+    @Owner("Yuliia Terentieva")
+    @Description("Verify that the Eco news section is displayed correctly for unregistered users on the main page.")
+    @Feature("Home Page")
     @Test
     public void verifyEcoNewsSectionDisplayedUnregisteredUser(){
         driver.get(testValueProvider.getBaseUIUrl());

@@ -4,6 +4,7 @@ import com.greencity.ui.components.baseComponents.CancelConfirmModal;
 import com.greencity.ui.elements.NewsTags;
 import com.greencity.ui.pages.abstractNewsPage.PreviewNewsPage;
 import com.greencity.ui.pages.econewspage.EcoNewsPage;
+import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -83,6 +84,9 @@ public class CreateEditNewsPage extends BasePage {
     @FindBy(xpath = "//p[contains(@class, 'warning')]")
     private WebElement imageWarning;
 
+    @FindBy(xpath = "//p[@class='textarea-description warning']")
+    private WebElement descriptionWarningTextarea;
+
     private final By titleWarningCounterBy=By.xpath("//div[@class='title-wrapper']/span[contains(@class,'field-info')]");
 
     public CreateEditNewsPage(WebDriver driver) {
@@ -119,18 +123,21 @@ public class CreateEditNewsPage extends BasePage {
         return driver.getCurrentUrl().contains("#/news/create-news");
     }
 
+    @Step("Enter {title}")
     public CreateEditNewsPage enterTitle(String title) {
         titleInput.clear();
         titleInput.sendKeys(title);
         return this;
     }
 
+    @Step("Enter {source}")
     public CreateEditNewsPage enterSource(String source) {
         sourceInput.clear();
         sourceInput.sendKeys(source);
         return this;
     }
 
+    @Step("Enter Content 20 digits text")
     public CreateEditNewsPage enterContent(String content) {
         contentInput.clear();
         contentInput.sendKeys(content);
@@ -163,6 +170,7 @@ public class CreateEditNewsPage extends BasePage {
         return this;
     }
 
+    @Step("Click Cancel button")
     public CancelConfirmModal clickCancelButton() {
         cancelButton.click();
         return new CancelConfirmModal(driver, modalRoot);
@@ -174,12 +182,14 @@ public class CreateEditNewsPage extends BasePage {
         return new PreviewNewsPage(driver);
     }
 
+    @Step("Click Publish button")
     public EcoNewsPage clickPublish() {
         waitUntilElementClickable(publishButton);
         publishButton.click();
         return new EcoNewsPage(driver);
     }
 
+    @Step("Select {tag}")
     public CreateEditNewsPage clickTag(NewsTags tag) {
         driver.findElement(tag.getLocator()).click();
         return this;

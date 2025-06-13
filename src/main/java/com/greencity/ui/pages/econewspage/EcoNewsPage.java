@@ -25,7 +25,7 @@ public class EcoNewsPage extends BasePage {
     private List<WebElement> filteringOptions;
     @FindBy(xpath = "//div[@id='create-button']")
     private WebElement createNewsButton;
-    @FindBy(xpath = "//li[contains(@class,'gallery-view-li')]")
+    @FindBy(xpath = "//ul[contains(@class,'list gallery-view-active')]/li[contains(@class,'gallery-view-li')]")
     private List<WebElement> newsCards;
     @FindBy(css = ".news-date")
     private List<WebElement> newsDates;
@@ -68,6 +68,7 @@ public class EcoNewsPage extends BasePage {
         return new CreateEditNewsPage(driver);
     }
 
+    @Step("Retrieve all news components on Eco News page")
     public List<NewsComponent> getNewsComponents() {
         return newsCards.stream().map(el -> new NewsComponent(driver, el)).toList();
     }
@@ -85,6 +86,23 @@ public class EcoNewsPage extends BasePage {
             }
         }
         return new NewsPage(driver);
+    }
+
+    public boolean isAnyTagFilterActive() {
+        return filteringOptions.stream()
+                .anyMatch(tag -> tag.getAttribute("class").contains("active"));
+    }
+
+    public List<NewsComponent> getAllNewsComponents() {
+        return newsCards.stream()
+                .map(el -> new NewsComponent(driver, el))
+                .toList();
+    }
+
+    public List<String> getAllNewsTitles() {
+        return getAllNewsComponents().stream()
+                .map(NewsComponent::getTitleText)
+                .toList();
     }
 
 }

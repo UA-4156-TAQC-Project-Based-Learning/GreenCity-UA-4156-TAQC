@@ -1,5 +1,6 @@
 package com.greencity.ui.pages.abstractNewsPage;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,6 +17,7 @@ public class PreviewNewsPage extends AbstractNewsPage {
         super(driver);
     }
 
+    @Step("Retrieve header text in preview")
     public String getCreateNewsTitle() {
         return createNewsTitle.getText().trim();
     }
@@ -24,6 +26,7 @@ public class PreviewNewsPage extends AbstractNewsPage {
         backToEditingButton.click();
     }
 
+    @Step("Check if 'Back to editing' button is visible")
     public boolean isBackToEditButtonVisible() {
         try {
             return backToEditingButton.isDisplayed();
