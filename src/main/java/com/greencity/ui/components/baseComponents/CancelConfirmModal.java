@@ -1,5 +1,6 @@
 package com.greencity.ui.components.baseComponents;
 
+import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -36,18 +37,17 @@ public class CancelConfirmModal extends BaseComponent {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             wait.until(ExpectedConditions.elementToBeClickable(continueEditingButton));
             continueEditingButton.click();
-            wait.until(ExpectedConditions.invisibilityOf(rootElement));
         } catch (Exception e) {
             throw new RuntimeException("Failed to click continue editing button", e);
         }
     }
 
+    @Step("Confirm cancel")
     public void clickYesCancel() {
             try {
                 WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
                 wait.until(ExpectedConditions.elementToBeClickable(yesCancelButton));
                 yesCancelButton.click();
-                wait.until(ExpectedConditions.invisibilityOf(rootElement));
             } catch (Exception e) {
                 throw new RuntimeException("Failed to click yes cancel button", e);
             }
@@ -58,7 +58,6 @@ public class CancelConfirmModal extends BaseComponent {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             wait.until(ExpectedConditions.elementToBeClickable(closeButton));
             closeButton.click();
-            wait.until(ExpectedConditions.invisibilityOf(rootElement));
         } catch (Exception e) {
             throw new RuntimeException("Failed to click close button", e);
         }

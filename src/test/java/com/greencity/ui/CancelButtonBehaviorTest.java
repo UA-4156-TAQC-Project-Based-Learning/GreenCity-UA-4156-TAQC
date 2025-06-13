@@ -25,7 +25,7 @@ public class CancelButtonBehaviorTest extends TestRunnerWithUser {
     public void testCancelNewsCreationAndConfirmCancel() {
         CreateEditNewsPage createNewsPage = prepareCreateNewsPageWithTestData();
 
-        CancelConfirmModal confirmModal = createNewsPage.clickCancel();
+        CancelConfirmModal confirmModal = createNewsPage.clickCancelButton();
 
         SoftAssert softAssert = new SoftAssert();
 
@@ -46,7 +46,7 @@ public class CancelButtonBehaviorTest extends TestRunnerWithUser {
     public void testCancelNewsCreationAndContinueEditing() {
         CreateEditNewsPage createNewsPage = prepareCreateNewsPageWithTestData();
 
-        CancelConfirmModal confirmModal = createNewsPage.clickCancel();
+        CancelConfirmModal confirmModal = createNewsPage.clickCancelButton();
 
         SoftAssert softAssert = new SoftAssert();
 
