@@ -1,13 +1,17 @@
 package com.greencity.ui.components.baseComponents;
 
+import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class SignInModal extends BaseComponent {
 
-    public SignInModal(WebDriver driver, WebElement rootElement) {
-        super(driver, rootElement);
+    private static final By SIGN_IN_MODAL_ROOT = By.cssSelector("app-auth-modal");
+
+    public SignInModal(WebDriver driver) {
+        super(driver, driver.findElement(SIGN_IN_MODAL_ROOT));
     }
 
     @FindBy(id = "email")
@@ -88,6 +92,7 @@ public class SignInModal extends BaseComponent {
         return signInButton.isEnabled();
     }
 
+    @Step("Check if Sign In modal is displayed")
     public boolean isDisplayed() {
         return emailInput.isDisplayed() && passwordInput.isDisplayed();
     }
