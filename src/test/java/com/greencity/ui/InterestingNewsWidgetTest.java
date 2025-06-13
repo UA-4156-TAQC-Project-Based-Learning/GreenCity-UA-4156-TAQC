@@ -5,6 +5,10 @@ import com.greencity.ui.pages.abstractNewsPage.NewsPage;
 import com.greencity.ui.pages.econewspage.EcoNewsPage;
 import com.greencity.ui.pages.homepage.HomePage;
 import com.greencity.ui.testrunners.TestRunnerWithUser;
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Owner;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import java.time.LocalDate;
@@ -12,6 +16,11 @@ import java.util.Comparator;
 import java.util.List;
 
 public class InterestingNewsWidgetTest extends TestRunnerWithUser {
+
+    @Issue("96")
+    @Feature("EcoNews")
+    @Description("Verify that the recommended news widget shows exactly 3 most recent news regardless of any tag filters.")
+    @Owner("Svitlana Kovalova")
     @Test
     public void verifyRecommendedNewsShows3MostRecentRegardlessOfTagWhenNoFilter() {
         SoftAssert softAssert = new SoftAssert();
@@ -20,19 +29,15 @@ public class InterestingNewsWidgetTest extends TestRunnerWithUser {
                 .getHeader()
                 .goToEcoNews();
 
-        boolean anyTagActive = ecoNewsPage.getFilteringOptions().stream()
-                .anyMatch(tag -> tag.getAttribute("class").contains("active"));
-        softAssert.assertFalse(anyTagActive, "No tag filter should be active.");
+        softAssert.assertFalse(ecoNewsPage.isAnyTagFilterActive(), "No tag filter should be active.");
+
 
         List<NewsComponent> allNewsComponents = ecoNewsPage.getNewsComponents();
-        System.out.println("Number of news items on the page: " + allNewsComponents.size());
-        allNewsComponents.forEach(n -> System.out.println("News title: " + n.getTitleText()));
-
         softAssert.assertTrue(allNewsComponents.size() >= 4,
                 "There should be at least 4 news items to run this test. Found: " + allNewsComponents.size());
 
         if (allNewsComponents.size() < 4) {
-           throw new AssertionError("Not enough news items to run the test. Found: " + allNewsComponents.size() + ", required: 4");
+            throw new AssertionError("Not enough news items to run the test. Found: " + allNewsComponents.size() + ", required: 4");
         }
 
         List<String> allNewsTitles = allNewsComponents.stream()
@@ -54,9 +59,6 @@ public class InterestingNewsWidgetTest extends TestRunnerWithUser {
         List<NewsComponent> recommended = newsPage.getRecommendedNewsCards().stream()
                 .map(card -> new NewsComponent(driver, card))
                 .toList();
-
-        System.out.println("Number of recommended news: " + recommended.size());
-        recommended.forEach(n -> System.out.println("Recommended news title: " + n.getTitleText()));
 
         softAssert.assertEquals(recommended.size(), 3,
                 "Widget should display exactly 3 recommended news. Found: " + recommended.size());

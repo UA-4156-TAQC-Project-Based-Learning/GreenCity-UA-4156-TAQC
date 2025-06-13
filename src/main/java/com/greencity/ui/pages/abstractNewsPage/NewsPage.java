@@ -1,6 +1,8 @@
 package com.greencity.ui.pages.abstractNewsPage;
 
+import com.greencity.ui.components.NewsComponent;
 import com.greencity.ui.pages.CreateEditNewsPage;
+import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -77,6 +79,7 @@ public class NewsPage extends AbstractNewsPage {
         return likeIcon.isDisplayed();
     }
 
+    @Step("Verify 'Interesting for you' section is visible")
     public boolean isInterestingSectionVisible() {
         return interestingForYouTitle.isDisplayed();
     }
@@ -89,5 +92,6 @@ public class NewsPage extends AbstractNewsPage {
         driver.findElement(deleteButton).click();
         return new WarningModalDialog(driver, driver.findElement(dialogPopUpRoot));
     }
+
 }
 

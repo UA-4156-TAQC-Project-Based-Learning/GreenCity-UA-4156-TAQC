@@ -39,6 +39,7 @@ public class HeaderComponent extends BaseComponent {
         super(driver, rootElement);
     }
 
+    @Step("Navigate to Eco News page")
     public EcoNewsPage goToEcoNews() {
         waitUntilElementClickable(ecoNewsLink);
         ecoNewsLink.click();
