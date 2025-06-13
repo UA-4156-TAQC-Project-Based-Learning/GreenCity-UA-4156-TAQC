@@ -17,7 +17,7 @@ public class HeaderComponent extends BaseComponent {
     @FindBy(xpath = ".//img[@src='assets/img/logo.svg']")
     private WebElement logo;
 
-    @FindBy(css = "a[href='#/greenCity/news'].url-name")
+    @FindBy(css = "ul[role='tablist'] a[href='#/greenCity/news']")
     private WebElement ecoNewsLink;
 
     @FindBy(xpath = ".//a[contains(@href, '#/greenCity/profile')]")
@@ -39,14 +39,14 @@ public class HeaderComponent extends BaseComponent {
         super(driver, rootElement);
     }
 
-    @Step("Go to EcoNews page")
+    @Step("Navigate to Eco News page")
     public EcoNewsPage goToEcoNews() {
         waitUntilElementClickable(ecoNewsLink);
         ecoNewsLink.click();
         return new EcoNewsPage(driver);
     }
 
-    @Step("Click My Space link in the header")
+    @Step("Navigate to My Space page")
     public MySpacePage goToMySpace() {
         try {
             waitUntilElementClickable(mySpaceLink);

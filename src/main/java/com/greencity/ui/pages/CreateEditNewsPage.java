@@ -84,6 +84,9 @@ public class CreateEditNewsPage extends BasePage {
     @FindBy(xpath = "//p[contains(@class, 'warning')]")
     private WebElement imageWarning;
 
+    @FindBy(xpath = "//p[@class='textarea-description warning']")
+    private WebElement descriptionWarningTextarea;
+
     private final By titleWarningCounterBy=By.xpath("//div[@class='title-wrapper']/span[contains(@class,'field-info')]");
 
     public CreateEditNewsPage(WebDriver driver) {
