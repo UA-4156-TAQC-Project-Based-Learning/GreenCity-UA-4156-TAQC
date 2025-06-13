@@ -25,9 +25,8 @@ public class AdvertisingInfoBlockTest extends BaseTestRunner {
 
     @Test
     @Issue("107")
-    @Description("Verify that the advertising block works correctly for a logged-in user: " +
-            "clicking the 'Start forming a habit!' button redirects to the My Space page, " +
-            "and the My Space description is visible.")
+    @Description("Verify that the advertising block is displayed correctly on the Home page for an unlogged user, " +
+            "and that clicking the 'Start forming a habit!' button opens the login form.")
     @Owner("Svitlana Kovalova")
     public void verifyAdvertisingBlockForUnloggedUser() {
         SoftAssert softAssert = new SoftAssert();
@@ -50,8 +49,9 @@ public class AdvertisingInfoBlockTest extends BaseTestRunner {
 
     @Test
     @Issue("107")
-    @Description("Verify that the advertising block is displayed correctly on the Home page for an unlogged user, " +
-            "and that clicking the 'Start forming a habit!' button opens the login form.")
+    @Description("Verify that the advertising block works correctly for a logged-in user: " +
+            "clicking the 'Start forming a habit!' button redirects to the My Space page, " +
+            "and the My Space description is visible.")
     @Owner("Svitlana Kovalova")
     public void testAdvertisingBlockForLoggedInUser() {
         loginViaLocalStorage(driver, localStorageJS, testValueProvider);
