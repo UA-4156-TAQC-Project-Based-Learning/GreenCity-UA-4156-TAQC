@@ -24,7 +24,8 @@ public class EcoNewsPage extends BasePage {
     private List<WebElement> filteringOptions;
     @FindBy(xpath = "//div[@id='create-button']")
     private WebElement createNewsButton;
-    @FindBy(xpath = "//li[contains(@class,'gallery-view-li')]")
+//    @FindBy(xpath = "//li[contains(@class,'gallery-view-li')]")
+    @FindBy(xpath = "//ul[contains(@class,'list gallery-view-active')]")
     private List<WebElement> newsCards;
     @FindBy(css = ".news-date")
     private List<WebElement> newsDates;
