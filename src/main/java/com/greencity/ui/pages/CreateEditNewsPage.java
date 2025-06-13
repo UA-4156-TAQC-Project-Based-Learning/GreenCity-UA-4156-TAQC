@@ -220,6 +220,7 @@ public class CreateEditNewsPage extends BasePage {
         return driver.findElement(titleWarningCounterBy);
     }
 
+    @Step("Check if Create News form is displayed")
     public boolean isFormDisplayed() {
         try {
             return titleInput != null && titleInput.isDisplayed() && contentInput != null && contentInput.isDisplayed();
@@ -228,10 +229,12 @@ public class CreateEditNewsPage extends BasePage {
         }
     }
 
+    @Step("Get entered title")
     public String getTitleText() {
         return titleInput.getAttribute("value");
     }
 
+    @Step("Get entered content")
     public String getContentText() {
         return contentInput.getText().trim();
     }
