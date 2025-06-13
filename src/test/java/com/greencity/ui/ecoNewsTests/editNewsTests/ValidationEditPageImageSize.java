@@ -12,7 +12,7 @@ import java.io.File;
 
 public class ValidationEditPageImageSize  extends TestRunnerWithUser {
 
-    @Issue("131")
+    @Issue("40")
     @Owner("Dmytro Kovalchuk")
     @Description("Verify that user cannot upload image greater than 10MB in edit news page")
     @Feature("Edit news image upload validation")

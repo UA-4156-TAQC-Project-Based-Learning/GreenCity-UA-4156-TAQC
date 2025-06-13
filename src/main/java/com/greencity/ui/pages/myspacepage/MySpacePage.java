@@ -41,7 +41,9 @@ public class MySpacePage extends BasePage {
         return this;
     }
 
+    @Step("Click First New in the My Space Page")
     public NewsPage clickFirstNew(){
+        listOfNews = driver.findElements(newsListInMyNewsTab);
         if (listOfNews.isEmpty()) {
             throw new NoSuchElementException("No news found in 'My news' tab");
         }

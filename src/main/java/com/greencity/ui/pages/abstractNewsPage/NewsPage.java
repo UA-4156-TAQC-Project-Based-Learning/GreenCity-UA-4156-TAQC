@@ -1,6 +1,7 @@
 package com.greencity.ui.pages.abstractNewsPage;
 
 import com.greencity.ui.pages.CreateEditNewsPage;
+import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -46,6 +47,7 @@ public class NewsPage extends AbstractNewsPage {
         super(driver);
     }
 
+    @Step("Visibility Edit News Button in the News Page")
     public boolean isEditNewsButtonVisible() {
         return !driver.findElements(editNewsButton).isEmpty();
     }
@@ -85,6 +87,7 @@ public class NewsPage extends AbstractNewsPage {
         return recommendedNewsCards.size();
     }
 
+    @Step("Click Delete Button in the News Page")
     public WarningModalDialog clickDeleteButton(){
         driver.findElement(deleteButton).click();
         return new WarningModalDialog(driver, driver.findElement(dialogPopUpRoot));

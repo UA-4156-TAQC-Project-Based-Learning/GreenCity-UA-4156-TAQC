@@ -3,7 +3,7 @@ package com.greencity.ui.components.header;
 import com.greencity.ui.components.baseComponents.BaseComponent;
 import com.greencity.ui.pages.econewspage.EcoNewsPage;
 import com.greencity.ui.pages.myspacepage.MySpacePage;
-import io.qameta.allure.Step;
+import io.qameta.allure.*;
 import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -18,7 +18,7 @@ public class HeaderComponent extends BaseComponent {
     private WebElement logo;
 
 //    @FindBy(css = "a[href='#/greenCity/news'].url-name")
-    @FindBy(css = "ul[role='tablist'] a[href='#/news']")
+    @FindBy(css = "ul[role='tablist'] a[href='#/greenCity/news']")
     private WebElement ecoNewsLink;
 
     @FindBy(xpath = ".//a[contains(@href, '#/greenCity/profile')]")
@@ -40,6 +40,7 @@ public class HeaderComponent extends BaseComponent {
         super(driver, rootElement);
     }
 
+    @Step("Click Eco News link in the header")
     public EcoNewsPage goToEcoNews() {
         waitUntilElementClickable(ecoNewsLink);
         ecoNewsLink.click();
