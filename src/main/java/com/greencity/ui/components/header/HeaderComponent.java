@@ -3,7 +3,7 @@ package com.greencity.ui.components.header;
 import com.greencity.ui.components.baseComponents.BaseComponent;
 import com.greencity.ui.pages.econewspage.EcoNewsPage;
 import com.greencity.ui.pages.myspacepage.MySpacePage;
-import io.qameta.allure.Step;
+import io.qameta.allure.*;
 import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -39,14 +39,14 @@ public class HeaderComponent extends BaseComponent {
         super(driver, rootElement);
     }
 
-    @Step("Navigate to Eco News page")
+    @Step("Click Eco News link in the header")
     public EcoNewsPage goToEcoNews() {
         waitUntilElementClickable(ecoNewsLink);
         ecoNewsLink.click();
         return new EcoNewsPage(driver);
     }
 
-    @Step("Navigate to My Space page")
+    @Step("Click My Space link in the header")
     public MySpacePage goToMySpace() {
         try {
             waitUntilElementClickable(mySpaceLink);

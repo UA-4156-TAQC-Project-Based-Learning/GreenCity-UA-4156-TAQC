@@ -43,7 +43,7 @@ public class EcoNewsPage extends BasePage {
         super(driver);
     }
 
-    @Step("Click Create News button")
+    @Step("Click Create News Button in the Eco News Page")
     public CreateEditNewsPage clickCreateNewsButton() {
         scrollToElement(createNewsButton);
         waitUntilElementClickable(createNewsButton);
@@ -51,7 +51,7 @@ public class EcoNewsPage extends BasePage {
         return new CreateEditNewsPage(driver);
     }
 
-    @Step("Click first News page")
+    @Step("Click First News Page in the Eco News Page")
     public NewsPage clickFirstNewsPage() {
         WebElement firstCard = newsCards.getFirst();
         firstCard.click();
@@ -62,6 +62,7 @@ public class EcoNewsPage extends BasePage {
         return driver.findElement(createButtonBy);
     }
 
+    @Step("Click Create Button in the Eco News Page")
     public CreateEditNewsPage clickCreateButton() {
         getCreateButton().click();
         return new CreateEditNewsPage(driver);

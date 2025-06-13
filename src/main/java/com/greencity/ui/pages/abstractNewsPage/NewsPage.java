@@ -1,6 +1,5 @@
 package com.greencity.ui.pages.abstractNewsPage;
 
-import com.greencity.ui.components.NewsComponent;
 import com.greencity.ui.pages.CreateEditNewsPage;
 import io.qameta.allure.Step;
 import lombok.Getter;
@@ -90,10 +89,10 @@ public class NewsPage extends AbstractNewsPage {
         return recommendedNewsCards.size();
     }
 
+    @Step("Click Delete Button in the News Page")
     public WarningModalDialog clickDeleteButton(){
         driver.findElement(deleteButton).click();
         return new WarningModalDialog(driver, driver.findElement(dialogPopUpRoot));
     }
-
 }
 

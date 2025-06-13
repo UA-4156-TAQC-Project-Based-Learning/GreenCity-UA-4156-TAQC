@@ -71,6 +71,11 @@ ls.accessToken=${LS_ACCESS_TOKEN}
 ls.userId=${LS_USER_ID}
 ls.refreshToken=${LS_REFRESH_TOKEN}
 ls.name=${LS_NAME}
+
+ls.accessTokenUserB=${LS_ACCESS_TOKEN_USER_B}
+ls.userIdUserB=${LS_USER_ID_USER_B}
+ls.refreshTokenUserB=${LS_REFRESH_TOKEN_USER_B}
+ls.nameUserB=${LS_NAME_USER_B}
 ```
 ### 2️⃣ Install dependencies
 Run the following command to install all necessary dependencies:
