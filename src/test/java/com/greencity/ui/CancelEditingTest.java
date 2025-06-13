@@ -3,10 +3,18 @@ package com.greencity.ui;
 import com.greencity.ui.pages.econewspage.EcoNewsPage;
 import com.greencity.ui.pages.homepage.HomePage;
 import com.greencity.ui.testrunners.TestRunnerWithUser;
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Owner;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class CancelEditingTest extends TestRunnerWithUser {
+    @Issue("41")
+    @Owner("Yuliia Terentieva")
+    @Description("Verify that clicking Cancel discards changes and returns to the original view.")
+    @Feature("Edit News")
     @Test
     public void declineEditTitle() {
 
@@ -17,7 +25,11 @@ public class CancelEditingTest extends TestRunnerWithUser {
                 .getHeader()
                 .goToEcoNews();
 
-        String originalNewsTitle = ecoNewsPage.getNewsComponents().getFirst().getTitle().getText();
+        String originalNewsTitle = ecoNewsPage
+                .getNewsComponents()
+                .getFirst()
+                .getTitle()
+                .getText();
 
         ecoNewsPage
                 .clickFirstNewsPage()

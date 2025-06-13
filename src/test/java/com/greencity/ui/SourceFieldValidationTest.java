@@ -4,10 +4,18 @@ import com.greencity.ui.elements.NewsTags;
 import com.greencity.ui.pages.CreateEditNewsPage;
 import com.greencity.ui.pages.econewspage.EcoNewsPage;
 import com.greencity.ui.testrunners.TestRunnerWithUser;
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Owner;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 public class SourceFieldValidationTest extends TestRunnerWithUser {
+    @Issue("18")
+    @Owner("Yuliia Terentieva")
+    @Description("Verify the validation of the Source field (optional, must be a valid URL).")
+    @Feature("Create News")
     @Test
     public void sourceFieldValidation() {
         driver.get(testValueProvider.getBaseUIUrl() + "/profile");
@@ -18,7 +26,11 @@ public class SourceFieldValidationTest extends TestRunnerWithUser {
                 .enterTitle("Source test")
                 .clickTag(NewsTags.EDUCATION_TAG)
                 .enterContent("Source test content text to 20 chars")
-                .clickPublish().getNewsComponents().getFirst().getTitle().getText();
+                .clickPublish()
+                .getNewsComponents()
+                .getFirst()
+                .getTitle()
+                .getText();
 
 
         SoftAssert softAssert = new SoftAssert();

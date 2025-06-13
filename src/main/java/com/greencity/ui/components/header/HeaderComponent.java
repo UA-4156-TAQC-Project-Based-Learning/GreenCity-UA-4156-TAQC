@@ -46,7 +46,7 @@ public class HeaderComponent extends BaseComponent {
         return new EcoNewsPage(driver);
     }
 
-    @Step("Click My Space link in the header")
+    @Step("Navigate to My Space page")
     public MySpacePage goToMySpace() {
         try {
             waitUntilElementClickable(mySpaceLink);

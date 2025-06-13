@@ -48,6 +48,7 @@ public class NewsPage extends AbstractNewsPage {
         super(driver);
     }
 
+    @Step("Verify Edit News button is visible")
     public boolean isEditNewsButtonVisible() {
         return !driver.findElements(editNewsButton).isEmpty();
     }
@@ -56,6 +57,7 @@ public class NewsPage extends AbstractNewsPage {
         backButton.click();
     }
 
+    @Step("Click EditNews page")
     public CreateEditNewsPage clickEditNewsButton() {
 
         waitUntilElementVisible(driver.findElement(editNewsButton));

@@ -3,10 +3,18 @@ package com.greencity.ui;
 import com.greencity.ui.pages.econewspage.EcoNewsPage;
 import com.greencity.ui.pages.homepage.HomePage;
 import com.greencity.ui.testrunners.TestRunnerWithUser;
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Owner;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class AuthorCanEditNewsTest extends TestRunnerWithUser {
+    @Issue("36")
+    @Owner("Yuliia Terentieva")
+    @Description("Verify that the author can edit their own news and the changes are saved.")
+    @Feature("Edit News")
     @Test
     public void authorCanEditOwnNews() {
         driver.get(testValueProvider.getBaseUIUrl() + "/profile");

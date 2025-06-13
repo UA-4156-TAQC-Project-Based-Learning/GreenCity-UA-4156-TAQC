@@ -25,7 +25,6 @@ public class EcoNewsPage extends BasePage {
     private List<WebElement> filteringOptions;
     @FindBy(xpath = "//div[@id='create-button']")
     private WebElement createNewsButton;
-//    @FindBy(xpath = "//li[contains(@class,'gallery-view-li')]")
     @FindBy(xpath = "//ul[contains(@class,'list gallery-view-active')]/li[contains(@class,'gallery-view-li')]")
     private List<WebElement> newsCards;
     @FindBy(css = ".news-date")
@@ -44,6 +43,7 @@ public class EcoNewsPage extends BasePage {
         super(driver);
     }
 
+    @Step("Click Create News button")
     public CreateEditNewsPage clickCreateNewsButton() {
         scrollToElement(createNewsButton);
         waitUntilElementClickable(createNewsButton);
@@ -51,6 +51,7 @@ public class EcoNewsPage extends BasePage {
         return new CreateEditNewsPage(driver);
     }
 
+    @Step("Click first News page")
     public NewsPage clickFirstNewsPage() {
         WebElement firstCard = newsCards.getFirst();
         firstCard.click();
