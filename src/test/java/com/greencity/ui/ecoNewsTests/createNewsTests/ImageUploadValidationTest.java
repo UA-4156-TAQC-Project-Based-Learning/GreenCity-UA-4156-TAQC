@@ -21,9 +21,6 @@ public class ImageUploadValidationTest extends TestRunnerWithUser {
 
     @BeforeMethod
     @Description("Before method for image upload validation class")
-    @Owner("Prykhodchenko Oleksandra")
-    @Issue("16")
-    @Feature("Set value for ecoNewsPage variable")
     public void navigateToEcoNews(){
         ecoNewsPage = homePage.getHeader().goToEcoNews();
     }

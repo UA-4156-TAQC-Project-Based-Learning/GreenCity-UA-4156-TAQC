@@ -19,8 +19,6 @@ public class EditNewsButtonForDifferentUserVisibilityTest extends TestRunnerWith
     @Description("This is before class for Edit News Button For Different User Visibility class. " +
             "In this method we logged as user A, create new news add than login as user B")
     @Owner("Prykhodchenko Oleksandra")
-    @Issue("35")
-    @Feature("Create new as user A than login as user B")
     public void setup(){
         loginAsUserA();
 
@@ -62,8 +60,6 @@ public class EditNewsButtonForDifferentUserVisibilityTest extends TestRunnerWith
     @Description("This is after class method. " +
             "In this method we login as user A and delete news")
     @Owner("Prykhodchenko Oleksandra")
-    @Issue("35")
-    @Feature("login as user A and delete news")
     public void tearDown() throws InterruptedException {
         cleanLocalStorage();
         loginAsUserA();
