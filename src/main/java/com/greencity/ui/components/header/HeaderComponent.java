@@ -18,7 +18,7 @@ public class HeaderComponent extends BaseComponent {
     private WebElement logo;
 
 //    @FindBy(css = "a[href='#/greenCity/news'].url-name")
-    @FindBy(css = "ul[role='tablist'] a[href='#/news']")
+    @FindBy(css = "ul[role='tablist'] a[href='#/greenCity/news']")
     private WebElement ecoNewsLink;
 
     @FindBy(xpath = ".//a[contains(@href, '#/greenCity/profile')]")
