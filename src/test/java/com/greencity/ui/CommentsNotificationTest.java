@@ -59,6 +59,8 @@ public class CommentsNotificationTest extends TestRunnerWithUsers {
         softAssert.assertTrue(notificationPage.isTitleDisplayed(), "Notifications page title should be visible");
         softAssert.assertTrue(notificationPage.isNoNotificationsMessageDisplayed(),
                 "User A should NOT receive any notifications after User B adds comment");
+        softAssert.assertEquals(notificationPage.getNotificationCount(), 0,
+                "Notification list should be empty");
 
         softAssert.assertAll();
     }

@@ -53,7 +53,8 @@ public class NewsCommentsComponent extends BaseComponent {
         try {
             return Integer.parseInt(totalCommentsCount.getText().trim());
         } catch (NumberFormatException e) {
-            return 0;
+            throw new IllegalStateException(
+                    "Unexpected total comment counter format: '" + totalCommentsCount.getText() + "'", e);
         }
     }
 

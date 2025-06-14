@@ -72,10 +72,6 @@ public class HeaderComponent extends BaseComponent {
     public UserDropdownComponent getUserDropdown() {
         waitUntilElementClickable(userDropdownToggle);
         userDropdownToggle.click();
-
-        if (userDropdown == null) {
-            userDropdown = new UserDropdownComponent(driver, userDropdownRoot);
-        }
-        return userDropdown;
+        return new UserDropdownComponent(driver, userDropdownRoot);
     }
 }
