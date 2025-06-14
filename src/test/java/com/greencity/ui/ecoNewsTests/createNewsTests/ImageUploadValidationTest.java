@@ -54,7 +54,7 @@ public class ImageUploadValidationTest extends TestRunnerWithUser {
 
         createEditNewsPage.uploadImage(image.getAbsolutePath());
 
-        Assert.assertTrue(createEditNewsPage.getCropper().isDisplayed());
+        Assert.assertTrue(createEditNewsPage.getImagePresentation().isDisplayed());
     }
 
     @DataProvider(name = "invalidImageFiles")
