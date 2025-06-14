@@ -5,6 +5,7 @@ import com.greencity.ui.pages.abstractNewsPage.NewsPage;
 import com.greencity.ui.pages.homepage.HomePage;
 import com.greencity.ui.testrunners.BaseTestRunner;
 import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Owner;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -12,9 +13,9 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import java.time.Duration;
-
 import static com.greencity.utils.LoginUtil.loginViaLocalStorage;
 
+@Feature("News Comments")
 public class AddCommentsToNewsTest extends BaseTestRunner {
 
     @BeforeMethod

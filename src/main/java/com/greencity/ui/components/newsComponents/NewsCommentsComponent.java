@@ -1,6 +1,7 @@
 package com.greencity.ui.components.newsComponents;
 
 import com.greencity.ui.components.baseComponents.BaseComponent;
+import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -26,6 +27,7 @@ public class NewsCommentsComponent extends BaseComponent {
         super(driver, rootElement);
     }
 
+    @Step("Add comment: {text}")
     public void addComment(String text) {
         scrollToElement(commentInput);
         commentInput.click();
@@ -33,18 +35,22 @@ public class NewsCommentsComponent extends BaseComponent {
         commentButton.click();
     }
 
+    @Step("Get number of displayed comments")
     public int getDisplayedCommentCount() {
         return commentItems.size();
     }
 
+    @Step("Get comment section title")
     public String getCommentsTitleText() {
         return commentsTitle.getText().trim();
     }
 
+    @Step("Get total comments value from counter")
     public int getTotalCommentsValue() {
         return Integer.parseInt(totalCommentsCount.getText().trim());
     }
 
+    @Step("Check if element is interactable")
     public boolean isElementInteractable(org.openqa.selenium.WebElement element) {
         try {
             return element.isDisplayed() && element.isEnabled();
@@ -53,6 +59,7 @@ public class NewsCommentsComponent extends BaseComponent {
         }
     }
 
+    @Step("Scroll to element")
     public void scrollToElement(WebElement element) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
     }
