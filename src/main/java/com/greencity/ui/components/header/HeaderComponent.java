@@ -1,6 +1,7 @@
 package com.greencity.ui.components.header;
 
 import com.greencity.ui.components.baseComponents.BaseComponent;
+import com.greencity.ui.components.baseComponents.UserDropdownComponent;
 import com.greencity.ui.pages.econewspage.EcoNewsPage;
 import com.greencity.ui.pages.myspacepage.MySpacePage;
 import io.qameta.allure.*;
@@ -31,6 +32,14 @@ public class HeaderComponent extends BaseComponent {
     @FindBy(xpath = ".//li[contains(@class,'user-name')]")
     private WebElement loggedInUserName;
 
+    @FindBy(id = "header_user-wrp")
+    private WebElement userDropdownToggle;
+
+    @FindBy(xpath = "//ul[@id='header_user-wrp']//ul[contains(@class,'dropdown-list')]")
+    private WebElement userDropdownRoot;
+
+    private UserDropdownComponent userDropdown;
+
     public String getLoggedInUserName() {
         return loggedInUserName.getText().trim();
     }
@@ -59,4 +68,14 @@ public class HeaderComponent extends BaseComponent {
         return new MySpacePage(driver);
     }
 
+    @Step("Open user dropdown")
+    public UserDropdownComponent getUserDropdown() {
+        waitUntilElementClickable(userDropdownToggle);
+        userDropdownToggle.click();
+
+        if (userDropdown == null) {
+            userDropdown = new UserDropdownComponent(driver, userDropdownRoot);
+        }
+        return userDropdown;
+    }
 }
