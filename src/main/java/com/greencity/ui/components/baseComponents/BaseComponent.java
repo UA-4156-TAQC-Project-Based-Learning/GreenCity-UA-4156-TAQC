@@ -17,4 +17,5 @@ public abstract class BaseComponent extends Base {
         PageFactory.initElements(new DefaultElementLocatorFactory(rootElement), this);
         this.rootElement = rootElement;
     }
+
 }

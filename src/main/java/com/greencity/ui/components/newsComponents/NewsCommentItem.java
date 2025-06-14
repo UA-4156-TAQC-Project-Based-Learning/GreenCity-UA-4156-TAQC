@@ -1,6 +1,7 @@
 package com.greencity.ui.components.newsComponents;
 
 import com.greencity.ui.components.baseComponents.BaseComponent;
+import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -36,22 +37,27 @@ public class NewsCommentItem extends BaseComponent {
         super(driver, rootElement);
     }
 
+    @Step("Get the author's name of the comment")
     public String getAuthorNameText() {
         return authorName.getText().trim();
     }
 
+    @Step("Get comment date")
     public String getCommentDateText() {
         return commentDate.getText().trim();
     }
 
+    @Step("Get comment text")
     public String getCommentText() {
         return commentText.getText().trim();
     }
 
+    @Step("Click like on comment")
     public void clickLikeButton() {
         likeCommentIcon.click();
     }
 
+    @Step("Get like count for comment")
     public int getLikeCount() {
         try {
             String countText = likeCount.getText().trim();
@@ -61,14 +67,17 @@ public class NewsCommentItem extends BaseComponent {
             }
     }
 
+    @Step("Click edit button on comment")
     public void clickEdit() {
         editButton.click();
     }
 
+    @Step("Click delete button on comment")
     public void clickDelete() {
         deleteButton.click();
     }
 
+    @Step("Click reply button on comment")
     public void clickReply() {
         replyButton.click();
     }
