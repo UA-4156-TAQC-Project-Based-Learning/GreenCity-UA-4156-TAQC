@@ -42,7 +42,7 @@ public class HomePage extends BasePage {
     private WebElement sectionSubscription;
 
     @FindBy(xpath = "//app-subscribe//h2")
-    private WebElement sectionSubscriptionTittle;
+    private WebElement sectionSubscriptionTitle;
 
     @FindBy(xpath = "//app-subscribe//img")
     private WebElement sectionSubscriptionQRImg;

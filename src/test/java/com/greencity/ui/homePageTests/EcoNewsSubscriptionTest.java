@@ -42,7 +42,7 @@ public class EcoNewsSubscriptionTest extends BaseTestRunner {
     public void testSubscriptionTextsAndPlaceholder() {
         SoftAssert softAssert = new SoftAssert();
 
-        softAssert.assertEquals(homePage.getSectionSubscriptionTittle().getText(),
+        softAssert.assertEquals(homePage.getSectionSubscriptionTitle().getText(),
                 "Receive interesting news", "Title mismatch");
 
         softAssert.assertEquals(homePage.getSectionSubscriptionDescription().getText(),
