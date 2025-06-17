@@ -1,17 +1,18 @@
 package com.greencity.api.models.econews;
 
+import com.google.common.primitives.Booleans;
 import com.greencity.api.models.user.ResponseAuthor;
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class ResponseEcoNews {
 
     private Date creationDate;
-    private Object imagePath;
-    private int id;
+    private String imagePath;
+    private long id;
     private String title;
     private String content;
     private String shortInfo;
@@ -19,8 +20,8 @@ public class ResponseEcoNews {
     private int likes;
     private int dislikes;
     private int countComments;
-    private boolean hidden;
-    private ArrayList<String> tagsEn;
-    private ArrayList<String> tagsUk;
+    private Booleans hidden;
+    private List<String> tagsEn;
+    private List<String> tagsUk;
 
 }

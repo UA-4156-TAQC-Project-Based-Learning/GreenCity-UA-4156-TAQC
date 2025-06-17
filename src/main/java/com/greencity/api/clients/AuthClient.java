@@ -1,19 +1,20 @@
 package com.greencity.api.clients;
 
+import com.greencity.api.models.user.RequestSignIn;
 import io.restassured.response.Response;
 
 public class AuthClient extends BaseClient {
 
-    protected String recourseUrl = "/ownSecurity";
+    protected String recourseUrl = "api/testers/sign-in";
 
     public AuthClient(String baseUrl) {
         super(baseUrl);
     }
 
-    public Response signIn(String email, String password) {
+    public Response signIn(RequestSignIn request) {
         return preparedRequest()
-                .body("{\"email\":\"" + email + "\",\"password\":\"" + password + "\"}")
-                .post(recourseUrl + "/signIn");
-        
+                .body(request)
+                .post(recourseUrl);
+
     }
 }

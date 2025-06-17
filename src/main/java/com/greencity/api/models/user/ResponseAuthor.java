@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class ResponseAuthor {
 
-    private int id;
+    private long userId;  //?
     private String name;
 }
