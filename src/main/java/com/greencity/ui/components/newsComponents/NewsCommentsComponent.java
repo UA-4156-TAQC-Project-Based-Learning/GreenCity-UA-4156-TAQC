@@ -53,13 +53,12 @@ public class NewsCommentsComponent extends BaseComponent {
         try {
             return Integer.parseInt(totalCommentsCount.getText().trim());
         } catch (NumberFormatException e) {
-            throw new IllegalStateException(
-                    "Unexpected total comment counter format: '" + totalCommentsCount.getText() + "'", e);
+            throw new IllegalStateException("Unexpected total comment counter format: '" + totalCommentsCount.getText() + "'", e);
         }
     }
 
     @Step("Check if element is interactable")
-    public boolean isElementInteractable(org.openqa.selenium.WebElement element) {
+    public boolean isElementInteractable(WebElement element) {
         try {
             return element.isDisplayed() && element.isEnabled();
         } catch (Exception e) {
