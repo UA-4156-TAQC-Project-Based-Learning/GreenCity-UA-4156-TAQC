@@ -10,11 +10,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
-
 import java.util.Random;
 
 @Getter
@@ -51,10 +46,10 @@ public class CreateEditNewsPage extends BasePage {
     @FindBy(xpath = "//button[@class='secondary-global-button']")
     private WebElement previewButton;
 
-    @FindBy(xpath = "//span[@class='span span-title']")
+    @FindBy(xpath = "//span[@class='field-info']")
     private WebElement titleCharacterCounter;
 
-    @FindBy(xpath = "//p[@class='textarea-description']")
+    @FindBy(xpath = "//p[@class='field-info']")
     private WebElement contentCharacterCounter;
 
     @FindBy(xpath = "//div[@class='date']/p/span[contains(text(),'Date')]")
@@ -63,7 +58,7 @@ public class CreateEditNewsPage extends BasePage {
     @FindBy(xpath = "//div[@class='date']/p/span[contains(text(),'Author')]")
     private WebElement authorLabel;
 
-    @FindBy(xpath = "//div/span[@class='span']")
+    @FindBy(xpath = "//div/span[@class='span field-info']")
     private WebElement sourcePlaceholder;
 
     @FindBy(xpath = "//div[@class='centered']")
@@ -84,13 +79,13 @@ public class CreateEditNewsPage extends BasePage {
     @FindBy(xpath = "//span[@class = 'span field-info warning']")
     private WebElement sourceErrorMessage;
 
-    @FindBy(xpath = "//div[contains(@class, 'ngx-ic-cropper')]")
-    private WebElement cropper;
+    @FindBy(xpath = "//img[contains(@class, 'ngx-ic-source-image')]")
+    private WebElement imagePresentation;
 
     @FindBy(xpath = "//p[contains(@class, 'warning')]")
     private WebElement imageWarning;
 
-    @FindBy(xpath = "//p[@class='textarea-description warning']")
+    @FindBy(xpath = "//p[@class='field-info warning']")
     private WebElement descriptionWarningTextarea;
 
     private final By titleWarningCounterBy=By.xpath("//div[@class='title-wrapper']/span[contains(@class,'field-info')]");
@@ -220,6 +215,7 @@ public class CreateEditNewsPage extends BasePage {
         return driver.findElement(titleWarningCounterBy);
     }
 
+    @Step("Check if Create News form is displayed")
     public boolean isFormDisplayed() {
         try {
             return titleInput != null && titleInput.isDisplayed() && contentInput != null && contentInput.isDisplayed();
@@ -228,10 +224,12 @@ public class CreateEditNewsPage extends BasePage {
         }
     }
 
+    @Step("Get entered title")
     public String getTitleText() {
         return titleInput.getAttribute("value");
     }
 
+    @Step("Get entered content")
     public String getContentText() {
         return contentInput.getText().trim();
     }

@@ -32,25 +32,28 @@ public class CancelConfirmModal extends BaseComponent {
         super(driver, rootElement);
     }
 
+    @Step("Click 'Continue editing' in confirmation modal")
     public void clickContinueEditing() {
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             wait.until(ExpectedConditions.elementToBeClickable(continueEditingButton));
             continueEditingButton.click();
+            wait.until(ExpectedConditions.invisibilityOf(rootElement));
         } catch (Exception e) {
             throw new RuntimeException("Failed to click continue editing button", e);
         }
     }
 
-    @Step("Confirm cancel")
+    @Step("Click 'Yes, cancel' in confirmation modal")
     public void clickYesCancel() {
-            try {
-                WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-                wait.until(ExpectedConditions.elementToBeClickable(yesCancelButton));
-                yesCancelButton.click();
-            } catch (Exception e) {
-                throw new RuntimeException("Failed to click yes cancel button", e);
-            }
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.elementToBeClickable(yesCancelButton));
+            yesCancelButton.click();
+            wait.until(ExpectedConditions.invisibilityOf(rootElement));
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to click yes cancel button or wait for modal to disappear", e);
+        }
     }
 
     public void closeModal() {
@@ -58,11 +61,13 @@ public class CancelConfirmModal extends BaseComponent {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             wait.until(ExpectedConditions.elementToBeClickable(closeButton));
             closeButton.click();
+            wait.until(ExpectedConditions.invisibilityOf(rootElement));
         } catch (Exception e) {
             throw new RuntimeException("Failed to click close button", e);
         }
     }
 
+    @Step("Check if confirmation modal is displayed")
     public boolean isDisplayed() {
         try {
             return rootElement != null && rootElement.isDisplayed();
