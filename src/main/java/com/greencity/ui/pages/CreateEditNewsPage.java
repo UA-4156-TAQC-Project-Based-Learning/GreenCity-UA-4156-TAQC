@@ -79,8 +79,8 @@ public class CreateEditNewsPage extends BasePage {
     @FindBy(xpath = "//span[@class = 'span field-info warning']")
     private WebElement sourceErrorMessage;
 
-    @FindBy(xpath = "//div[contains(@class, 'ngx-ic-cropper')]")
-    private WebElement cropper;
+    @FindBy(xpath = "//img[contains(@class, 'ngx-ic-source-image')]")
+    private WebElement imagePresentation;
 
     @FindBy(xpath = "//p[contains(@class, 'warning')]")
     private WebElement imageWarning;
