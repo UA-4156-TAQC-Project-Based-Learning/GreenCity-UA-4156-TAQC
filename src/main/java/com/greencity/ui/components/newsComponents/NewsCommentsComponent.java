@@ -7,6 +7,9 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 import java.util.List;
 
 @Getter
@@ -47,16 +50,26 @@ public class NewsCommentsComponent extends BaseComponent {
 
     @Step("Get total comments value from counter")
     public int getTotalCommentsValue() {
-        return Integer.parseInt(totalCommentsCount.getText().trim());
+        try {
+            return Integer.parseInt(totalCommentsCount.getText().trim());
+        } catch (NumberFormatException e) {
+            throw new IllegalStateException("Unexpected total comment counter format: '" + totalCommentsCount.getText() + "'", e);
+        }
     }
 
     @Step("Check if element is interactable")
-    public boolean isElementInteractable(org.openqa.selenium.WebElement element) {
+    public boolean isElementInteractable(WebElement element) {
         try {
             return element.isDisplayed() && element.isEnabled();
         } catch (Exception e) {
             return false;
         }
+    }
+
+    @Step("Wait until comment count increases from {initialCount}")
+    public void waitForNewCommentCount(int initialCount, int timeoutSeconds) {
+        new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds))
+                .until(d -> getDisplayedCommentCount() > initialCount);
     }
 
     @Step("Scroll to element")

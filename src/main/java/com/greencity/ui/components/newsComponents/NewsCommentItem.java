@@ -3,6 +3,8 @@ package com.greencity.ui.components.newsComponents;
 import com.greencity.ui.components.baseComponents.BaseComponent;
 import io.qameta.allure.Step;
 import lombok.Getter;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -21,16 +23,16 @@ public class NewsCommentItem extends BaseComponent {
     @FindBy(xpath = ".//*[contains(@class,'comment-likes')]//img")
     private WebElement likeCommentIcon;
 
-    @FindBy(xpath = "//span[contains(@class,'like-amount')]")
+    @FindBy(xpath = ".//span[contains(@class,'like-amount')]")
     private WebElement likeCount;
 
-    @FindBy(xpath = "//button[contains(@class,'edit')]")
+    @FindBy(xpath = ".//button[contains(@class,'edit')]")
     private WebElement editButton;
 
-    @FindBy(xpath = "//button[contains(@class,'delete')]")
+    @FindBy(xpath = ".//button[contains(@class,'delete')]")
     private WebElement deleteButton;
 
-    @FindBy(xpath = "//button[contains(@class,'reply')]")
+    @FindBy(xpath = ".//button[contains(@class,'reply')]")
     private WebElement replyButton;
 
     public NewsCommentItem(WebDriver driver, WebElement rootElement) {
@@ -62,9 +64,36 @@ public class NewsCommentItem extends BaseComponent {
         try {
             String countText = likeCount.getText().trim();
             return countText.isEmpty() ? 0 : Integer.parseInt(countText);
-            } catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             return 0;
-            }
+        }
+    }
+
+    @Step("Check if Edit button is visible")
+    public boolean isEditButtonVisible() {
+        try {
+            return editButton.isDisplayed();
+        } catch (NoSuchElementException | StaleElementReferenceException e) {
+            return false;
+        }
+    }
+
+    @Step("Check if Delete button is visible")
+    public boolean isDeleteButtonVisible() {
+        try {
+            return deleteButton.isDisplayed();
+        } catch (NoSuchElementException | StaleElementReferenceException e) {
+            return false;
+        }
+    }
+
+    @Step("Check if Reply button is visible")
+    public boolean isReplyButtonVisible() {
+        try {
+            return replyButton.isDisplayed();
+        } catch (NoSuchElementException | StaleElementReferenceException e) {
+            return false;
+        }
     }
 
     @Step("Click edit button on comment")
@@ -82,5 +111,3 @@ public class NewsCommentItem extends BaseComponent {
         replyButton.click();
     }
 }
-
-
