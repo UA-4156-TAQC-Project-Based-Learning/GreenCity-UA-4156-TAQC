@@ -1,7 +1,6 @@
 package com.greencity.api.models.econews;
 
 import com.google.common.primitives.Booleans;
-import com.greencity.api.models.user.ResponseAuthor;
 import lombok.Data;
 
 import java.util.Date;
