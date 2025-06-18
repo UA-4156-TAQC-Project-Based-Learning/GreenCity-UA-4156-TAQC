@@ -50,7 +50,8 @@ create in `src/test/resources` file  `config.properties`
 
 ```properties
 base.ui.url=${BASE_UI_URL}
-base.api.url=${BASE_API_URL}
+base.api.greencity.url=${BASE_API_GREENCITY_URL}
+base.api.user.url=${BASE_API_USER_URL}
 
 implicitlyWait=${IMPLICITLY_WAIT}
 
@@ -58,6 +59,7 @@ implicitlyWait=${IMPLICITLY_WAIT}
 user.email=${USER_EMAIL}
 user.name=${USER_NAME}
 user.password=${USER_PASSWORD}
+user.secretKey=${USER_SECRET_KEY}
 
 admin.email=${ADMIN_EMAIL}
 admin.name=${ADMIN_NAME}
