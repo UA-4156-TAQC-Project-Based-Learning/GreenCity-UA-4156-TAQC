@@ -4,7 +4,6 @@ import com.greencity.api.clients.AuthClient;
 import com.greencity.api.models.user.RequestSignIn;
 import com.greencity.api.models.user.ResponseSignIn;
 import com.greencity.api.testRunner.ApiTestRunner;
-import com.greencity.utils.TestValueProvider;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -15,9 +14,8 @@ public class AuthTest extends ApiTestRunner {
     private AuthClient authClient;
 
     @BeforeClass
-    public void setUp() {
-        testValueProvider = new TestValueProvider(); //  ?
-        authClient = new AuthClient(testValueProvider.getBaseAPIUrl());
+    public void setUpTest() {
+        authClient = new AuthClient(testValueProvider.getBaseAPIUserUrl());
     }
 
     @Test
@@ -34,6 +32,6 @@ public class AuthTest extends ApiTestRunner {
 
         Assert.assertNotNull(responseSignIn.getAccessToken(),"Access token is null");
         Assert.assertNotNull(responseSignIn.getRefreshToken(), "Refresh token is null");
-        Assert.assertNotNull(responseSignIn.getName(), "Name is null");
+        Assert.assertEquals(responseSignIn.getName(), testValueProvider.getUserName(), "Name is null");
     }
 }

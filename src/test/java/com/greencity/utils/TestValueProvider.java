@@ -22,8 +22,12 @@ public class TestValueProvider {
         return properties != null ? properties.getProperty("base.ui.url") : System.getenv("BASE_UI_URL");
     }
 
-    public String getBaseAPIUrl() {
-        return properties != null ? properties.getProperty("base.api.url") : System.getenv("BASE_API_URL");
+    public String getBaseAPIGreencityUrl() {
+        return properties != null ? properties.getProperty("base.api.greencity.url") : System.getenv("BASE_API_GREENCITY_URL");
+    }
+
+    public String getBaseAPIUserUrl() {
+        return properties != null ? properties.getProperty("base.api.user.url") : System.getenv("BASE_API_USER_URL");
     }
 
     public int getImplicitlyWait() {
