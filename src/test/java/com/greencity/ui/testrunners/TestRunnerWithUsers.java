@@ -17,7 +17,7 @@ public class TestRunnerWithUsers extends BaseTestRunner {
     @Step("Login As User A in the Test Runner With Users")
     public void loginAsUserA(){
         loginAsUser(testValueProvider.getLocalStorageAccessToken(),
-                testValueProvider.getLocalStorageUserId(),
+                testValueProvider.getLocalStorageUserId().toString(),
                 testValueProvider.getLocalStorageRefreshToken(),
                 testValueProvider.getLocalStorageName());
     }

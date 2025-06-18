@@ -12,7 +12,7 @@ public class LoginUtil {
         localStorageJS.setItemLocalStorage("language", "en");
         localStorageJS.setItemLocalStorage("accessToken", provider.getLocalStorageAccessToken());
         localStorageJS.setItemLocalStorage("refreshToken", provider.getLocalStorageRefreshToken());
-        localStorageJS.setItemLocalStorage("userId", provider.getLocalStorageUserId());
+        localStorageJS.setItemLocalStorage("userId", provider.getLocalStorageUserId().toString());
         localStorageJS.setItemLocalStorage("name", provider.getLocalStorageName());
 
         driver.navigate().refresh();

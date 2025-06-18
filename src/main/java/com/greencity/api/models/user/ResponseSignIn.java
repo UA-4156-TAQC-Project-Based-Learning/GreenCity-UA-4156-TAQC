@@ -4,10 +4,11 @@ import lombok.Data;
 
 @Data
 public class ResponseSignIn {
-    private int userId;
+
+    private long userId;
+    private String name;
     private String accessToken;
     private String refreshToken;
-    private String name;
     private boolean ownRegistrations;
 
 }
