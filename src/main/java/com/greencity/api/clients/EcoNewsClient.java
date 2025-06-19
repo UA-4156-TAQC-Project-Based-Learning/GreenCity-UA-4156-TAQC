@@ -18,4 +18,15 @@ public class EcoNewsClient extends BaseClient {
                 .post(recourseUrl);
 
     }
+
+    public Response getNewsById(int newsId) {
+        return preparedRequest()
+                .get(recourseUrl + "/" + newsId);
+    }
+
+
+    public Response deleteNews(int newsId) {
+        return preparedRequest()
+                .delete(recourseUrl + "/" + newsId);
+    }
 }
