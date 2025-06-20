@@ -4,7 +4,7 @@ import io.restassured.response.Response;
 
 public class FriendClient extends BaseClient{
 
-    protected String recourseUrl = "/friends/";
+    protected String recourseUrl = "/friends";
 
     public FriendClient(String baseUrl) {
         super(baseUrl);
