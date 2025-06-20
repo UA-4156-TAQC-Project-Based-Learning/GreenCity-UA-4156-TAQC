@@ -17,14 +17,6 @@ public class EcoNewsClient extends BaseClient {
         super(baseUrl);
     }
 
-    public Response createNews(RequestEcoNews request) {
-
-        return preparedRequest()
-                .body(request)
-                .post(recourseUrl);
-
-    }
-
     public Response createNews(RequestEcoNews request, String imagePath) {
         RequestSpecification requestSpecification = preparedRequest()
                 .contentType(ContentType.MULTIPART)
