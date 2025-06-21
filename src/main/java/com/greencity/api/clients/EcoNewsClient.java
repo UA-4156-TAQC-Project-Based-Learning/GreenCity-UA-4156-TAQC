@@ -20,7 +20,7 @@ public class EcoNewsClient extends BaseClient {
     public Response createNews(RequestEcoNews request, String imagePath) {
         RequestSpecification requestSpecification = preparedRequest()
                 .contentType(ContentType.MULTIPART)
-                .multiPart("RequestEcoNews",request,"application/json");
+                .multiPart("addEcoNewsDtoRequest",request,"application/json");
         attachImage(requestSpecification, imagePath);
         return requestSpecification.post(recourseUrl);
 
