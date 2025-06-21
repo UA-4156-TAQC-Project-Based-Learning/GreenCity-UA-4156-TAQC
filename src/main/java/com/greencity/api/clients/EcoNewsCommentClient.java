@@ -6,6 +6,8 @@ import io.qameta.allure.Step;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,27 +26,43 @@ public class EcoNewsCommentClient extends AuthClient{
     @Step("Add new comment by eco news id")
     public Response addComment(RequestAddComment comment, Long ecoNewsId, List<String> imagePaths) {
         RequestSpecification requestSpecification = preparedRequest()
-                .contentType(ContentType.MULTIPART)
-                .multiPart("addEcoNewsCommentDtoRequest",comment,"application/json");
-        attachImage(requestSpecification, imagePaths);
+                .contentType(ContentType.MULTIPART);
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonComment = objectMapper.writeValueAsString(comment);
+            requestSpecification.multiPart("request", jsonComment, "application/json");
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Failed to serialize comment to JSON", e);
+        }
+
+        attachImages(requestSpecification, imagePaths);
 
         return requestSpecification.post(String.format("%s/%d%s", resourceUrl, ecoNewsId, resourceUrlComment));
     }
 
-    private void attachImage(RequestSpecification requestSpecification, List<String> imagePaths) {
-        if (imagePaths == null || imagePaths.isEmpty()){
-            requestSpecification.multiPart("image", "", "");
+
+    private void attachImages(RequestSpecification requestSpecification, List<String> imagePaths) {
+        if (imagePaths == null || imagePaths.isEmpty()) {
             return;
         }
-        try {
-            for (String imagePath : imagePaths) {
-                File imageFile = new File(imagePath);
-                String fileName = imageFile.getName().toLowerCase();
-                String mimeType = fileName.endsWith(".png") ? "image/png" : fileName.endsWith(".gif")? "image/png": "image/jpeg";
-                requestSpecification.multiPart("image", fileName, new FileInputStream(imageFile), mimeType);
+
+        for (String imagePath : imagePaths) {
+            File imageFile = new File(imagePath);
+            if (!imageFile.exists()) {
+                throw new RuntimeException("File not found: " + imagePath);
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+
+            String fileName = imageFile.getName().toLowerCase();
+            String mimeType = fileName.endsWith(".png") ? "image/png"
+                    : fileName.endsWith(".gif") ? "image/gif"
+                    : "image/jpeg";
+
+            try {
+                requestSpecification.multiPart("images", fileName, new FileInputStream(imageFile), mimeType);
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to attach image: " + fileName, e);
+            }
         }
     }
 
