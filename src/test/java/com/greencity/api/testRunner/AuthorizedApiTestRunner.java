@@ -9,8 +9,7 @@ import org.testng.annotations.BeforeSuite;
 public class AuthorizedApiTestRunner extends ApiTestRunner {
     protected static String token;
 
-    @BeforeSuite
-    @Override
+    @BeforeClass
 
     public void setUp() {
         super.setUp();
