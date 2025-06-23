@@ -13,10 +13,14 @@ import org.testng.annotations.Test;
 public class FriendTest extends ApiTestRunner {
     private FriendClient friendClient;
     private FriendClient friendClientUserB;
+    public static final Long TEST_USER_A_ID = 5L;
+    public static final Long TEST_USER_B_ID = 7L;
+    public static final String DEFAULT_NAME = "YuliiaTest2";
 
     @BeforeClass
     public void setUpTest() {
         AuthClient authClient = new AuthClient(testValueProvider.getBaseAPIUserUrl());
+
         RequestSignIn requestSignIn = new RequestSignIn();
         requestSignIn.setEmail(testValueProvider.getUserEmail());
         requestSignIn.setPassword(testValueProvider.getUserPassword());
@@ -26,33 +30,39 @@ public class FriendTest extends ApiTestRunner {
         friendClient = new FriendClient(testValueProvider.getBaseAPIGreencityUrl());
         friendClient.setToken(responseSignIn.getAccessToken());
 
+        RequestSignIn requestSignInUserB = new RequestSignIn();
+        requestSignInUserB.setEmail(testValueProvider.getUserBEmail());
+        requestSignInUserB.setPassword(testValueProvider.getUserBPassword());
+        requestSignInUserB.setSecretKey(testValueProvider.getUserBSecretKey());
+        ResponseSignIn responseSignInUserB = authClient.signIn(requestSignInUserB).as(ResponseSignIn.class);
+
         friendClientUserB = new FriendClient(testValueProvider.getBaseAPIGreencityUrl());
-        friendClientUserB.setToken(testValueProvider.getLocalStorageAccessTokenUserB());
+        friendClientUserB.setToken(responseSignInUserB.getAccessToken());
     }
 
     @Test
     public void addNewTest() {
-        Response response = friendClient.addNewFriend(FriendClient.TEST_USER_B_ID);
+        Response response = friendClient.addNewFriend(TEST_USER_B_ID);
         response.then().log().all().statusCode(200);
     }
 
     @Test
     public void addNewAlreadyExistsNegativeTest() {
-        friendClient.addNewFriend(FriendClient.TEST_USER_B_ID);
-        Response response = friendClient.addNewFriend(FriendClient.TEST_USER_B_ID);
+        friendClient.addNewFriend(TEST_USER_B_ID);
+        Response response = friendClient.addNewFriend(TEST_USER_B_ID);
         response.then().log().all().statusCode(400);
     }
 
     @Test
     public void acceptNewTest() {
-        Response response = friendClientUserB.acceptNewRequest(FriendClient.TEST_USER_A_ID);
+        Response response = friendClientUserB.acceptNewRequest(TEST_USER_A_ID);
         response.then().log().all().statusCode(200);
 
     }
 
     @Test
     public void declineNewTest() {
-        Response response = friendClientUserB.declineNewRequest(FriendClient.TEST_USER_A_ID);
+        Response response = friendClientUserB.declineNewRequest(TEST_USER_A_ID);
         response.then().log().all().statusCode(200);
 
     }
@@ -60,14 +70,14 @@ public class FriendTest extends ApiTestRunner {
 
     @Test
     public void deleteFriendTest() {
-        Response response = friendClient.deleteFriend(FriendClient.TEST_USER_B_ID);
+        Response response = friendClient.deleteFriend(TEST_USER_B_ID);
         response.then().log().all().statusCode(200);
     }
 
     @Test
     public void testFindFriendsWithDefaultParams() {
         Response response = friendClient.findAllFriends(
-                FriendClient.DEFAULT_NAME,
+                DEFAULT_NAME,
                 FriendClient.FILTER_BY_CITY,
                 FriendClient.DEFAULT_PAGE,
                 FriendClient.SIZE,

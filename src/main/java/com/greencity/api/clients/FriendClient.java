@@ -6,9 +6,6 @@ import io.restassured.response.Response;
 public class FriendClient extends BaseClient{
 
     protected String recourseUrl = "/friends";
-    public static final Long TEST_USER_A_ID = 5L;
-    public static final Long TEST_USER_B_ID = 7L;
-    public static final String DEFAULT_NAME = "YuliiaTest2";
     public static final boolean FILTER_BY_CITY = true;
     public static final int DEFAULT_PAGE = 1;
     public static final int SIZE = 1;

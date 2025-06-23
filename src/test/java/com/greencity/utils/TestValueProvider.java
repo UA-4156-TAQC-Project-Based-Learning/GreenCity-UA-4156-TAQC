@@ -51,6 +51,22 @@ public class TestValueProvider {
         return properties != null ? properties.getProperty("user.secretKey") : System.getenv("USER_SECRET_KEY");
     }
 
+    public String getUserBEmail() {
+        return properties != null ? properties.getProperty("userB.email") : System.getenv("USERB_EMAIL");
+    }
+
+    public String getUserBName() {
+        return properties != null ? properties.getProperty("userB.name") : System.getenv("USERB_NAME");
+    }
+
+    public String getUserBPassword() {
+        return properties != null ? properties.getProperty("userB.password") : System.getenv("USERB_PASSWORD");
+    }
+
+    public String getUserBSecretKey() {
+        return properties != null ? properties.getProperty("userB.secretKey") : System.getenv("USERB_SECRET_KEY");
+    }
+
     public String getAdminEmail() {
         return properties != null ? properties.getProperty("admin.email") : System.getenv("ADMIN_EMAIL");
     }
