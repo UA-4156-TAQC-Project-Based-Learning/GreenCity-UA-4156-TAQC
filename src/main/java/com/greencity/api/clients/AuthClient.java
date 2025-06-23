@@ -5,7 +5,7 @@ import io.restassured.response.Response;
 
 public class AuthClient extends BaseClient {
 
-    protected String recourseUrl = "api/testers/sign-in";
+    protected String recourseUrl = "/api/testers/sign-in";
 
     public AuthClient(String baseUrl) {
         super(baseUrl);
