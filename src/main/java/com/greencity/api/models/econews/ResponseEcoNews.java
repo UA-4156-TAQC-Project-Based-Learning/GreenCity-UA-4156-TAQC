@@ -18,6 +18,8 @@ public class ResponseEcoNews {
     private List<String> tagsEn;
     private List<String> tagsUk;
     private int likes;
+    private int dislikes;
+    private boolean hidden;
     private int countComments;
     private int countOfEcoNews;
     private Boolean favorite;
