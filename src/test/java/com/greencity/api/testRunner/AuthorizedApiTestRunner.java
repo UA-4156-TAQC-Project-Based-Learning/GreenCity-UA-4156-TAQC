@@ -4,13 +4,13 @@ import com.greencity.api.clients.AuthClient;
 import com.greencity.api.models.user.RequestSignIn;
 import com.greencity.api.models.user.ResponseSignIn;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
+
 
 public class AuthorizedApiTestRunner extends ApiTestRunner {
     protected static String token;
 
     @BeforeClass
-
+    @Override
     public void setUp() {
         super.setUp();
 
