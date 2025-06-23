@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 @Data
 public class ResponseHabits {
-    public ArrayList<HabitPage> habitPage;
+    public ArrayList<HabitPage> page;
     public int totalElements;
     public int currentPage;
     public int totalPages;

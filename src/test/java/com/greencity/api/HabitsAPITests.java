@@ -1,14 +1,10 @@
 package com.greencity.api;
 
 import com.greencity.api.clients.HabitClient;
-import com.greencity.api.models.habits.ResponseHabits;
 import com.greencity.api.testRunner.AuthorizedApiTestRunner;
 import io.restassured.response.Response;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
-import static io.restassured.RestAssured.given;
 
 
 public class HabitsAPITests extends AuthorizedApiTestRunner {
@@ -28,5 +24,4 @@ public class HabitsAPITests extends AuthorizedApiTestRunner {
 
         softAssert.assertAll();
     }
-
 }

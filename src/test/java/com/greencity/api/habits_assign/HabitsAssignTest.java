@@ -1,4 +1,4 @@
-package com.greencity.api.testRunner.habits_assign;
+package com.greencity.api.habits_assign;
 
 import com.greencity.api.clients.HabitClient;
 import com.greencity.api.models.habits.AssignedHabitPage;
@@ -7,11 +7,11 @@ import com.greencity.api.models.habits.ResponseAssignedHabits;
 import com.greencity.api.models.habits.ResponseHabits;
 import com.greencity.api.testRunner.AuthorizedApiTestRunner;
 import io.restassured.response.Response;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -39,9 +39,7 @@ public class HabitsAssignTest extends AuthorizedApiTestRunner {
 
         Response userHabitsResponse = habitClient.getUserHabits(testValueProvider.getLocalStorageUserId());
         List<AssignedHabitPage> assignedHabit = userHabitsResponse.as(ResponseAssignedHabits.class).getPage();
-
-
-
+        Assert.assertEquals(assignedHabit.getFirst().getHabit().getId(), habitIdAssignToUser, "Habit " + habitIdAssignToUser+" should be assigned to user");
 
     }
 

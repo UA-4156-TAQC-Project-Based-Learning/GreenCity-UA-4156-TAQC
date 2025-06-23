@@ -3,7 +3,6 @@ package com.greencity.api.testRunner;
 import com.greencity.api.clients.AuthClient;
 import com.greencity.api.models.user.RequestSignIn;
 import com.greencity.api.models.user.ResponseSignIn;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 
 public class AuthorizedApiTestRunner extends ApiTestRunner {
@@ -30,7 +29,6 @@ public class AuthorizedApiTestRunner extends ApiTestRunner {
                 .as(ResponseSignIn.class);
 
         token = response.getAccessToken();
-
     }
 }
 

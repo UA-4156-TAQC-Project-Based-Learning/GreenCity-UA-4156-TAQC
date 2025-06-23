@@ -1,5 +1,6 @@
 package com.greencity.api.models.habits;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -15,11 +16,17 @@ public class HabitPage {
     private ArrayList<String> tags;
     private ArrayList<ToDoListItem> toDoListItems;
     private ArrayList<CustomToDoListItem> customToDoListItems;
-    private boolean isCustomHabit;
+
+    @JsonProperty("isCustomHabit")
+    private boolean customHabit;
     private int usersIdWhoCreatedCustomHabit;
     private String habitAssignStatus;
-    private boolean isAssigned;
-    private boolean isFavorite;
+
+    @JsonProperty("isAssigned")
+    private boolean assigned;
+
+    @JsonProperty("isFavorite")
+    private boolean favorite;
     private int likes;
     private int dislikes;
 }
