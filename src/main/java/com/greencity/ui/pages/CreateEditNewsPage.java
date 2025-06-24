@@ -90,6 +90,8 @@ public class CreateEditNewsPage extends BasePage {
 
     private final By titleWarningCounterBy=By.xpath("//div[@class='title-wrapper']/span[contains(@class,'field-info')]");
 
+    private final By contentFieldWarningCounterBy=By.xpath("//p[contains(@class,'quill-counter')]");
+
     public CreateEditNewsPage(WebDriver driver) {
         super(driver);
     }
@@ -210,10 +212,18 @@ public class CreateEditNewsPage extends BasePage {
         return new EcoNewsPage(driver);
     }
 
+    @Step("Get title counter")
     public WebElement getTitleCounter() {
 
         return driver.findElement(titleWarningCounterBy);
     }
+
+    @Step("Get Content counter")
+    public WebElement getContentCounter() {
+
+        return driver.findElement(contentFieldWarningCounterBy);
+    }
+
 
     @Step("Check if Create News form is displayed")
     public boolean isFormDisplayed() {

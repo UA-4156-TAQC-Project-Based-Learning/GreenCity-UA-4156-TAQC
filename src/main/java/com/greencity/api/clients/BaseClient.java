@@ -2,9 +2,12 @@ package com.greencity.api.clients;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.specification.MultiPartSpecification;
 import io.restassured.specification.RequestSpecification;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.io.File;
 
 public class BaseClient {
     protected final String baseAPIUrl;
@@ -42,4 +45,14 @@ public class BaseClient {
         return request;
     }
 
+    protected RequestSpecification preparedMultipartRequest() {
+        RequestSpecification request = RestAssured.given()
+                .baseUri(baseAPIUrl);
+
+        if (token != null) {
+            request.header("Authorization", "Bearer " + token);
+        }
+
+        return request;
+    }
 }
