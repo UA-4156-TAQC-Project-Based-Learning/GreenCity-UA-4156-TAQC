@@ -10,7 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
 public class EventClient extends BaseClient {
-    protected String recourseUrl = "/events";
+    protected String resourceUrl = "/events";
 
     public EventClient(String baseUrl) {
         super(baseUrl);
@@ -22,12 +22,12 @@ public class EventClient extends BaseClient {
                 .queryParam("user-id", userId)
                 .queryParam("page", page)
                 .queryParam("size", size)
-                .get(recourseUrl);
+                .get(resourceUrl);
     }
 
     public Response getEventById(long eventId) {
         return preparedRequest()
-                .get(recourseUrl + "/" + eventId);
+                .get(resourceUrl + "/" + eventId);
     }
 
     public Response createEvent(File jsonFile, File... images) {
@@ -50,7 +50,7 @@ public class EventClient extends BaseClient {
             request.multiPart("images", image);
         }
 
-        return request.post(recourseUrl);
+        return request.post(resourceUrl);
     }
 
     public Response likeEvent(long eventId) {
@@ -83,16 +83,16 @@ public class EventClient extends BaseClient {
 
     public Response deleteEvent(long eventId) {
         return preparedRequest()
-                .delete(recourseUrl + "/" + eventId);
+                .delete(resourceUrl + "/" + eventId);
     }
 
     public Response addEventToFavorites(long eventId) {
         return preparedRequest()
-                .post(recourseUrl + "/" + eventId + "/favorites");
+                .post(resourceUrl + "/" + eventId + "/favorites");
     }
 
     public Response removeEventFromFavorites(long eventId) {
         return preparedRequest()
-                .delete(recourseUrl + "/" + eventId + "/favorites");
+                .delete(resourceUrl + "/" + eventId + "/favorites");
     }
 }
