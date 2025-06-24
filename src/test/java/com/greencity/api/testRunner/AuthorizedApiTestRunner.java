@@ -29,7 +29,6 @@ public class AuthorizedApiTestRunner extends ApiTestRunner {
                 .as(ResponseSignIn.class);
 
         token = response.getAccessToken();
-
     }
 }
 
