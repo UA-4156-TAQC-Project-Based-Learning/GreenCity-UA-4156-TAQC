@@ -7,7 +7,7 @@ import org.testng.annotations.BeforeClass;
 
 
 public class AuthorizedApiTestRunner extends ApiTestRunner {
-    protected static String token;
+    protected static ResponseSignIn signIn;
 
     @BeforeClass
     @Override
@@ -21,14 +21,13 @@ public class AuthorizedApiTestRunner extends ApiTestRunner {
                 testValueProvider.getSecretKey()
         );
 
-        ResponseSignIn  response = authClient
+        signIn = authClient
                 .signIn(request)
                 .then()
                 .statusCode(200)
                 .extract()
                 .as(ResponseSignIn.class);
 
-        token = response.getAccessToken();
     }
 }
 

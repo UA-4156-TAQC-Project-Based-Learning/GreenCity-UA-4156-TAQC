@@ -22,7 +22,7 @@ public class HabitsAssignTest extends AuthorizedApiTestRunner {
     @BeforeClass
     public void initClient() {
         habitClient = new HabitClient(testValueProvider.getBaseAPIGreencityUrl());
-        habitClient.setToken(token);
+        habitClient.setSignIn(signIn);
     }
 
     @BeforeMethod

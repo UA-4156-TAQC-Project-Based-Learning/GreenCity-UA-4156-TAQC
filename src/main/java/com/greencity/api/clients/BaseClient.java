@@ -1,5 +1,6 @@
 package com.greencity.api.clients;
 
+import com.greencity.api.models.user.ResponseSignIn;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.specification.MultiPartSpecification;
@@ -12,14 +13,18 @@ import java.io.File;
 public class BaseClient {
     protected final String baseAPIUrl;
     protected final ContentType contentType;
-    @Getter
     @Setter
-    protected String token;
-
+    @Getter
+    protected ResponseSignIn signIn;
 
     public BaseClient(String baseUrl) {
         this.baseAPIUrl = baseUrl;
         contentType = ContentType.JSON;
+    }
+    public BaseClient(String baseUrl, ResponseSignIn signIn) {
+        this.baseAPIUrl = baseUrl;
+        this.contentType = ContentType.JSON;
+        this.signIn = signIn;
     }
 
     public BaseClient(String baseUrl, ContentType contentType) {
@@ -39,8 +44,8 @@ public class BaseClient {
 //                .body()
                 .baseUri(baseAPIUrl)
                 .contentType(contentType);
-        if (token != null) {
-            request.header("Authorization", "Bearer " + token);
+        if (signIn != null) {
+            request.header("Authorization", "Bearer " + signIn.getAccessToken());
         }
         return request;
     }
@@ -49,8 +54,8 @@ public class BaseClient {
         RequestSpecification request = RestAssured.given()
                 .baseUri(baseAPIUrl);
 
-        if (token != null) {
-            request.header("Authorization", "Bearer " + token);
+        if (signIn != null) {
+            request.header("Authorization", "Bearer " + signIn.getAccessToken());
         }
 
         return request;

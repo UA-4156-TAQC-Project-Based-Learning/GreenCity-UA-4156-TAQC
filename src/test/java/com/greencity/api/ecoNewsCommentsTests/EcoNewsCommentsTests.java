@@ -24,7 +24,7 @@ public class EcoNewsCommentsTests extends AuthorizedApiTestRunner {
     @BeforeClass
     public void setup() {
         client = new EcoNewsCommentClient(testValueProvider.getBaseAPIGreencityUrl());
-        client.setToken(token);
+        client.setSignIn(signIn);
     }
 
     @DataProvider(name = "commentsProvider")

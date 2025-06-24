@@ -19,7 +19,7 @@ public class EcoNewsTest extends AuthorizedApiTestRunner {
     @BeforeClass
     public void setUpTest() {
         ecoNewsClient = new EcoNewsClient(testValueProvider.getBaseAPIGreencityUrl());
-        ecoNewsClient.setToken(token);
+        ecoNewsClient.setSignIn(signIn);
     }
 
     @Test

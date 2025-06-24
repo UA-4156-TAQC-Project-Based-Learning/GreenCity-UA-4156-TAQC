@@ -17,7 +17,7 @@ public class HabitsAPITests extends AuthorizedApiTestRunner {
     @Test
     public void getHabitsAuthorizedTest() {
         HabitClient habitClient = new HabitClient(testValueProvider.getBaseAPIGreencityUrl());
-        habitClient.setToken(token);
+        habitClient.setSignIn(signIn);
 
         int page = 0;
         int size = 1;
