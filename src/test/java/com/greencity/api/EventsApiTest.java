@@ -18,7 +18,7 @@ public class EventsApiTest extends AuthorizedApiTestRunner {
     @BeforeMethod
     public void initEventClient() {
         eventClient = new EventClient(testValueProvider.getBaseAPIGreencityUrl());
-        eventClient.setToken(token);
+        eventClient.setSignIn(signIn);
     }
 
     @Test

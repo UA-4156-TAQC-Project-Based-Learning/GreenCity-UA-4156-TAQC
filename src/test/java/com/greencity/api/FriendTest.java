@@ -28,7 +28,7 @@ public class FriendTest extends ApiTestRunner {
         ResponseSignIn responseSignIn = authClient.signIn(requestSignIn).as(ResponseSignIn.class);
 
         friendClient = new FriendClient(testValueProvider.getBaseAPIGreencityUrl());
-        friendClient.setToken(responseSignIn.getAccessToken());
+        friendClient.setSignIn(responseSignIn);
 
         RequestSignIn requestSignInUserB = new RequestSignIn();
         requestSignInUserB.setEmail(testValueProvider.getUserBEmail());
@@ -37,7 +37,7 @@ public class FriendTest extends ApiTestRunner {
         ResponseSignIn responseSignInUserB = authClient.signIn(requestSignInUserB).as(ResponseSignIn.class);
 
         friendClientUserB = new FriendClient(testValueProvider.getBaseAPIGreencityUrl());
-        friendClientUserB.setToken(responseSignInUserB.getAccessToken());
+        friendClientUserB.setSignIn(responseSignInUserB);
     }
 
     @Test
