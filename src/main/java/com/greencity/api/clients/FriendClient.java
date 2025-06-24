@@ -43,7 +43,7 @@ public class FriendClient extends BaseClient{
 
     public Response getAllUserFriends(int page, int size) {
         return preparedRequest()
-            .get(recourseUrl + String.format("/28/all-user-friends?page=%d&size=%d", page, size));
+            .get(recourseUrl + String.format("/%d/all-user-friends?page=%d&size=%d",signIn.getUserId(), page, size));
     }
 
     public Response getRecommendedFriend() {
