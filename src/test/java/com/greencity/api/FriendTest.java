@@ -8,6 +8,7 @@ import com.greencity.api.models.user.ResponseSignIn;
 import com.greencity.api.testRunner.ApiTestRunner;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class FriendTest extends ApiTestRunner {
@@ -40,11 +41,18 @@ public class FriendTest extends ApiTestRunner {
         friendClientUserB.setSignIn(responseSignInUserB);
     }
 
+    @BeforeMethod
+    public void resetFriendState() {
+        friendClient.deleteFriend(TEST_USER_B_ID);
+        friendClientUserB.declineNewRequest(TEST_USER_A_ID);
+    }
+
     @Test
     public void addNewTest() {
         Response response = friendClient.addNewFriend(TEST_USER_B_ID);
         response.then().log().all().statusCode(200);
-    }
+        }
+
 
     @Test
     public void addNewAlreadyExistsNegativeTest() {
@@ -55,6 +63,7 @@ public class FriendTest extends ApiTestRunner {
 
     @Test
     public void acceptNewTest() {
+        friendClient.addNewFriend(TEST_USER_B_ID);
         Response response = friendClientUserB.acceptNewRequest(TEST_USER_A_ID);
         response.then().log().all().statusCode(200);
 
@@ -62,6 +71,7 @@ public class FriendTest extends ApiTestRunner {
 
     @Test
     public void declineNewTest() {
+        friendClient.addNewFriend(TEST_USER_B_ID);
         Response response = friendClientUserB.declineNewRequest(TEST_USER_A_ID);
         response.then().log().all().statusCode(200);
 
@@ -70,9 +80,12 @@ public class FriendTest extends ApiTestRunner {
 
     @Test
     public void deleteFriendTest() {
+        friendClient.addNewFriend(TEST_USER_B_ID);
+        friendClientUserB.acceptNewRequest(TEST_USER_A_ID);
         Response response = friendClient.deleteFriend(TEST_USER_B_ID);
         response.then().log().all().statusCode(200);
     }
+
 
     @Test
     public void testFindFriendsWithDefaultParams() {
