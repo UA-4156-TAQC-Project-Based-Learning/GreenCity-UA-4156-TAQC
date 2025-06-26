@@ -84,7 +84,7 @@ public class EventClient extends BaseClient {
     @Step("Get dislikes count for event ID: {eventId}")
     public Response getEventDislikesCount(long eventId) {
         return preparedRequest()
-                .get(resourceUrl + "/" + eventId + "/likes/count");
+                .get(resourceUrl + "/" + eventId + "/dislikes/count");
     }
 
     @Step("Update event ID: {eventId} with new JSON and {images.length} image(s)")
