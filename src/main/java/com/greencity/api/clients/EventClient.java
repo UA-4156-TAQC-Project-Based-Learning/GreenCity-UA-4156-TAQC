@@ -185,4 +185,5 @@ public class EventClient extends BaseClient {
         return preparedRequest()
                 .get(resourceUrl + "/addresses");
     }
+
 }

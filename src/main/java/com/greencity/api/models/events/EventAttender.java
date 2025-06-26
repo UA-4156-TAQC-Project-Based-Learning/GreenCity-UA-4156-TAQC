@@ -7,4 +7,5 @@ public class EventAttender {
     private Long id;
     private String name;
     private String imagePath;
+
 }

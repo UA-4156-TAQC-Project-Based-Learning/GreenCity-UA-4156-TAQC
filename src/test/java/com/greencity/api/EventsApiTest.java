@@ -691,4 +691,5 @@ public class EventsApiTest extends AuthorizedApiTestRunner {
 
         softAssert.assertAll();
     }
+
 }
