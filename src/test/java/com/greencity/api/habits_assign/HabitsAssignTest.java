@@ -37,7 +37,7 @@ public class HabitsAssignTest extends AuthorizedApiTestRunner {
         Response assignResponse = habitClient.assignHabit(habitIdAssignToUser);
         assignResponse.then().statusCode(201);
 
-        Response userHabitsResponse = habitClient.getUserHabits(testValueProvider.getLocalStorageUserId());
+        Response userHabitsResponse = habitClient.getUserHabits(signIn.getUserId());
         List<AssignedHabitPage> assignedHabit = userHabitsResponse.as(ResponseAssignedHabits.class).getPage();
         Assert.assertEquals(assignedHabit.getFirst().getHabit().getId(), habitIdAssignToUser, "Habit " + habitIdAssignToUser+" should be assigned to user");
 

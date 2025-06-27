@@ -21,7 +21,7 @@ public class HabitClient extends BaseClient {
                 .get(resourceUrl);
     }
 
-    public Response getUserHabits(int user_id) {
+    public Response getUserHabits(long user_id) {
 
         return preparedRequest()
                 .queryParam("lang", "en")
@@ -38,7 +38,7 @@ public class HabitClient extends BaseClient {
                 .delete(resourceUrl + "/assign/delete/" + assignedHabitId);
     }
 
-    public void deleteAllAssignedHabits(int userId) {
+    public void deleteAllAssignedHabits(long userId) {
         Response response = getUserHabits(userId);
         List<AssignedHabitPage> assignedHabits = response.as(ResponseAssignedHabits.class).getPage();
 

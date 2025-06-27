@@ -6,11 +6,17 @@ import com.greencity.api.clients.FriendSortField;
 import com.greencity.api.models.user.RequestSignIn;
 import com.greencity.api.models.user.ResponseSignIn;
 import com.greencity.api.testRunner.ApiTestRunner;
+import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+
+@Epic("User API")
+@Feature("Friend-controller")
+@Issue("168")
+@Owner("Yuliia Terentieva")
 public class FriendTest extends ApiTestRunner {
     private FriendClient friendClient;
     private FriendClient friendClientUserB;
@@ -47,7 +53,9 @@ public class FriendTest extends ApiTestRunner {
         friendClientUserB.declineNewRequest(TEST_USER_A_ID);
     }
 
+
     @Test
+    @Description("Verify possibility to add new friend.")
     public void addNewTest() {
         Response response = friendClient.addNewFriend(TEST_USER_B_ID);
         response.then().log().all().statusCode(200);
@@ -55,6 +63,8 @@ public class FriendTest extends ApiTestRunner {
 
 
     @Test
+    @Description("Verify response status in case add new friend request already exists.")
+    @Feature("Friend-controller")
     public void addNewAlreadyExistsNegativeTest() {
         friendClient.addNewFriend(TEST_USER_B_ID);
         Response response = friendClient.addNewFriend(TEST_USER_B_ID);
@@ -62,6 +72,7 @@ public class FriendTest extends ApiTestRunner {
     }
 
     @Test
+    @Description("Verify accept new friend.")
     public void acceptNewTest() {
         friendClient.addNewFriend(TEST_USER_B_ID);
         Response response = friendClientUserB.acceptNewRequest(TEST_USER_A_ID);
@@ -70,6 +81,7 @@ public class FriendTest extends ApiTestRunner {
     }
 
     @Test
+    @Description("Verify decline new friend.")
     public void declineNewTest() {
         friendClient.addNewFriend(TEST_USER_B_ID);
         Response response = friendClientUserB.declineNewRequest(TEST_USER_A_ID);
@@ -77,8 +89,8 @@ public class FriendTest extends ApiTestRunner {
 
     }
 
-
     @Test
+    @Description("Verify delete existing friend.")
     public void deleteFriendTest() {
         friendClient.addNewFriend(TEST_USER_B_ID);
         friendClientUserB.acceptNewRequest(TEST_USER_A_ID);
@@ -86,8 +98,8 @@ public class FriendTest extends ApiTestRunner {
         response.then().log().all().statusCode(200);
     }
 
-
     @Test
+    @Description("Verify find all friends for current user.")
     public void testFindFriendsWithDefaultParams() {
         Response response = friendClient.findAllFriends(
                 DEFAULT_NAME,
@@ -100,6 +112,23 @@ public class FriendTest extends ApiTestRunner {
 
         response.then().statusCode(200);
     }
+
+    @Test
+    @Description("Verify getAllUserFriends returns 200 for valid page and size.")
+    public void testGetAllUserFriends() {
+        int page = 0;
+        int size = 5;
+        Response response = friendClient.getAllUserFriends(page, size);
+        response.then().log().all().statusCode(200);
+    }
+
+    @Test
+    @Description("Verify getRecommendedFriend returns 200 and list is not null.")
+    public void testGetRecommendedFriend() {
+        Response response = friendClient.getRecommendedFriend();
+        response.then().log().all().statusCode(200);
+    }
+
 
 
 }
