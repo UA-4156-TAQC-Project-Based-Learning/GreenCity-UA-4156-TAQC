@@ -1,11 +1,11 @@
 {
-  "title": "New Event",
+  "title": "New Event Test",
   "description": "New Test Event",
   "open": true,
   "datesLocations": [
     {
-      "startDate": "2025-06-23T19:51:48.560Z",
-      "finishDate": "2025-06-24T19:51:48.560Z",
+      "startDate": "2025-06-26T19:51:48.560Z",
+      "finishDate": "2025-06-27T19:51:48.560Z",
       "onlineLink": "http://localhost:4205/#/greenCity/events",
       "coordinates": {
         "latitude": 49.8397,
