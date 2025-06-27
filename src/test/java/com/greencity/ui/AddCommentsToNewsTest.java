@@ -1,5 +1,7 @@
 package com.greencity.ui;
 
+import com.greencity.jdbc.entity.CommentEntity;
+import com.greencity.jdbc.services.CommentService;
 import com.greencity.ui.components.newsComponents.NewsCommentsComponent;
 import com.greencity.ui.pages.abstractNewsPage.NewsPage;
 import com.greencity.ui.pages.homepage.HomePage;
@@ -9,14 +11,28 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Owner;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import java.time.Duration;
+import java.util.List;
+
 import static com.greencity.utils.LoginUtil.loginViaLocalStorage;
 
 @Feature("News Comments")
 public class AddCommentsToNewsTest extends BaseTestRunner {
+
+    private CommentService commentService;
+
+    @BeforeClass
+    private void init(){
+        this.commentService = new CommentService(
+                testValueProvider.getJDBCGreenCityUsername(),
+                testValueProvider.getJDBCGreenCityPassword(),
+                testValueProvider.getJDBCGreenCityURL()
+        );
+    }
 
     @BeforeMethod
     public void beforeEachTest() {
@@ -75,6 +91,9 @@ public class AddCommentsToNewsTest extends BaseTestRunner {
                 .until(driver -> comments.getDisplayedCommentCount() > before);
 
         int after = comments.getDisplayedCommentCount();
+        List<CommentEntity> commentsEntity = commentService.getCommentByUserEmail(testValueProvider.getUserEmail());
+        softAssert.assertEquals(commentsEntity.getLast().getText(), commentText);
+
 
         softAssert.assertEquals(after, before + 1, "New comment should be added");
         softAssert.assertAll();
