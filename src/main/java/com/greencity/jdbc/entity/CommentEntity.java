@@ -8,18 +8,31 @@ import java.util.List;
 @Data
 public class CommentEntity {
     public static final String SELECT_ALL = """
-                                                SELECT
-                                                    id,
-                                                    parent_comment_id,
-                                                    user_id,
-                                                    article_type,
-                                                    article_id,
-                                                    text,
-                                                    created_date,
-                                                    modified_date,
-                                                    status
-                                                FROM
-                                                    comments;""";
+            SELECT
+                id,
+                parent_comment_id,
+                user_id,
+                article_type,
+                article_id,
+                text,
+                created_date,
+                modified_date,
+                status
+            FROM
+                comments;""";
+    public static final String SELECT_BY_USER_ID = """
+            SELECT
+                id,
+                parent_comment_id,
+                user_id,
+                article_type,
+                article_id,
+                text,
+                created_date,
+                modified_date,
+                status
+            FROM
+                WHERE user_id = '%s'""";
 
     private Integer id;
     private Integer parent_comment_id;

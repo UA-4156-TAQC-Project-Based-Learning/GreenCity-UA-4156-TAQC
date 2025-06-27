@@ -1,6 +1,6 @@
 package com.greencity.jdbc.dao;
 
-import com.greencity.jdbc.entity.CommentEntity;
+import com.greencity.jdbc.entity.UserEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,48 +8,41 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommentDAO extends BaseDAO {
-
-
-    public CommentDAO(String login, String password, String url) {
+public class UserDAO extends BaseDAO {
+    public UserDAO(String login, String password, String url) {
         super(login, password, url);
     }
 
-    public List<CommentEntity> selectAllComments() {
+    public List<UserEntity> selectAll() {
         Statement statement = ManagerDAO.getInstance(url, login, password).getStatement();
         List<List<String>> rows = null;
         try {
-            ResultSet resultSet = statement.executeQuery(CommentEntity.SELECT_ALL);
+            ResultSet resultSet = statement.executeQuery(UserEntity.SELECT_ALL);
             rows = ManagerDAO.parseResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
             ManagerDAO.closeAllStatements();
         }
-        List<CommentEntity> comments = new ArrayList<>();
+        List<UserEntity> comments = new ArrayList<>();
         for (List<String> row : rows) {
-            comments.add(CommentEntity.parseRow(row));
+            comments.add(UserEntity.parseRow(row));
         }
         return comments;
 
     }
 
-    public List<CommentEntity> selectAllByUserId(Integer user_id) {
+    public UserEntity selectByEmail(String email) {
         Statement statement = ManagerDAO.getInstance(url, login, password).getStatement();
         List<List<String>> rows = null;
         try {
-            ResultSet resultSet = statement.executeQuery(String.format(CommentEntity.SELECT_BY_USER_ID, user_id));
+            ResultSet resultSet = statement.executeQuery(String.format(UserEntity.FIND_BY_EMAIL, email));
             rows = ManagerDAO.parseResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
             ManagerDAO.closeAllStatements();
         }
-        List<CommentEntity> comments = new ArrayList<>();
-        for (List<String> row : rows) {
-            comments.add(CommentEntity.parseRow(row));
-        }
-        return comments;
-
+        return UserEntity.parseRow(rows.get(0));
     }
 }
