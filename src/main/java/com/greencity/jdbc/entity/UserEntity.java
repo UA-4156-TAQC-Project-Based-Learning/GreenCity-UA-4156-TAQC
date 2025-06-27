@@ -36,7 +36,7 @@ public class UserEntity {
 
     public static UserEntity parseRow(List<String> row) {
         UserEntity user = new UserEntity();
-        user.setId(Long.parseLong(row.get(0)));
+        user.setId(Integer.parseInt(row.get(0)));
 //        ToDo impl
         return user;
     }
