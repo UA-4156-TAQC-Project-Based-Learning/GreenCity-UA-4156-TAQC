@@ -5,7 +5,7 @@ public abstract class BaseServise {
     private final String password;
     private final String url;
 
-    protected BaseServise(String login, String password, String url) {
+    public BaseServise(String login, String password, String url) {
         this.login = login;
         this.password = password;
         this.url = url;

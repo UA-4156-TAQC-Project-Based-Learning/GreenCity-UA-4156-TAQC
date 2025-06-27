@@ -12,7 +12,7 @@ public class CommentService extends BaseServise {
     private final UserDAO userDAO;
 
 
-    protected CommentService(String login, String password, String url) {
+    public CommentService(String login, String password, String url) {
         super(login, password, url);
         commentDAO = new CommentDAO(login, password, url);
         userDAO = new UserDAO(login, password, url);
@@ -24,7 +24,6 @@ public class CommentService extends BaseServise {
 
     public List<CommentEntity> getCommentByUserEmail(String email) {
         UserEntity user = userDAO.selectByEmail(email);
-        List<CommentEntity> comments = commentDAO.selectAllByUserId(user.getId());
-        return comments;
+        return commentDAO.selectAllByUserId(user.getId());
     }
 }
