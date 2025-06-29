@@ -1,5 +1,7 @@
 package com.greencity.ui;
 
+import com.greencity.jdbc.enums.TagType;
+import com.greencity.jdbc.services.TagService;
 import com.greencity.ui.elements.NewsTags;
 import com.greencity.ui.pages.econewspage.EcoNewsPage;
 import com.greencity.ui.testrunners.TestRunnerWithUser;
@@ -8,17 +10,30 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Owner;
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.Arrays;
 import java.util.List;
+@Feature("Create News")
+@Issue("15")
+@Owner("Yuliia Terentieva")
 
 public class CheckingTagSelectionTest extends TestRunnerWithUser {
-    @Issue("15")
-    @Owner("Yuliia Terentieva")
+
+    private TagService tagService;
+
+    @BeforeClass
+    private void init(){
+        this.tagService = new TagService(
+                testValueProvider.getJDBCGreenCityUsername(),
+                testValueProvider.getJDBCGreenCityPassword(),
+                testValueProvider.getBaseAPIUserUrl()
+        );
+    }
+
     @Description("Verify that the user can select between 1 and 3 tags from the predefined list.")
-    @Feature("Create News")
     @Test
     public void checkingNewsTagSelection() {
         driver.get(testValueProvider.getBaseUIUrl() + "/profile");
@@ -37,6 +52,12 @@ public class CheckingTagSelectionTest extends TestRunnerWithUser {
                 .getFirst()
                 .getText();
 
+        List<Long> ecoNewsTagIds = tagService.getTagsByType(TagType.ECO_NEWS)
+                .stream()
+                .map(tag -> tag.getId())
+                .toList();
+
+        System.out.println("DataBase contains tags with id (ECO_NEWS): " + ecoNewsTagIds);
 
         SoftAssert softAssert = new SoftAssert();
 
@@ -78,6 +99,20 @@ public class CheckingTagSelectionTest extends TestRunnerWithUser {
                 .map(WebElement::getText)
                 .map(String::trim)
                 .toList();
+
+        for (String uiTag : actualTags) {
+            softAssert.assertTrue(
+                    NewsTags.containsUkrainianName(uiTag),
+                    "Tag '" + uiTag + "' from UI was NOT found in known NewsTags enum (ukrainianName)."
+                            );
+        }
+
+        for (String uiTag : actualTags) {
+            softAssert.assertTrue(
+                    NewsTags.containsEnglishName(uiTag),
+                    "Tag '" + uiTag + "' from UI was NOT found in known NewsTags enum (englishName)."
+            );
+        }
 
         softAssert.assertEquals(actualTags.size(), 3, "Expected 3 tags on the news card.");
         softAssert.assertAll();
