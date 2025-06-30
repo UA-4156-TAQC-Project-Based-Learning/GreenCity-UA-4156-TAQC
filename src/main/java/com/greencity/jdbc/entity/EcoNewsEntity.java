@@ -11,17 +11,22 @@ public class EcoNewsEntity {
     public static final String SELECT_ALL = """
                                                SELECT
                                                     id,
-                                                    create_date,
+                                                    creation_date,
                                                     image_path,
                                                     author_id,
                                                     title,
                                                     source,
                                                     short_info
                                                FROM
-                                                    eco_news;""";
+                                                    eco_news""";
+
+    public static final String SELECT_BY_USERID = SELECT_ALL + " WHERE author_id = %s;";
+    public static final String SELECT_BY_TITLE = SELECT_ALL + " WHERE title = '%s'";
+    public static final String SELECT_BY_ID = SELECT_ALL + " WHERE id = %s";
+
 
     private Integer id;
-    private Timestamp create_date;
+    private Timestamp creation_date;
     private String image_path;
     private Integer author_id;
     private String title;
@@ -36,7 +41,7 @@ public class EcoNewsEntity {
                          String source,
                          String short_info) {
         this.id = id;
-        this.create_date = create_date;
+        this.creation_date = create_date;
         this.image_path = image_path;
         this.author_id = author_id;
         this.title = title;

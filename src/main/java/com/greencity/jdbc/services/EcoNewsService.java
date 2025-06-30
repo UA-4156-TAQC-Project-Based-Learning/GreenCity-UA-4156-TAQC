@@ -20,4 +20,17 @@ public class EcoNewsService extends BaseServise {
     public List<EcoNewsEntity> getAllNews() {
         return ecoNewsDAO.selectAllNews();
     }
+
+    public List<EcoNewsEntity> getNewsByUserId(Integer userId) {
+        return ecoNewsDAO.selectByAuthorId(userId);
+    }
+
+    public List<EcoNewsEntity> getNewByTitle(String title) {
+        return ecoNewsDAO.selectByTitle(title);
+    }
+
+    public List<EcoNewsEntity> getById(Integer id) {
+        return ecoNewsDAO.selectById(id);
+    }
+
 }
