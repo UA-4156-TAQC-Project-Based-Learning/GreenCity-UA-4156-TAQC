@@ -18,4 +18,22 @@ public enum NewsTags {
     private final String englishName;
     private final String ukrainianName;
 
+    public static boolean containsUkrainianName(String name) {
+        for (NewsTags tag : NewsTags.values()) {
+            if (tag.getUkrainianName().equalsIgnoreCase(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean containsEnglishName(String name) {
+        for (NewsTags tag : NewsTags.values()) {
+            if (tag.getEnglishName().equalsIgnoreCase(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
