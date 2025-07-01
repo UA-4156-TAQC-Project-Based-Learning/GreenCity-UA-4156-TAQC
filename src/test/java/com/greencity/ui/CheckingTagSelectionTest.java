@@ -25,7 +25,7 @@ public class CheckingTagSelectionTest extends TestRunnerWithUser {
     private TagService tagService;
 
     @BeforeClass
-    private void init(){
+    public void init(){
         this.tagService = new TagService(
                 testValueProvider.getJDBCGreenCityUsername(),
                 testValueProvider.getJDBCGreenCityPassword(),
