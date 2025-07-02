@@ -9,7 +9,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Owner;
-import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -29,7 +28,7 @@ public class CheckingTagSelectionTest extends TestRunnerWithUser {
         this.tagService = new TagService(
                 testValueProvider.getJDBCGreenCityUsername(),
                 testValueProvider.getJDBCGreenCityPassword(),
-                testValueProvider.getBaseAPIUserUrl()
+                testValueProvider.getJDBCGreenCityURL()
         );
     }
 
@@ -50,7 +49,8 @@ public class CheckingTagSelectionTest extends TestRunnerWithUser {
                 .getFirst()
                 .getTags()
                 .getFirst()
-                .getText();
+                .getText()
+                .trim();
 
         List<Long> ecoNewsTagIds = tagService.getTagsByType(TagType.ECO_NEWS)
                 .stream()
@@ -61,7 +61,7 @@ public class CheckingTagSelectionTest extends TestRunnerWithUser {
 
         SoftAssert softAssert = new SoftAssert();
 
-        softAssert.assertEquals(newsTag, NewsTags.NEWS_TAG, "Expected News tag is missed.");
+        softAssert.assertEquals(newsTag, NewsTags.NEWS_TAG.getEnglishName(), "Expected News tag is missed.");
 
 
         List<String> updatedListOfTags3 = new EcoNewsPage(driver)
@@ -74,14 +74,17 @@ public class CheckingTagSelectionTest extends TestRunnerWithUser {
                 .getFirst()
                 .getTags()
                 .stream()
-                .map(WebElement::getText)
+                .flatMap(el -> Arrays.stream(el.getText().split("\\|")))
                 .map(String::trim)
+                .filter(tag -> !tag.isEmpty())
                 .toList();
 
+
+
         List<String> expected = Arrays.asList(
-                NewsTags.NEWS_TAG.getUkrainianName(),
-                NewsTags.EVENTS_TAG.getUkrainianName(),
-                NewsTags.EDUCATION_TAG.getUkrainianName()
+                NewsTags.NEWS_TAG.getEnglishName(),
+                NewsTags.EVENTS_TAG.getEnglishName(),
+                NewsTags.EDUCATION_TAG.getEnglishName()
         );
 
         softAssert.assertEquals(updatedListOfTags3.size(), expected.size(), "Expected 3 tags on the news card.");
@@ -96,16 +99,11 @@ public class CheckingTagSelectionTest extends TestRunnerWithUser {
                 .getFirst()
                 .getTags()
                 .stream()
-                .map(WebElement::getText)
+                .flatMap(el -> Arrays.stream(el.getText().split("\\|")))
                 .map(String::trim)
+                .filter(tag -> !tag.isEmpty())
                 .toList();
 
-        for (String uiTag : actualTags) {
-            softAssert.assertTrue(
-                    NewsTags.containsUkrainianName(uiTag),
-                    "Tag '" + uiTag + "' from UI was NOT found in known NewsTags enum (ukrainianName)."
-                            );
-        }
 
         for (String uiTag : actualTags) {
             softAssert.assertTrue(
