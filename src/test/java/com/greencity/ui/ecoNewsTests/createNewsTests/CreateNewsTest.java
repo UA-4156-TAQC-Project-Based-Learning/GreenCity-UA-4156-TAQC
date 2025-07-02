@@ -19,7 +19,7 @@ public class CreateNewsTest extends TestRunnerWithUser {
     private EcoNewsService ecoNewsService;
 
     @BeforeClass
-    private void init(){
+    public void init(){
         this.ecoNewsService = new EcoNewsService(
                 testValueProvider.getJDBCGreenCityUsername(),
                 testValueProvider.getJDBCGreenCityPassword(),
