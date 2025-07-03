@@ -89,4 +89,16 @@ public class EcoNewsDAO extends BaseDAO{
         }
         return news;
     }
+
+    public void deleteNewsById(Integer id) {
+        Statement statement = ManagerDAO.getInstance(url, login, password).getStatement();
+
+        try {
+            statement.executeUpdate(String.format(EcoNewsEntity.DELETE_BY_ID, id));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            ManagerDAO.closeAllStatements();
+        }
+    }
 }

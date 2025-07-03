@@ -33,4 +33,8 @@ public class EcoNewsService extends BaseServise {
         return ecoNewsDAO.selectById(id);
     }
 
+    public void deleteNews(Integer id) {
+        ecoNewsDAO.deleteNewsById(id);
+    }
+
 }
