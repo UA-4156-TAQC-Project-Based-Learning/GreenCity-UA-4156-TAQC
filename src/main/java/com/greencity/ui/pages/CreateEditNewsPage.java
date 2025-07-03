@@ -123,7 +123,7 @@ public class CreateEditNewsPage extends BasePage {
     }
 
     public boolean isStillOnEditPage() {
-        return driver.getCurrentUrl().contains("#/news/create-news");
+        return driver.getCurrentUrl().contains("/news/create-news");
     }
 
     @Step("Enter {title}")

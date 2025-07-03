@@ -32,6 +32,7 @@ public class CommentEntity {
                 modified_date,
                 status
             FROM
+                comments
                 WHERE user_id = '%s'""";
 
     private Integer id;
