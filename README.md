@@ -82,7 +82,7 @@ ls.nameUserB=${LS_NAME_USER_B}
 ### 2️⃣ Install dependencies
 Run the following command to install all necessary dependencies:
 ```
-mvn clean install
+mvn clean install -Dmaven.test.skip=true
 ```
 ### 3️⃣ Run tests
 Run all tests:
