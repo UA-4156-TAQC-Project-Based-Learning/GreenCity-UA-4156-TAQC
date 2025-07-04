@@ -2,23 +2,78 @@ package com.greencity.api;
 
 import com.greencity.api.clients.EventClient;
 import com.greencity.api.models.events.EventAttender;
+import com.greencity.api.models.events.EventOrganizer;
 import com.greencity.api.models.events.EventsPage;
 import com.greencity.api.models.events.ResponseEventsPage;
 import com.greencity.api.testRunner.AuthorizedApiTestRunner;
+import com.greencity.jdbc.entity.eventsEntity.*;
+import com.greencity.jdbc.services.eventsService.*;
+import io.cucumber.core.logging.Logger;
+import io.cucumber.core.logging.LoggerFactory;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import java.io.File;
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Feature("Events API")
 
 public class EventsApiTest extends AuthorizedApiTestRunner {
     private EventClient eventClient;
+    private EventService eventService;
+    private EventUserLikeService eventUserLikeService;
+    private EventUserDislikeService eventUserDislikeService;
+    private EventGradeService eventGradeService;
+    private EventAttenderService eventAttenderService;
+    private EventRequesterService eventRequesterService;
+    private EventDateLocationService eventDateLocationService;
+
+    @BeforeClass
+    public void init() {
+        this.eventService = new EventService(
+                testValueProvider.getJDBCGreenCityUsername(),
+                testValueProvider.getJDBCGreenCityPassword(),
+                testValueProvider.getJDBCGreenCityURL()
+        );
+        this.eventUserLikeService = new EventUserLikeService(
+                testValueProvider.getJDBCGreenCityUsername(),
+                testValueProvider.getJDBCGreenCityPassword(),
+                testValueProvider.getJDBCGreenCityURL()
+        );
+        this.eventUserDislikeService = new EventUserDislikeService(
+                testValueProvider.getJDBCGreenCityUsername(),
+                testValueProvider.getJDBCGreenCityPassword(),
+                testValueProvider.getJDBCGreenCityURL()
+        );
+        this.eventGradeService = new EventGradeService(
+                testValueProvider.getJDBCGreenCityUsername(),
+                testValueProvider.getJDBCGreenCityPassword(),
+                testValueProvider.getJDBCGreenCityURL()
+        );
+        this.eventAttenderService = new EventAttenderService(
+                testValueProvider.getJDBCGreenCityUsername(),
+                testValueProvider.getJDBCGreenCityPassword(),
+                testValueProvider.getJDBCGreenCityURL()
+        );
+        this.eventRequesterService = new EventRequesterService(
+                testValueProvider.getJDBCGreenCityUsername(),
+                testValueProvider.getJDBCGreenCityPassword(),
+                testValueProvider.getJDBCGreenCityURL()
+        );
+        this.eventDateLocationService = new EventDateLocationService(
+                testValueProvider.getJDBCGreenCityUsername(),
+                testValueProvider.getJDBCGreenCityPassword(),
+                testValueProvider.getJDBCGreenCityURL()
+        );
+    }
 
     @BeforeMethod
     public void initEventClient() {
@@ -51,7 +106,15 @@ public class EventsApiTest extends AuthorizedApiTestRunner {
             softAssert.assertNotNull(event.getTitle(), "Event title should not be null");
             softAssert.assertNotNull(event.getOrganizer(), "Event organizer should not be null");
             softAssert.assertNotNull(event.getCreationDate(), "Event creationDate should not be null");
+
+            List<EventEntity> dbEvents = eventService.getAllEvents();
+            List<Long> dbEventIds = dbEvents.stream()
+                    .map(EventEntity::getId)
+                    .collect(Collectors.toList());
+
+            System.out.println("DataBase contains event IDs: " + dbEventIds);
         }
+
         softAssert.assertAll();
     }
 
@@ -83,6 +146,17 @@ public class EventsApiTest extends AuthorizedApiTestRunner {
         softAssert.assertNotNull(event.getDates(), "Dates should not be null");
         softAssert.assertFalse(event.getDates().isEmpty(), "Dates list should not be empty");
         softAssert.assertNotNull(event.getTags(), "Tags should not be null");
+
+        EventEntity dbEvent = eventService.getEventById(eventId);
+        softAssert.assertNotNull(dbEvent, "Event should exist in Database for ID " + eventId);
+
+        if (dbEvent != null) {
+            softAssert.assertEquals(dbEvent.getId().longValue(), eventId, "Event ID from DB should match requested ID");
+            softAssert.assertEquals(dbEvent.getTitle(), event.getTitle(), "Event title from API should match DB");
+            softAssert.assertEquals(dbEvent.getDescription(), event.getDescription(), "Event description from API should match DB");
+            softAssert.assertEquals(dbEvent.getOrganizerId(), event.getOrganizer().getId(), "Event organizer ID from API should match DB");
+            softAssert.assertEquals(dbEvent.getCreationDate(), Date.valueOf(event.getCreationDate()), "Event creation date from API should match DB");
+        }
         softAssert.assertAll();
     }
 
@@ -107,6 +181,19 @@ public class EventsApiTest extends AuthorizedApiTestRunner {
             softAssert.assertEquals(createdEvent.getTitle(), "New Event", "Title should match");
             softAssert.assertEquals(createdEvent.getDescription(), "New Test Event", "Description should match");
             softAssert.assertTrue(createdEvent.isOpen(), "Event should be open");
+
+            EventEntity eventFromDb = eventService.getEventById(createdEvent.getId());
+
+            softAssert.assertNotNull(eventFromDb, "Event should be saved in DB");
+            EventOrganizer organizerFromApi = createdEvent.getOrganizer();
+            softAssert.assertNotNull(organizerFromApi, "Organizer in response should not be null");
+            softAssert.assertNotNull(organizerFromApi.getId(), "Organizer ID in response should not be null");
+
+            softAssert.assertEquals(
+                    eventFromDb.getOrganizerId(),
+                    organizerFromApi.getId(),
+                    "DB: Organizer ID should match API"
+            );
         }
 
         softAssert.assertAll();
@@ -117,7 +204,7 @@ public class EventsApiTest extends AuthorizedApiTestRunner {
         return new Object[][]{
                 {2L, 200, null},
                 {5L, 404, "Event doesn't exist by this id: 5"},
-                {10L, 400, "Current user has no permission for this action"}
+                {4L, 400, "Current user has no permission for this action"}
         };
     }
 
@@ -136,15 +223,25 @@ public class EventsApiTest extends AuthorizedApiTestRunner {
             softAssert.assertEquals(actualMessage, expectedMessage, "Validation message should match");
         }
 
+        if (expectedStatus == 200) {
+            Long currentUserId = signIn.getUserId();
+            List<EventUserLikeEntity> likesFromDb = eventUserLikeService.getByEventId(eventId);
+            boolean userLiked = likesFromDb.stream()
+                    .anyMatch(like -> like.getEventId().equals(eventId) && like.getUsersId().equals(currentUserId));
+            softAssert.assertTrue(userLiked, "DB: User should have liked event with id " + eventId);
+        } else if (expectedMessage != null) {
+            String actualMessage = response.jsonPath().getString("message");
+            softAssert.assertEquals(actualMessage, expectedMessage, "Validation message should match");
+        }
         softAssert.assertAll();
     }
 
     @DataProvider(name = "dislikeEventCases")
     public Object[][] provideDislikeEventCases() {
         return new Object[][]{
-                {2L, 200, null},
+                {1L, 200, null},
                 {5L, 404, "Event doesn't exist by this id: 5"},
-                {10L, 400, "Current user has no permission for this action"}
+                {4L, 400, "Current user has no permission for this action"}
         };
     }
 
@@ -163,13 +260,22 @@ public class EventsApiTest extends AuthorizedApiTestRunner {
             softAssert.assertEquals(actualMessage, expectedMessage, "Validation message should match");
         }
 
+        if (expectedStatus == 200) {
+            List<EventUserDislikeEntity> dislikesFromDb = eventUserDislikeService.getByEventId(eventId);
+            softAssert.assertFalse(dislikesFromDb.isEmpty(), "Dislikes should be present in DB for eventId: " + eventId);
+
+            boolean userDisliked = dislikesFromDb.stream()
+                    .anyMatch(dislike -> dislike.getUserId().equals(signIn.getUserId()));
+            softAssert.assertTrue(userDisliked, "Current user should have disliked the event");
+        }
+
         softAssert.assertAll();
     }
 
     @DataProvider(name = "likesCountCases")
     public Object[][] provideLikesCountCases() {
         return new Object[][]{
-                {1L, 200, null},
+                {2L, 200, null},
                 {99L, 404, "Event doesn't exist by this id: 99"}
         };
     }
@@ -184,12 +290,20 @@ public class EventsApiTest extends AuthorizedApiTestRunner {
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(response.statusCode(), expectedStatus, "Unexpected status code");
 
+        Integer apiCount = null;
+
         if (expectedStatus == 200) {
-            Integer count = response.as(Integer.class);
-            softAssert.assertTrue(count >= 0, "Likes count should be >= 0");
+            apiCount = response.as(Integer.class);
+            softAssert.assertTrue(apiCount >= 0, "Likes count should be >= 0");
         } else if (expectedMessage != null) {
             String actualMessage = response.jsonPath().getString("message");
             softAssert.assertEquals(actualMessage, expectedMessage, "Error message should match");
+        }
+
+        if (expectedStatus == 200 && apiCount != null) {
+            List<EventUserLikeEntity> likesFromDb = eventUserLikeService.getByEventId(eventId);
+            int dbCount = likesFromDb.size();
+            softAssert.assertEquals(apiCount.intValue(), dbCount, "API likes count should match DB count");
         }
 
         softAssert.assertAll();
@@ -217,6 +331,15 @@ public class EventsApiTest extends AuthorizedApiTestRunner {
         if (expectedStatus == 200) {
             Boolean actualLiked = response.as(Boolean.class);
             softAssert.assertEquals(actualLiked, expectedLiked, "Liked status should match");
+
+            List<EventUserLikeEntity> likesFromDb = eventUserLikeService.getByEventId(eventId);
+            Long currentUserId = signIn.getUserId();
+
+            boolean isLikedInDb = likesFromDb.stream()
+                    .anyMatch(like -> like.getUsersId().equals(currentUserId));
+
+            softAssert.assertEquals(Boolean.valueOf(isLikedInDb), expectedLiked, "Liked status in DB should match expected");
+
         } else if (expectedStatus == 404 && expectedErrorMessage != null) {
             String actualMessage = response.jsonPath().getString("message");
             softAssert.assertEquals(actualMessage, expectedErrorMessage, "Error message should match");
@@ -230,7 +353,7 @@ public class EventsApiTest extends AuthorizedApiTestRunner {
     @Owner("Svitlana Kovalova")
     public Object[][] provideDislikesCountCases() {
         return new Object[][]{
-                {1L, 200, null},
+                {2L, 200, null},
                 {99L, 404, "Event doesn't exist by this id: 99"}
         };
     }
@@ -246,8 +369,13 @@ public class EventsApiTest extends AuthorizedApiTestRunner {
         softAssert.assertEquals(response.statusCode(), expectedStatus, "Unexpected status code");
 
         if (expectedStatus == 200) {
-            Integer count = response.as(Integer.class);
-            softAssert.assertTrue(count >= 0, "Likes count should be >= 0");
+            Integer apiCount = response.as(Integer.class);
+            softAssert.assertTrue(apiCount >= 0, "Dislikes count should be >= 0");
+
+            List<EventUserDislikeEntity> dislikesFromDb = eventUserDislikeService.getByEventId(eventId);
+            int dbCount = dislikesFromDb.size();
+            softAssert.assertEquals(apiCount.intValue(), dbCount, "API dislikes count should match DB count");
+
         } else if (expectedMessage != null) {
             String actualMessage = response.jsonPath().getString("message");
             softAssert.assertEquals(actualMessage, expectedMessage, "Error message should match");
@@ -259,7 +387,7 @@ public class EventsApiTest extends AuthorizedApiTestRunner {
     @DataProvider(name = "updateEventCases")
     public Object[][] updateEventCases() {
         return new Object[][]{
-                {10L},
+                {8L},
         };
     }
 
@@ -293,13 +421,21 @@ public class EventsApiTest extends AuthorizedApiTestRunner {
         softAssert.assertNotEquals(eventAfter.getDescription(), eventBefore.getDescription(), "Description should be updated");
         softAssert.assertEquals(eventAfter.getId(), eventBefore.getId(), "Event ID should remain the same");
         softAssert.assertEquals(eventAfter.getOrganizer().getId(), eventBefore.getOrganizer().getId(), "Organizer should not change");
+
+        EventEntity eventFromDb = eventService.getEventById(eventId);
+        softAssert.assertNotNull(eventFromDb, "Event should exist in DB");
+
+        softAssert.assertEquals(eventFromDb.getTitle(), eventAfter.getTitle(), "Title in DB should match updated title");
+        softAssert.assertEquals(eventFromDb.getDescription(), eventAfter.getDescription(), "Description in DB should match updated description");
+        softAssert.assertEquals(eventFromDb.getId(), eventAfter.getId(), "Event ID in DB should match");
+        softAssert.assertEquals(eventFromDb.getOrganizerId(), eventAfter.getOrganizer().getId(), "Organizer ID in DB should match");
         softAssert.assertAll();
     }
 
     @DataProvider(name = "deleteEventCases")
     public Object[][] deleteEventCases() {
         return new Object[][]{
-                {11L, 200, null},
+                {10L, 200, null},
                 {3L, 403, "Current user has no permission for this action"},
                 {99L, 404, "Event hasn't been found"}
         };
@@ -318,13 +454,15 @@ public class EventsApiTest extends AuthorizedApiTestRunner {
         if (expectedStatus == 200) {
             Response getResponse = eventClient.getEventById(eventId);
             softAssert.assertEquals(getResponse.getStatusCode(), 404, "Event should not be found after deletion");
+
+            EventEntity eventFromDb = eventService.getEventById(eventId);
+            softAssert.assertNull(eventFromDb, "Event should be null in DB after deletion");
         } else if (expectedMessage != null) {
             String actualMessage = deleteResponse.jsonPath().getString("message");
             softAssert.assertEquals(actualMessage, expectedMessage, "Error message should match");
         }
-
         softAssert.assertAll();
-}
+    }
 
     @DataProvider(name = "favoriteEventIds")
     public Object[][] favoriteEventIds() {
@@ -418,19 +556,17 @@ public class EventsApiTest extends AuthorizedApiTestRunner {
     @DataProvider(name = "rateEventCases")
     public Object[][] provideRateEventCases() {
         return new Object[][]{
-                {3L, 1, 200, null},
-                {3L, 2, 200, null},
-                {3L, 3, 200, null},
+                {2L, 1, 200, null},
+                {2L, 2, 200, null},
+                {2L, 3, 200, null},
 
-                {3L, 4, 400, "must be less than or equal to 3"},
+                {2L, 4, 400, "must be less than or equal to 3"},
                 {3L, 0, 400, "must be greater than or equal to 1"},
                 {3L, -1, 400, "must be greater than or equal to 1"},
                 {3L, 999, 400, "must be less than or equal to 3"},
 
-                {10L, 3, 403, "Organizer have no rights to rate the own event"},
-
+                {8L, 3, 403, "Organizer have no rights to rate the own event"},
                 {1L, 2, 400, "Event is not finished yet"},
-
                 {99L, 2, 404, "Event hasn't been found"}
         };
     }
@@ -450,12 +586,19 @@ public class EventsApiTest extends AuthorizedApiTestRunner {
             softAssert.assertEquals(actualMessage, expectedMessage, "Validation message should match");
         }
 
+        if (expectedStatus == 200) {
+            List<EventGradeEntity> gradesFromDb = eventGradeService.getByEventId(eventId);
+            boolean found = gradesFromDb.stream()
+                    .anyMatch(g -> g.getGrade() != null && g.getGrade() == grade);
+            softAssert.assertTrue(found, "DB should contain the rating with grade = " + grade);
+        }
+
         softAssert.assertAll();
     }
 
     @DataProvider(name = "eventAttendersCases")
     public Object[][] provideEventAttendersCases() {
-        return new Object[][] {
+        return new Object[][]{
                 {1L, 200, true},
                 {99L, 404, false}
         };
@@ -476,6 +619,10 @@ public class EventsApiTest extends AuthorizedApiTestRunner {
             softAssert.assertNotNull(attenders, "Attenders list should not be null");
             if (expectList) {
                 softAssert.assertTrue(attenders.size() >= 0, "Attenders list size should be >= 0");
+
+                List<EventAttenderEntity> attendersFromDb = eventAttenderService.getByEventId(eventId);
+                int dbCount = attendersFromDb.size();
+                softAssert.assertEquals(attenders.size(), dbCount, "API attenders count should match DB count");
             }
         } else if (expectedStatus == 404) {
             String message = response.jsonPath().getString("message");
@@ -509,12 +656,19 @@ public class EventsApiTest extends AuthorizedApiTestRunner {
             softAssert.assertEquals(actualMessage, expectedMessage, "Validation message should match");
         }
 
+        if (expectedStatus == 200) {
+            List<EventAttenderEntity> attendersFromDb = eventAttenderService.getByEventId(eventId);
+            boolean userIsAttender = attendersFromDb.stream()
+                    .anyMatch(attender -> attender.getUserId().equals(signIn.getUserId()));
+            softAssert.assertTrue(userIsAttender, "User should be present in attenders list in DB after subscription");
+        }
+
         softAssert.assertAll();
     }
 
     @DataProvider(name = "attendersCountData")
     public Object[][] attendersCountData() {
-        return new Object[][] {
+        return new Object[][]{
                 {5L, 2},
                 {99L, 0},
         };
@@ -532,14 +686,18 @@ public class EventsApiTest extends AuthorizedApiTestRunner {
         int actualCount = response.as(Integer.class);
         softAssert.assertEquals(actualCount, expectedCount, "Count should match expected value");
 
+        List<EventAttenderEntity> attendersFromDb = eventAttenderService.getByUserId(userId);
+        int dbCount = attendersFromDb.size();
+        softAssert.assertEquals(dbCount, expectedCount, "Count from DB should match expected value");
+
         softAssert.assertAll();
     }
 
     @DataProvider(name = "addToRequestedCases")
     public Object[][] provideAddToRequestedCases() {
         return new Object[][]{
-                {1L, 200, null},
-                {1L, 400, "User has already added this event to requested."},
+                {12L, 200, null},
+                {12L, 400, "User has already added this event to requested."},
                 {99L, 404, "Event doesn't exist by this id: 99"}
         };
     }
@@ -566,15 +724,21 @@ public class EventsApiTest extends AuthorizedApiTestRunner {
             var attenders = attendersResponse.jsonPath().getList("id", Integer.class);
             Long currentUserId = signIn.getUserId();
             softAssert.assertTrue(attenders.contains(currentUserId.intValue()), "Current user should be in attenders list");
-        }
 
+            List<EventRequesterEntity> requestedList = eventRequesterService.getByEventId(eventId);
+
+            boolean foundInRequested = requestedList.stream()
+                    .anyMatch(r -> currentUserId.equals(r.getUserId()));
+
+            softAssert.assertTrue(foundInRequested, "User should be present in event_requesters table for this event");
+        }
         softAssert.assertAll();
     }
 
     @DataProvider(name = "requestedUsersCases")
     public Object[][] provideRequestedUsersCases() {
         return new Object[][]{
-                {10L, 200, null},
+                {8L, 200, null},
                 {99L, 404, "Event hasn't been found"},
                 {1L, 403, "Current user has no permission for this action"}
         };
@@ -604,6 +768,18 @@ public class EventsApiTest extends AuthorizedApiTestRunner {
                 softAssert.assertNotNull(user.get("email"), "User email should not be null");
             }
 
+            List<EventRequesterEntity> requestedUsers = eventRequesterService.getByEventId(eventId);
+            softAssert.assertEquals(requestedUsers.size(), totalElements, "Number of requested users should match DB count");
+
+            List<Long> apiUserIds = page.stream()
+                    .map(userMap -> ((Number) userMap.get("id")).longValue())
+                    .collect(Collectors.toList());
+
+            for (EventRequesterEntity requester : requestedUsers) {
+                softAssert.assertTrue(apiUserIds.contains(requester.getUserId()),
+                        "User ID " + requester.getUserId() + " from DB should be present in API response");
+            }
+
         } else if (expectedMessage != null) {
             String actualMessage = response.jsonPath().getString("message");
             softAssert.assertEquals(actualMessage, expectedMessage, "Error message should match");
@@ -615,8 +791,8 @@ public class EventsApiTest extends AuthorizedApiTestRunner {
     @DataProvider(name = "removeRequestedCases")
     public Object[][] provideRemoveRequestedCases() {
         return new Object[][]{
-                {1L, 200, null},
-                {2L, 400, "This event is not in requested."},
+                {12L, 200, null},
+                {3L, 400, "This event is not in requested."},
                 {99L, 404, "Event doesn't exist by this id: 99"}
         };
     }
@@ -637,13 +813,23 @@ public class EventsApiTest extends AuthorizedApiTestRunner {
             softAssert.assertEquals(actualMessage, expectedMessage, "Error message should match");
         }
 
+        if (expectedStatus == 200) {
+            Long currentUserId = signIn.getUserId();
+            List<EventRequesterEntity> requestedList = eventRequesterService.getByEventId(eventId);
+
+            boolean userStillRequested = requestedList.stream()
+                    .anyMatch(r -> currentUserId.equals(r.getUserId()));
+
+            softAssert.assertFalse(userStillRequested, "User should NOT be present in event_requesters table for this event after removal");
+        }
+
         softAssert.assertAll();
     }
 
     @DataProvider(name = "organizerCounts")
     public Object[][] provideOrganizerCounts() {
         return new Object[][]{
-                {5L, 200, 1},
+                {5L, 200, 3},
                 {99L, 200, 0}
         };
     }
@@ -662,7 +848,6 @@ public class EventsApiTest extends AuthorizedApiTestRunner {
             int actualCount = response.as(Integer.class);
             softAssert.assertEquals(actualCount, expectedCount, "Events count should match expected");
         }
-
         softAssert.assertAll();
     }
 
@@ -676,20 +861,70 @@ public class EventsApiTest extends AuthorizedApiTestRunner {
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(response.statusCode(), 200, "Status code should be 200");
 
-        var addresses = response.jsonPath().getList("$");
-        softAssert.assertNotNull(addresses, "Addresses list should not be null");
-        softAssert.assertTrue(addresses.size() > 0, "Addresses list should not be empty");
+        List<Map<String, Object>> apiAddresses = response.jsonPath().getList("$");
+        softAssert.assertNotNull(apiAddresses, "API addresses list should not be null");
+        softAssert.assertTrue(apiAddresses.size() > 0, "API addresses list should not be empty");
 
-        if (!addresses.isEmpty()) {
+        if (!apiAddresses.isEmpty()) {
             var firstAddress = response.jsonPath().getMap("[0]");
             softAssert.assertTrue(firstAddress.containsKey("latitude"), "Address should have latitude");
             softAssert.assertTrue(firstAddress.containsKey("longitude"), "Address should have longitude");
             softAssert.assertTrue(firstAddress.containsKey("streetEn"), "Address should have streetEn");
             softAssert.assertTrue(firstAddress.containsKey("cityUa"), "Address should have cityUa");
             softAssert.assertTrue(firstAddress.containsKey("countryUa"), "Address should have countryUa");
+
+            List<EventDateLocationEntity> dbAddresses = eventDateLocationService.getAll();
+            Map<Long, List<EventDateLocationEntity>> dbGroupedByEventId = dbAddresses.stream()
+                    .filter(e -> e.getEventId() != null)
+                    .collect(Collectors.groupingBy(EventDateLocationEntity::getEventId));
+
+            Map<Long, List<Map<String, Object>>> apiGroupedByEventId = apiAddresses.stream()
+                    .filter(addr -> addr.get("eventId") != null)
+                    .collect(Collectors.groupingBy(addr -> ((Number) addr.get("eventId")).longValue()));
+
+            for (Map.Entry<Long, List<Map<String, Object>>> entry : apiGroupedByEventId.entrySet()) {
+                Long eventId = entry.getKey();
+                List<Map<String, Object>> apiList = entry.getValue();
+                List<EventDateLocationEntity> dbList = dbGroupedByEventId.get(eventId);
+
+                softAssert.assertNotNull(dbList, "DB should have addresses for eventId: " + eventId);
+                if (dbList == null) continue;
+
+                softAssert.assertEquals(apiList.size(), dbList.size(),
+                        "Number of addresses should match for eventId: " + eventId);
+
+                for (int i = 0; i < Math.min(apiList.size(), dbList.size()); i++) {
+                    Map<String, Object> apiAddr = apiList.get(i);
+                    EventDateLocationEntity dbAddr = dbList.get(i);
+
+                    softAssert.assertEquals(
+                            Double.parseDouble(apiAddr.get("latitude").toString()),
+                            dbAddr.getLatitude(),
+                            "Latitude mismatch for eventId: " + eventId + " at index " + i
+                    );
+                    softAssert.assertEquals(
+                            Double.parseDouble(apiAddr.get("longitude").toString()),
+                            dbAddr.getLongitude(),
+                            "Longitude mismatch for eventId: " + eventId + " at index " + i
+                    );
+                    softAssert.assertEquals(
+                            apiAddr.get("streetEn"),
+                            dbAddr.getStreetEn(),
+                            "StreetEn mismatch for eventId: " + eventId + " at index " + i
+                    );
+                    softAssert.assertEquals(
+                            apiAddr.get("cityUa"),
+                            dbAddr.getCityUa(),
+                            "CityUa mismatch for eventId: " + eventId + " at index " + i
+                    );
+                    softAssert.assertEquals(
+                            apiAddr.get("countryUa"),
+                            dbAddr.getCountryUa(),
+                            "CountryUa mismatch for eventId: " + eventId + " at index " + i
+                    );
+                }
+            }
+            softAssert.assertAll();
         }
-
-        softAssert.assertAll();
     }
-
 }
