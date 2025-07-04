@@ -2,11 +2,13 @@ package com.greencity.ui.ecoNewsTests.createNewsTests;
 
 import com.greencity.jdbc.entity.EcoNewsEntity;
 import com.greencity.jdbc.services.EcoNewsService;
+import com.greencity.jdbc.services.TagService;
 import com.greencity.ui.elements.NewsTags;
 import com.greencity.ui.testrunners.TestRunnerWithUser;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -16,7 +18,10 @@ import java.util.List;
 
 public class CreateNewsTest extends TestRunnerWithUser {
 
+    private Integer createdNewsId;
+
     private EcoNewsService ecoNewsService;
+    private TagService tagService;
 
     @BeforeClass
     public void init(){
@@ -50,12 +55,24 @@ public class CreateNewsTest extends TestRunnerWithUser {
                 .clickPublish();
 
         List<EcoNewsEntity> ecoNewsEntities = ecoNewsService.getNewsByUserId(testValueProvider.getLocalStorageUserId());
+        EcoNewsEntity lastNews = ecoNewsService.getAllNews().getLast();
+        createdNewsId = lastNews.getId();
+
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(ecoNewsEntities.getLast().getTitle(), title);
         softAssert.assertEquals(ecoNewsEntities.getLast().getSource(), source);
         softAssert.assertEquals(ecoNewsEntities.getLast().getText().replaceAll("<[^>]*>",""), content);
         softAssert.assertAll();
 
+    }
+
+    @AfterMethod
+    public void cleanUp() {
+        if(createdNewsId != null){
+//            tagService.deleteTags(createdNewsId);
+            ecoNewsService.deleteNews(createdNewsId);
+            createdNewsId = null;
+        }
     }
 }
 

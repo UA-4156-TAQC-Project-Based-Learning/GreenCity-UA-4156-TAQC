@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EcoNewsDAO extends BaseDAO{
+public class EcoNewsDAO extends BaseDAO {
 
     public EcoNewsDAO(String login, String password, String url) {
         super(login, password, url);
@@ -27,7 +27,7 @@ public class EcoNewsDAO extends BaseDAO{
             ManagerDAO.closeAllStatements();
         }
         List<EcoNewsEntity> news = new ArrayList<>();
-        for (List<String> row : rows){
+        for (List<String> row : rows) {
             news.add(EcoNewsEntity.parseRow(row));
         }
         return news;
@@ -46,7 +46,7 @@ public class EcoNewsDAO extends BaseDAO{
             ManagerDAO.closeAllStatements();
         }
         List<EcoNewsEntity> news = new ArrayList<>();
-        for (List<String> row : rows){
+        for (List<String> row : rows) {
             news.add(EcoNewsEntity.parseRow(row));
         }
         return news;
@@ -65,7 +65,7 @@ public class EcoNewsDAO extends BaseDAO{
             ManagerDAO.closeAllStatements();
         }
         List<EcoNewsEntity> news = new ArrayList<>();
-        for(List<String> row : rows){
+        for (List<String> row : rows) {
             news.add(EcoNewsEntity.parseRow(row));
         }
         return news;
@@ -84,7 +84,7 @@ public class EcoNewsDAO extends BaseDAO{
             ManagerDAO.closeAllStatements();
         }
         List<EcoNewsEntity> news = new ArrayList<>();
-        for(List<String> row : rows){
+        for (List<String> row : rows) {
             news.add(EcoNewsEntity.parseRow(row));
         }
         return news;
@@ -101,5 +101,17 @@ public class EcoNewsDAO extends BaseDAO{
             ManagerDAO.closeAllStatements();
         }
     }
+
+    public void deleteNewsById(Integer id) {
+        Statement statement = ManagerDAO.getInstance(url, login, password).getStatement();
+
+        try {
+            statement.executeUpdate(String.format(EcoNewsEntity.DELETE_BY_ID, id));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            ManagerDAO.closeAllStatements();
+        }
     }
+}
 
