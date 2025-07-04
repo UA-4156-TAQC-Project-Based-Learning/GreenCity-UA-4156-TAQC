@@ -26,6 +26,7 @@ public class EcoNewsEntity {
     public static final String SELECT_BY_USERID = SELECT_ALL + " WHERE author_id = %s;";
     public static final String SELECT_BY_TITLE = SELECT_ALL + " WHERE title = '%s'";
     public static final String SELECT_BY_ID = SELECT_ALL + " WHERE id = %s";
+    public static final String DELETE_TAG_BY_ID = "DELETE FROM eco_news_tags WHERE eco_news_id = %s";
     public static final String DELETE_BY_ID = "DELETE FROM eco_news WHERE id = %s";
 
     private Integer id;
