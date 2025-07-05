@@ -127,7 +127,9 @@ public class HomePage extends BasePage {
     @Step("Click Section Subscription Submit Button")
     public HomePage clickSectionSubscriptionSubmitButton(){
         sectionSubscriptionSubmitButton.click();
-        sectionSubscriptionSuccessMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(sectionSubscriptionSuccessMessageBy));
+        if(!sectionSubscriptionValidationEmailError.isDisplayed()){
+            sectionSubscriptionSuccessMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(sectionSubscriptionSuccessMessageBy));
+        }
         return this;
     }
 }

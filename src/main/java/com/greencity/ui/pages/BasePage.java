@@ -3,7 +3,10 @@ package com.greencity.ui.pages;
 import com.greencity.ui.Base;
 import com.greencity.ui.components.footer.FooterComponent;
 import com.greencity.ui.components.header.HeaderComponent;
+import com.greencity.ui.components.header.HeaderGuestUserComponent;
+import com.greencity.ui.components.header.HeaderLoggedUserComponent;
 import lombok.Getter;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,6 +22,13 @@ import java.util.Objects;
 public abstract class BasePage extends Base {
     @Getter
     protected HeaderComponent header;
+
+    @Getter
+    protected HeaderGuestUserComponent headerGuestUser;
+
+    @Getter
+    protected HeaderLoggedUserComponent headerLoggedUser;
+
     @Getter
     protected FooterComponent footer;
 
@@ -31,6 +41,16 @@ public abstract class BasePage extends Base {
         super(driver);
         header = new HeaderComponent(driver, headerRoot);
         footer = new FooterComponent(driver, FooterRoot);
+        guestOrLoggedIn();
+    }
+
+    public void guestOrLoggedIn() {
+        boolean isGuest = driver.findElements(By.className("header_sign-in-link")).size() > 0;
+        if (isGuest) {
+            this.headerGuestUser = new HeaderGuestUserComponent(driver, headerRoot);
+        } else {
+            this.headerLoggedUser = new HeaderLoggedUserComponent(driver, headerRoot);
+        }
     }
 
 
