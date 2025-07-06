@@ -102,6 +102,9 @@ public class TestValueProvider {
     public String getLocalStorageName() {
         return properties != null ? properties.getProperty("ls.name") : System.getenv("LS_NAME");
     }
+    public String getLocalStorageLanguage() {
+        return properties!=null ? properties.getProperty("ls.language") : System.getenv("LS_LANGUAGE");
+    }
 
     public String getLocalStorageAccessTokenUserB() {
         return properties != null ? properties.getProperty("ls.accessTokenUserB") : System.getenv("LS_ACCESS_TOKEN_USER_B");
