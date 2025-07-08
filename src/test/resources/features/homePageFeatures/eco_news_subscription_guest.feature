@@ -23,7 +23,7 @@ Feature: Eco-news subscription for unregistered users on the GreenCity main page
 
   Scenario: Successful subscription with valid email
     When the user scrolls down to the "Receive interesting Eco-news" section
-    And the user enters "test+3@example.com" into the email input field
+    And the user enters "test+4@example.com" into the email input field
     And clicks the "Subscribe" button
     Then the system should accept the email
     And a success message or confirmation should be shown

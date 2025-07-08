@@ -23,21 +23,17 @@ public class HomePageSteps {
         return homePage;
     }
 
-    // ---------------------- SCENARIO 1 ----------------------
-
     @Given("the user is not logged in to the GreenCity system")
     public void the_user_is_not_logged_in_to_the_green_city_system() {
-        softAssert.assertTrue(getHomePage()
-                        .getHeaderGuestUser()
-                        .getSignInButton()
-                        .isDisplayed(),
-                "User logged in to the GreenCity system or Sign In button is not displayed");
+        hooks.getLocalStorageJS().clearLocalStorage();
+        hooks.getDriver().navigate().refresh();
     }
 
     @Given("the user opens the GreenCity Main Page in a maximized browser window")
     public void the_user_opens_the_green_city_main_page_in_a_maximized_browser_window() {
-        softAssert.assertTrue(hooks.getDriver().getCurrentUrl().contains("/greenCity"),
-                "User should be on the home page");
+        hooks.getDriver().get(hooks.getTestValueProvider().getBaseUIUrl());
+        hooks.getDriver().manage().window().maximize();
+
     }
 
     @When("the user scrolls down to the {string} section")
@@ -71,8 +67,6 @@ public class HomePageSteps {
                 expectedPlaceholder, "Placeholder text mismatch");
     }
 
-    // ---------------------- SCENARIO 2 ----------------------
-
     @When("the user enters {string} into the email input field")
     public void the_user_enters_into_the_email_input_field(String email) {
         getHomePage().enterEmailIntoSectionSubscriptionEmailInput(email);
@@ -90,8 +84,6 @@ public class HomePageSteps {
                 .getAttribute("class");
         softAssert.assertEquals(classAttribute, "visible", "Expected error to be visible for invalid email");
     }
-
-    // ---------------------- SCENARIO 3 ----------------------
 
     @Then("the system should accept the email")
     public void the_system_should_accept_the_email() {
