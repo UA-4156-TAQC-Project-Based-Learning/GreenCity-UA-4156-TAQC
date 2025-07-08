@@ -248,7 +248,7 @@ public class CreateEditNewsPage extends BasePage {
     }
     @Step("Get selected tags")
     public List<String> getSelectedTags() {
-        return driver.findElements(By.cssSelector(".tags-select"))
+        return driver.findElements(By.xpath("//a[@class='global-tag global-tag-clicked']"))
                 .stream()
                 .map(WebElement::getText)
                 .collect(Collectors.toList());

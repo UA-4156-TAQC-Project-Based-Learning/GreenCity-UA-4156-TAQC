@@ -54,11 +54,6 @@ public class TagSelectionSteps {
 
     @Then("User should see only 3 tags selected")
     public void verifyOnlyThreeTagsSelected() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         createEditNewsPage = getCreateEditNewsPage();
         List<String> selectedTags = createEditNewsPage.getSelectedTags();
         hooks.getSoftAssert().assertEquals(selectedTags.size(), 3, "Only three tags should be selected");
