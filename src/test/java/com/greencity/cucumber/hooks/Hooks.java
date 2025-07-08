@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.testng.asserts.SoftAssert;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.time.Duration;
@@ -87,6 +88,16 @@ public class Hooks {
             result = Files.readAllBytes(scrFile.toPath());
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        String filePath = "target/" + attachName + ".png";
+        try (FileOutputStream fos = new FileOutputStream(filePath)) {
+            fos.write(result);
+            System.out.println("Зображення успішно збережено за шляхом: " + filePath);
+
+        } catch (IOException e) {
+            System.err.println("Помилка при збереженні зображення у файл " + filePath + ": " + e.getMessage());
+            e.printStackTrace();
+
         }
         return result;
     }
