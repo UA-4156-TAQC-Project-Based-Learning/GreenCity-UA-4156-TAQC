@@ -43,6 +43,7 @@ public class HeaderComponent extends BaseComponent {
 
     @Step("Click Eco News link in the header")
     public EcoNewsPage goToEcoNews() {
+        waitUntilPageLouder();
         waitUntilElementClickable(ecoNewsLink);
         ecoNewsLink.click();
         return new EcoNewsPage(driver);
