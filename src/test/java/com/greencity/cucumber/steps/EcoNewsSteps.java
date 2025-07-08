@@ -5,6 +5,7 @@ import com.greencity.ui.components.NewsComponent;
 import com.greencity.ui.pages.econewspage.EcoNewsPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 
 public class EcoNewsSteps {
     private final Hooks hooks;
@@ -19,7 +20,7 @@ public class EcoNewsSteps {
         return new EcoNewsPage(hooks.getDriver());
     }
 
-    @And("click the Create news")
+    @When("click the Create news")
     public void clickCreateNews(){
         getEcoNewsPage().clickCreateNewsButton();
     }
@@ -34,7 +35,7 @@ public class EcoNewsSteps {
        hooks.getSoftAssert().assertEquals(createdNews.getTag().getText(),expectedTag,"The tag should be the same");
     }
 
-    @And("click on their own news article with title {string}")
+    @When("click on their own news article with title {string}")
     public void clickOwnNews(String title){
         getEcoNewsPage().findNewsByTitleAndClick(title);
     }
