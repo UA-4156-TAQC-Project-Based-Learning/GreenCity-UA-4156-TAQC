@@ -3,7 +3,6 @@ package com.greencity.ui.components;
 import com.greencity.ui.components.baseComponents.BaseComponent;
 import io.qameta.allure.Step;
 import lombok.Getter;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -24,6 +23,12 @@ public class NewsComponent extends BaseComponent {
 
     @FindBy(xpath = ".//div[@class='filter-tag']")
     private List<WebElement> tags;
+
+    @FindBy(xpath = ".//div[@class='filter-tag']/div/span")
+    private WebElement tag;
+
+    @FindBy(xpath = ".//div[@class='list-text word-wrap ql-snow']")
+    private WebElement content;
 
     @FindBy(xpath = ".//p[contains(@class, 'user-data-text-date')]/span")
     private WebElement publicationDate;
