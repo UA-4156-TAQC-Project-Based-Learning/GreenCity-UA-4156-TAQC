@@ -52,7 +52,8 @@ public class CreateNewsTest extends TestRunnerWithUser {
                 .clickTag(tag)
                 .enterSource(source)
                 .enterContent(content)
-                .clickPublish();
+                .clickPublish()
+                .refreshPage();
 
         List<EcoNewsEntity> ecoNewsEntities = ecoNewsService.getNewsByUserId(testValueProvider.getLocalStorageUserId());
         EcoNewsEntity lastNews = ecoNewsService.getAllNews().getLast();
@@ -69,7 +70,7 @@ public class CreateNewsTest extends TestRunnerWithUser {
     @AfterMethod
     public void cleanUp() {
         if(createdNewsId != null){
-//            tagService.deleteTags(createdNewsId);
+            ecoNewsService.deleteTags(createdNewsId);
             ecoNewsService.deleteNews(createdNewsId);
             createdNewsId = null;
         }

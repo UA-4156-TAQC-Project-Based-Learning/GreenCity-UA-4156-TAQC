@@ -1,12 +1,16 @@
 package com.greencity.cucumber.steps;
 
 import com.greencity.cucumber.hooks.Hooks;
+import com.greencity.ui.components.NewsComponent;
 import com.greencity.ui.elements.NewsTags;
 import com.greencity.ui.pages.CreateEditNewsPage;
-import com.greencity.ui.pages.econewspage.EcoNewsPage;
 import com.greencity.ui.pages.abstractNewsPage.NewsPage;
+import com.greencity.ui.pages.econewspage.EcoNewsPage;
 import com.greencity.ui.pages.homepage.HomePage;
-import io.cucumber.java.en.*;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Owner;
@@ -16,13 +20,19 @@ public class EcoNewsSteps {
 
     private final Hooks hooks;
     private final SoftAssert softAssert;
-    private NewsPage newsPage;
     private final HomePage homePage;
+    private NewsPage newsPage;
+    private EcoNewsPage ecoNewsPage;
+
 
     public EcoNewsSteps(Hooks hooks) {
         this.hooks = hooks;
         this.softAssert = hooks.getSoftAssert();
         this.homePage = new HomePage(hooks.getDriver());
+    }
+
+    private EcoNewsPage getEcoNewsPage() {
+        return new EcoNewsPage(hooks.getDriver());
     }
 
     @Given("User A is logged into the system")
@@ -42,12 +52,12 @@ public class EcoNewsSteps {
     @Owner("Prykhodchenko Oleksandra")
     @Issue("192")
     public void userACreatesNews(String title, String tag) {
-        CreateEditNewsPage createPage = homePage.getHeader()
+        CreateEditNewsPage createPage = homePage
+                .getHeader()
                 .goToEcoNews()
                 .clickCreateNewsButton();
 
-        createPage
-                .enterTitle(title)
+        createPage.enterTitle(title)
                 .enterContent("This is test content for verifying visibility of Edit button.")
                 .clickTag(NewsTags.valueOf(tag.toUpperCase() + "_TAG"))
                 .clickPublish();
@@ -81,7 +91,8 @@ public class EcoNewsSteps {
     @Issue("192")
     public void userBNavigatesToEcoNews() {
         homePage.waitUntilPageLouder();
-        homePage.getHeader().goToEcoNews();
+        homePage.getHeader()
+                .goToEcoNews();
     }
 
     @And("User B opens the first news item")
@@ -89,7 +100,9 @@ public class EcoNewsSteps {
     @Owner("Prykhodchenko Oleksandra")
     @Issue("192")
     public void userBOpensFirstNews() {
-        newsPage = new EcoNewsPage(hooks.getDriver()).clickFirstNewsPage();
+
+        newsPage = new EcoNewsPage(hooks.getDriver())
+                .clickFirstNewsPage();
     }
 
     @Then("the \"Edit news\" button should not be visible to User B")
@@ -112,12 +125,32 @@ public class EcoNewsSteps {
     @Description("User A deletes the previously created news post to clean up")
     @Owner("Prykhodchenko Oleksandra")
     @Issue("192")
-    public void userADeletesTheCreatedNewsPost(){
+    public void userADeletesTheCreatedNewsPost() {
         homePage.getHeader()
                 .goToEcoNews()
                 .clickFirstNewsPage()
                 .clickDeleteButton()
                 .clickYesButton();
         hooks.getDriver().navigate().refresh();
+    }
+
+    @When("click the Create news")
+    public void clickCreateNews() {
+        getEcoNewsPage().clickCreateNewsButton();
+    }
+
+    @Then("the news article with title {string}, text {string}, and tag {string} should be saved in the eco-news page")
+    public void verifyNewsIsVisible(String expectedTitle, String expectedText, String expectedTag) {
+
+        NewsComponent createdNews = getEcoNewsPage().findNewsByTitle(expectedTitle);
+
+        hooks.getSoftAssert().assertEquals(createdNews.getTitle().getText(), expectedTitle, "The title should be the same");
+        hooks.getSoftAssert().assertEquals(createdNews.getContent().getText(), expectedText, "The text should be the same");
+        hooks.getSoftAssert().assertEquals(createdNews.getTag().getText(), expectedTag, "The tag should be the same");
+    }
+
+    @When("click on their own news article with title {string}")
+    public void clickOwnNews(String title) {
+        getEcoNewsPage().findNewsByTitleAndClick(title);
     }
 }
