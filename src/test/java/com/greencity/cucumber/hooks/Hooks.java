@@ -1,9 +1,12 @@
 package com.greencity.cucumber.hooks;
 
+import com.greencity.utils.FileNameNormalizer;
 import com.greencity.utils.LocalStorageJS;
 import com.greencity.utils.TestValueProvider;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.cucumber.java.BeforeAll;
+import io.cucumber.java.Scenario;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
@@ -18,14 +21,19 @@ import org.slf4j.LoggerFactory;
 import org.testng.asserts.SoftAssert;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 public class Hooks {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    public static String PathImageTestIsFailed;
     @Getter
     private WebDriver driver;
     @Getter
@@ -36,6 +44,19 @@ public class Hooks {
 
     @Getter
     private SoftAssert softAssert;
+
+    @BeforeAll
+    public static void beforeAll() {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd_MM_yyyy_HH_mm_ss");
+
+        PathImageTestIsFailed = "target/imageTestIsFailed/" + currentDateTime.format(formatter);
+        try {
+            Files.createDirectories(Path.of(PathImageTestIsFailed));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @Before
     public void driverSetup() {
@@ -69,8 +90,10 @@ public class Hooks {
     }
 
     @After
-    public void tearDown() {
-        saveImageAttach("PICTURE Test Name");
+    public void tearDown(Scenario scenario) {
+        if (scenario.isFailed()) {
+            saveImageAttach(scenario.getName());
+        }
         if (driver != null) {
             driver.quit();
         }
@@ -81,12 +104,20 @@ public class Hooks {
 
     @Attachment(value = "Image name = {0}", type = "image/png")
     public byte[] saveImageAttach(String attachName) {
+        attachName = FileNameNormalizer.normalizeFileName(attachName);
         byte[] result = null;
         File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         try {
             result = Files.readAllBytes(scrFile.toPath());
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        String filePath = PathImageTestIsFailed + "/" + attachName + ".png";
+        try (FileOutputStream fos = new FileOutputStream(filePath)) {
+            fos.write(result);
+            logger.info("Screenshot saved to {}", filePath);
+        } catch (IOException e) {
+            logger.error("Failed to save screenshot to {}", filePath, e);
         }
         return result;
     }
