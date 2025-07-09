@@ -4,6 +4,8 @@ import com.greencity.utils.LocalStorageJS;
 import com.greencity.utils.TestValueProvider;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.cucumber.java.BeforeAll;
+import io.cucumber.java.Scenario;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
@@ -21,12 +23,16 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 public class Hooks {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    public static String TEST_DATE_TIME_RUN;
     @Getter
     private WebDriver driver;
     @Getter
@@ -37,6 +43,18 @@ public class Hooks {
 
     @Getter
     private SoftAssert softAssert;
+
+    @BeforeAll
+    public static void beforeAll() {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd_MM_yyyy_HH_mm_ss");
+        TEST_DATE_TIME_RUN = currentDateTime.format(formatter);
+        try {
+            Files.createDirectories(Path.of("target/"+TEST_DATE_TIME_RUN));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @Before
     public void driverSetup() {
@@ -70,8 +88,10 @@ public class Hooks {
     }
 
     @After
-    public void tearDown() {
-        saveImageAttach("PICTURE Test Name");
+    public void tearDown(Scenario scenario) {
+        if (scenario.isFailed()) {
+            saveImageAttach(scenario.getName());
+        }
         if (driver != null) {
             driver.quit();
         }
@@ -89,15 +109,12 @@ public class Hooks {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String filePath = "target/" + attachName + ".png";
+        String filePath = "target/" + TEST_DATE_TIME_RUN + "/"+ attachName + ".png";
         try (FileOutputStream fos = new FileOutputStream(filePath)) {
             fos.write(result);
-            System.out.println("Зображення успішно збережено за шляхом: " + filePath);
-
+            logger.info("Screenshot saved to {}", filePath);
         } catch (IOException e) {
-            System.err.println("Помилка при збереженні зображення у файл " + filePath + ": " + e.getMessage());
-            e.printStackTrace();
-
+            logger.error("Failed to save screenshot to {}", filePath, e);
         }
         return result;
     }
