@@ -1,5 +1,6 @@
 package com.greencity.cucumber.hooks;
 
+import com.greencity.utils.FileNameNormalizer;
 import com.greencity.utils.LocalStorageJS;
 import com.greencity.utils.TestValueProvider;
 import io.cucumber.java.After;
@@ -32,7 +33,7 @@ import java.time.format.DateTimeFormatter;
 public class Hooks {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public static String TEST_DATE_TIME_RUN;
+    public static String PathImageTestIsFailed;
     @Getter
     private WebDriver driver;
     @Getter
@@ -48,9 +49,10 @@ public class Hooks {
     public static void beforeAll() {
         LocalDateTime currentDateTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd_MM_yyyy_HH_mm_ss");
-        TEST_DATE_TIME_RUN = currentDateTime.format(formatter);
+
+        PathImageTestIsFailed = "target/imageTestIsFailed/" + currentDateTime.format(formatter);
         try {
-            Files.createDirectories(Path.of("target/"+TEST_DATE_TIME_RUN));
+            Files.createDirectories(Path.of(PathImageTestIsFailed));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -102,6 +104,7 @@ public class Hooks {
 
     @Attachment(value = "Image name = {0}", type = "image/png")
     public byte[] saveImageAttach(String attachName) {
+        attachName = FileNameNormalizer.normalizeFileName(attachName);
         byte[] result = null;
         File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         try {
@@ -109,7 +112,7 @@ public class Hooks {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String filePath = "target/" + TEST_DATE_TIME_RUN + "/"+ attachName + ".png";
+        String filePath = PathImageTestIsFailed + "/" + attachName + ".png";
         try (FileOutputStream fos = new FileOutputStream(filePath)) {
             fos.write(result);
             logger.info("Screenshot saved to {}", filePath);
