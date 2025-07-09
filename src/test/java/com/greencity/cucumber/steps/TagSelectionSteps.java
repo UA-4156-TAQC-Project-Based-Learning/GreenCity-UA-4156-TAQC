@@ -21,12 +21,6 @@ public class TagSelectionSteps {
         return new CreateEditNewsPage(hooks.getDriver());
     }
 
-    @Given("User opens the Create News page")
-    public void userIsOnCreateNewsPage() {
-        hooks.getDriver().get(hooks.getTestValueProvider().getBaseUIUrl() + "/news/create-news");
-        createEditNewsPage = getCreateEditNewsPage();
-    }
-
     @When("User selects the first tag")
     public void selectFirstTag() {
         createEditNewsPage = getCreateEditNewsPage();

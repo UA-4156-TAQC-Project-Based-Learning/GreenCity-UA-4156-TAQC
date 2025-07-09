@@ -29,17 +29,7 @@ public class Steps {
     @Step("Login As User in the Test Runner With Users")
     @Given("the base user is registered and logged into the GreenCity system")
     public void userIsRegisteredAndLoggedIn() {
-        // This step can be implemented to ensure the user is registered and logged in.
-        // For example, you might navigate to the login page, enter credentials, and submit the form.
-        hooks.getDriver().get(hooks.getTestValueProvider().getBaseUIUrl());
-        // Add login logic here
-
-        hooks.getLocalStorageJS().setItemLocalStorage("accessToken", hooks.getTestValueProvider().getLocalStorageAccessToken());
-        hooks.getLocalStorageJS().setItemLocalStorage("userId", hooks.getTestValueProvider().getLocalStorageUserId().toString());
-        hooks.getLocalStorageJS().setItemLocalStorage("refreshToken", hooks.getTestValueProvider().getLocalStorageRefreshToken());
-        hooks.getLocalStorageJS().setItemLocalStorage("name", hooks.getTestValueProvider().getLocalStorageName());
-        hooks.getLocalStorageJS().setItemLocalStorage("language",hooks.getTestValueProvider().getLocalStorageLanguage());
-        hooks.getDriver().navigate().refresh();
+        hooks.loginViaLocalStorage();
     }
 
     @ParameterType(".*")
