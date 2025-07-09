@@ -10,7 +10,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Getter
 public class CreateEditNewsPage extends BasePage {
@@ -243,5 +246,13 @@ public class CreateEditNewsPage extends BasePage {
     public String getContentText() {
         return contentInput.getText().trim();
     }
+    @Step("Get selected tags")
+    public List<String> getSelectedTags() {
+        return driver.findElements(By.xpath("//a[@class='global-tag global-tag-clicked']"))
+                .stream()
+                .map(WebElement::getText)
+                .collect(Collectors.toList());
+    }
+
 
 }

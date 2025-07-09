@@ -8,7 +8,10 @@ import org.testng.annotations.Test;
 
 @CucumberOptions(
         features = "src/test/resources/features",
-        glue = "com.greencity.cucumber.steps")
+        glue = "com.greencity.cucumber.steps",
+        tags = "@tagSelection"
+        )
+
 public class TestRunnerCucumber extends AbstractTestNGCucumberTests {
 
     private TestNGCucumberRunner testNGCucumberRunner;
