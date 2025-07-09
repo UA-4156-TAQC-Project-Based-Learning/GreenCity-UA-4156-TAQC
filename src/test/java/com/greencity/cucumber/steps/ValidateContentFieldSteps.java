@@ -31,11 +31,6 @@ public class ValidateContentFieldSteps {
         createEditNewsPage = getCreateEditNewsPage();
     }
 
-    @When("User selects the first tag")
-    public void selectFirstTag() {
-        createEditNewsPage = getCreateEditNewsPage();
-        createEditNewsPage.clickTag(NewsTags.NEWS_TAG);
-    }
 
     @When("User enters {int} characters into the Content field")
     public void userEntersTextIntoContentField(int numberOfCharacters) {

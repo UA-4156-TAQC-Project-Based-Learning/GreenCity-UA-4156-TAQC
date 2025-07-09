@@ -122,4 +122,15 @@ public class Hooks {
         return result;
     }
 
+    public void loginViaLocalStorage() {
+        // This step can be implemented to ensure the user is registered and logged in.
+        // For example, you might navigate to the login page, enter credentials, and submit the form.
+        driver.get(testValueProvider.getBaseUIUrl());
+        localStorageJS.setItemLocalStorage("accessToken", testValueProvider.getLocalStorageAccessToken());
+        localStorageJS.setItemLocalStorage("userId", testValueProvider.getLocalStorageUserId().toString());
+        localStorageJS.setItemLocalStorage("refreshToken", testValueProvider.getLocalStorageRefreshToken());
+        localStorageJS.setItemLocalStorage("name", testValueProvider.getLocalStorageName());
+        localStorageJS.setItemLocalStorage("language", testValueProvider.getLocalStorageLanguage());
+        driver.navigate().refresh();
+    }
 }
