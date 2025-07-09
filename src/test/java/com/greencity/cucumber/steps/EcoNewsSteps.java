@@ -52,9 +52,15 @@ public class EcoNewsSteps {
     @Owner("Prykhodchenko Oleksandra")
     @Issue("192")
     public void userACreatesNews(String title, String tag) {
-        CreateEditNewsPage createPage = homePage.getHeader().goToEcoNews().clickCreateNewsButton();
+        CreateEditNewsPage createPage = homePage
+                .getHeader()
+                .goToEcoNews()
+                .clickCreateNewsButton();
 
-        createPage.enterTitle(title).enterContent("This is test content for verifying visibility of Edit button.").clickTag(NewsTags.valueOf(tag.toUpperCase() + "_TAG")).clickPublish();
+        createPage.enterTitle(title)
+                .enterContent("This is test content for verifying visibility of Edit button.")
+                .clickTag(NewsTags.valueOf(tag.toUpperCase() + "_TAG"))
+                .clickPublish();
         hooks.getDriver().navigate().refresh();
     }
 
@@ -85,7 +91,8 @@ public class EcoNewsSteps {
     @Issue("192")
     public void userBNavigatesToEcoNews() {
         homePage.waitUntilPageLouder();
-        homePage.getHeader().goToEcoNews();
+        homePage.getHeader()
+                .goToEcoNews();
     }
 
     @And("User B opens the first news item")
@@ -93,7 +100,9 @@ public class EcoNewsSteps {
     @Owner("Prykhodchenko Oleksandra")
     @Issue("192")
     public void userBOpensFirstNews() {
-        newsPage = new EcoNewsPage(hooks.getDriver()).clickFirstNewsPage();
+
+        newsPage = new EcoNewsPage(hooks.getDriver())
+                .clickFirstNewsPage();
     }
 
     @Then("the \"Edit news\" button should not be visible to User B")
@@ -117,7 +126,11 @@ public class EcoNewsSteps {
     @Owner("Prykhodchenko Oleksandra")
     @Issue("192")
     public void userADeletesTheCreatedNewsPost() {
-        homePage.getHeader().goToEcoNews().clickFirstNewsPage().clickDeleteButton().clickYesButton();
+        homePage.getHeader()
+                .goToEcoNews()
+                .clickFirstNewsPage()
+                .clickDeleteButton()
+                .clickYesButton();
         hooks.getDriver().navigate().refresh();
     }
 
