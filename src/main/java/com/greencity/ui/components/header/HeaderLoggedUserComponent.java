@@ -11,6 +11,9 @@ public class HeaderLoggedUserComponent extends HeaderComponent {
     @FindBy(className = "nav-global-button")
     private WebElement loggedUserDropdown;
 
+    @FindBy(xpath = ".//li[contains(@class,'user-name')]")
+    private WebElement loggedInUserName;
+
     public HeaderLoggedUserComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
@@ -18,5 +21,9 @@ public class HeaderLoggedUserComponent extends HeaderComponent {
     public void clickUserDropdown() {
         waitUntilElementClickable(loggedUserDropdown);
         loggedUserDropdown.click();
+    }
+
+    public String getLoggedInUserName() {
+        return loggedInUserName.getText().trim();
     }
 }
