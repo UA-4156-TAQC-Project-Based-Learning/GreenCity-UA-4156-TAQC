@@ -12,6 +12,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 
@@ -86,6 +87,16 @@ public class EcoNewsPage extends BasePage {
             }
         }
         return new NewsPage(driver);
+    }
+
+    public NewsComponent findNewsByTitle(String title) {
+        List<NewsComponent> newsList = this.getNewsComponents();
+        for (NewsComponent news : newsList) {
+            if (news.getTitleText().equals(title)) {
+                return news;
+            }
+        }
+        throw new NoSuchElementException("News with title '" + title + "' not found on the page.");
     }
 
     public boolean isAnyTagFilterActive() {

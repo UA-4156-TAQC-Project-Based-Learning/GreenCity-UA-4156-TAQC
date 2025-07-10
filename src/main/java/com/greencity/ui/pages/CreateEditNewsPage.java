@@ -13,6 +13,7 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Getter
 public class CreateEditNewsPage extends BasePage {

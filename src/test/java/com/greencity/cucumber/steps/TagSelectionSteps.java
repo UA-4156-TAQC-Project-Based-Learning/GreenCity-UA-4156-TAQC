@@ -43,6 +43,12 @@ public class TagSelectionSteps {
         createEditNewsPage = ecoNewsPage.clickCreateNewsButton();
     }
 
+    @When("User selects the first tag")
+    public void selectFirstTag() {
+        createEditNewsPage = getCreateEditNewsPage();
+        createEditNewsPage.clickTag(NewsTags.NEWS_TAG);
+    }
+
     @When("User selects the {string} tag")
     public void userSelectsDynamicTag(String tag) {
         createEditNewsPage = getCreateEditNewsPage();
