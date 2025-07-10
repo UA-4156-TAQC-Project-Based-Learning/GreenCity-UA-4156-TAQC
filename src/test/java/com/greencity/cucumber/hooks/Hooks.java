@@ -77,7 +77,7 @@ public class Hooks {
 //        for (String option : testValueProvider.getChromeOptions()) {
 //            options.addArguments(option);
 //        }
-
+//
 //        options.addArguments("--disable-notifications");
 //        options.addArguments("--disable-popup-blocking");
 //        options.addArguments("--headless");
@@ -130,7 +130,7 @@ public class Hooks {
         localStorageJS.setItemLocalStorage("userId", testValueProvider.getLocalStorageUserId().toString());
         localStorageJS.setItemLocalStorage("refreshToken", testValueProvider.getLocalStorageRefreshToken());
         localStorageJS.setItemLocalStorage("name", testValueProvider.getLocalStorageName());
-        localStorageJS.setItemLocalStorage("language", testValueProvider.getLocalStorageLanguage());
+//        localStorageJS.setItemLocalStorage("language", testValueProvider.getLocalStorageLanguage());
         driver.navigate().refresh();
     }
 }
