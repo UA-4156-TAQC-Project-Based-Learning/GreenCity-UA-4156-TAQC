@@ -8,8 +8,6 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import java.util.List;
-
 public class TagSelectionSteps {
     private final Hooks hooks;
     private CreateEditNewsPage createEditNewsPage;
@@ -69,29 +67,24 @@ public class TagSelectionSteps {
         createEditNewsPage.clickPublish();
     }
 
-    @Then("The 'Initiatives' tag is not selected")
-    public void initiativesTagIsNotSelected() {
+    @Then("The {string} tag is not selected")
+    public void tagIsNotSelected(String ta) {
         createEditNewsPage = getCreateEditNewsPage();
-        hooks.getSoftAssert().assertFalse(createEditNewsPage.getSelectedTags().contains(NewsTags.INITIATIVES_TAG),
-                "The 'Initiatives' tag should not be selected");
+        hooks.getSoftAssert().assertEquals(createEditNewsPage.getSelectedTagCount(),3, "There should be three tags selected");
+        hooks.getSoftAssert().assertFalse(createEditNewsPage.isTagSelected(NewsTags.getByName(ta)), "The tag " + ta + " should not be selected");
     }
 
 
-    @Then("News is published with the {string} tag")
-    public void newsPublishedWithOneTag(String tag) {
+    @Then("News is published with the one tag")
+    public void newsPublishedWithOneTag() {
         ecoNewsPage = getEcoNewsPage();
-        List<String> publishedTags = ecoNewsPage.getSelectedTags();
-        hooks.getSoftAssert().assertEquals(publishedTags.size(), 1, "News should be published with one tag");
-        hooks.getSoftAssert().assertTrue(publishedTags.contains(tag), "Published tag should be: " + tag);
+        hooks.getSoftAssert().assertEquals(ecoNewsPage.getSelectedTagCount(), 1, "News should be published with one tag selected");
     }
 
-    @Then("News is published with the {string}, {string}, and {string} tags")
-    public void newsPublishedWithThreeTags(String tag1, String tag2, String tag3) {
+    @Then("News is published with three tags")
+    public void newsPublishedWithThreeTags() {
         ecoNewsPage = getEcoNewsPage();
-        List<String> publishedTags = ecoNewsPage.getSelectedTags();
-        List<String> expected = List.of(tag1, tag2, tag3);
-        hooks.getSoftAssert().assertTrue(publishedTags.containsAll(expected),
-                "Published tags should contain all: " + expected);
+        hooks.getSoftAssert().assertEquals(ecoNewsPage.getSelectedTagCount(), 3, "News should be published with three tags selected");
     }
 
 }

@@ -111,12 +111,6 @@ public class EcoNewsPage extends BasePage {
         return selectedTags.size();
     }
 
-    public List<String> getSelectedTags() {
-        return driver.findElements(By.xpath("//div[contains(@class,'tags-list')]//a[contains(@class,'global-tag') and contains(@class,'global-tag-clicked') or contains(@class,'global-tag')]"))
-                .stream()
-                .map(WebElement::getText)
-                .toList();
-    }
 
 
 

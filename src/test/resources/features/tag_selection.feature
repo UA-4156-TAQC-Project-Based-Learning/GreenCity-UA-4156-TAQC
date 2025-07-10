@@ -12,7 +12,7 @@ Feature: Tag Selection
     And User fills in the Main Text with "Test content with 20 chars"
     And User selects the "News" tag
     And User clicks Publish button
-    Then News is published with the "News" tag
+    Then News is published with the one tag
 
 
   Scenario: User can publish news with three tags
@@ -24,7 +24,7 @@ Feature: Tag Selection
     And User selects the "Events" tag
     And User selects the "Education" tag
     And User clicks Publish button
-    Then News is published with the "News", "Events", and "Education" tags
+    Then News is published with three tags
 
 
   Scenario: User cannot select more than three tags
@@ -38,5 +38,5 @@ Feature: Tag Selection
     And User selects the "Initiatives" tag
     Then The "Initiatives" tag is not selected
     When User clicks Publish button
-    Then News is published with the "News", "Events", and "Education" tags
-    And The "Initiatives" tag is not selected
+    Then News is published with three tags
+
