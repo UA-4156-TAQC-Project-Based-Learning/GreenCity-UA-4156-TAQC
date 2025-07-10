@@ -1,27 +1,24 @@
 Feature: Content Length Validation
 
-  Description: Verify that content shorter than 20 characters is not accepted when editing a news post.
-
   Background:
-    Given the author is editing a news post
+    Given the base user is registered and logged into the GreenCity system
 
   Scenario: Attempt to submit content shorter than 20 characters
-    When the author sets the "Content" field to less than 20 characters
-    And the author clicks "Submit"
+    When click the "Eco news" link
+    And click on their own news article with title "title"
+    And click the Edit news
+    And enter a valid text "bla "
+    And click the "Edit" button
     Then an error message indicating minimum length requirement should be displayed
-    And the submit action should fail
+    And the "Edit" button should be disabled
+    And the user a still on the edit page
 
-Feature: Title Field Validation
-
-  Description: Verify that a news post cannot be submitted without a title.
-
-  Background:
-    Given the author is editing a news post
 
   Scenario: Attempt to submit news with an empty title
-    When the author opens the edit form
-    And the author clears the "Title" field
-    And the author clicks the "Edit" button
+    When click the "Eco news" link
+    And click on their own news article with title "title"
+    And enter a valid title " "
+    And click the "Edit" button
     Then the "Title" field should be highlighted in red
     And the "Edit" button should be disabled
-    And the news post should not be updated
+    And the user a still on the edit page

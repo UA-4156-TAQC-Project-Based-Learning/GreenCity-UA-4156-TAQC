@@ -29,9 +29,6 @@ public class HeaderComponent extends BaseComponent {
     @FindBy(xpath = ".//div[@class = 'header_navigation-menu']")
     private WebElement modalRoot;
 
-    @FindBy(xpath = ".//li[contains(@class,'user-name')]")
-    private WebElement loggedInUserName;
-
     @FindBy(id = "header_user-wrp")
     private WebElement userDropdownToggle;
 
@@ -40,16 +37,13 @@ public class HeaderComponent extends BaseComponent {
 
     private UserDropdownComponent userDropdown;
 
-    public String getLoggedInUserName() {
-        return loggedInUserName.getText().trim();
-    }
-
     public HeaderComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 
     @Step("Click Eco News link in the header")
     public EcoNewsPage goToEcoNews() {
+        waitUntilPageLouder();
         waitUntilElementClickable(ecoNewsLink);
         ecoNewsLink.click();
         return new EcoNewsPage(driver);
