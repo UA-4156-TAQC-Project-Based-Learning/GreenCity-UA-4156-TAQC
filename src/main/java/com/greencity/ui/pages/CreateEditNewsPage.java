@@ -254,5 +254,9 @@ public class CreateEditNewsPage extends BasePage {
                 .collect(Collectors.toList());
     }
 
+    @Step("Get tag by name")
+    public WebElement getByName(String tag) {
+        return driver.findElement(By.xpath("//a[contains(@class,'global-tag') and text()='" + tag + "']"));
+    }
 
 }
