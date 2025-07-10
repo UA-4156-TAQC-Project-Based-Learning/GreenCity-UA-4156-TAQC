@@ -36,4 +36,13 @@ public enum NewsTags {
         return false;
     }
 
+    public static NewsTags getByName(String name) {
+        for (NewsTags tag : NewsTags.values()) {
+            if (tag.getEnglishName().equalsIgnoreCase(name) || tag.getUkrainianName().equalsIgnoreCase(name)) {
+                return tag;
+            }
+        }
+        throw new IllegalArgumentException("No NewsTags with name: " + name);
+    }
+
 }

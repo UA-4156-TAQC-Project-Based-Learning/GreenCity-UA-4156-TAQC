@@ -116,4 +116,13 @@ public class EcoNewsPage extends BasePage {
                 .toList();
     }
 
+    @Step("Get number of selected tag filters")
+    public int getSelectedTagCount() {
+        List<WebElement> selectedTags = driver.findElements(By.cssSelector(".custom-chip.global-tag.global-tag-clicked"));
+        return selectedTags.size();
+    }
+
+
+
+
 }

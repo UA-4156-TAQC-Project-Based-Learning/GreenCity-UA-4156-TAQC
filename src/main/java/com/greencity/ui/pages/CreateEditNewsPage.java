@@ -246,13 +246,22 @@ public class CreateEditNewsPage extends BasePage {
     public String getContentText() {
         return contentInput.getText().trim();
     }
-    @Step("Get selected tags")
-    public List<String> getSelectedTags() {
-        return driver.findElements(By.xpath("//a[@class='global-tag global-tag-clicked']"))
-                .stream()
-                .map(WebElement::getText)
-                .collect(Collectors.toList());
+
+    @Step("Get number of selected tags")
+    public int getSelectedTagCount() {
+        List<WebElement> selectedTags = driver.findElements(By.cssSelector(".global-tag.global-tag-clicked"));
+        return selectedTags.size();
     }
 
+    public boolean isTagSelected(NewsTags tag) {
+        List<WebElement> tags = driver.findElements(By.cssSelector(".global-tag"));
+        for (WebElement el : tags) {
+            if (el.getText().trim().equalsIgnoreCase(tag.toString())) {
+                String classAttr = el.getAttribute("class");
+                return classAttr != null && classAttr.contains("global-tag-clicked");
+            }
+        }
+        return false;
+    }
 
 }

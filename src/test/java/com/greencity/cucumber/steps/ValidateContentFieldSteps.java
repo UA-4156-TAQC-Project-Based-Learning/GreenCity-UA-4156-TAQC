@@ -21,17 +21,6 @@ public class ValidateContentFieldSteps {
         this.softAssert=hooks.getSoftAssert();
     }
 
-    private CreateEditNewsPage getCreateEditNewsPage() {
-        return new CreateEditNewsPage(hooks.getDriver());
-    }
-
-    @Given("User opens the Create News page")
-    public void userIsOnCreateNewsPage() {
-        hooks.getDriver().get(hooks.getTestValueProvider().getBaseUIUrl() + "/news/create-news");
-        createEditNewsPage = getCreateEditNewsPage();
-    }
-
-
     @When("User enters {int} characters into the Content field")
     public void userEntersTextIntoContentField(int numberOfCharacters) {
         String content = generateText(numberOfCharacters);
