@@ -22,7 +22,7 @@ public class EcoNewsSteps {
     private final SoftAssert softAssert;
     private final HomePage homePage;
     private NewsPage newsPage;
-    private EcoNewsPage ecoNewsPage;
+
 
 
     public EcoNewsSteps(Hooks hooks) {

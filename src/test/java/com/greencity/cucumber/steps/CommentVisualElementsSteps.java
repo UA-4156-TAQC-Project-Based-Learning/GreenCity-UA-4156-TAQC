@@ -1,8 +1,8 @@
 package com.greencity.cucumber.steps;
 
 import com.greencity.cucumber.hooks.Hooks;
-import com.greencity.ui.components.newsComponents.NewsCommentItem;
-import com.greencity.ui.components.newsComponents.NewsCommentsComponent;
+import com.greencity.ui.components.newsComponents.CommentItem;
+import com.greencity.ui.components.newsComponents.CommentsComponent;
 import com.greencity.ui.pages.abstractNewsPage.NewsPage;
 import com.greencity.ui.pages.homepage.HomePage;
 import io.cucumber.java.en.Given;
@@ -15,7 +15,7 @@ public class CommentVisualElementsSteps {
     private final Hooks hooks;
     private final SoftAssert softAssert;
     private List<WebElement> commentElements;
-    private NewsCommentItem firstCommentItem;
+    private CommentItem firstCommentItem;
     private String loggedInUserName;
 
     public CommentVisualElementsSteps(Hooks hooks) {
@@ -38,10 +38,10 @@ public class CommentVisualElementsSteps {
                 .goToEcoNews()
                 .clickFirstNewsPage();
 
-        NewsCommentsComponent comments = new NewsCommentsComponent(hooks.getDriver(), newsPage.getCommentsRoot());
+        CommentsComponent comments = new CommentsComponent(hooks.getDriver(), newsPage.getCommentsRoot());
         commentElements = comments.getCommentItems();
         if (!commentElements.isEmpty()) {
-            firstCommentItem = new NewsCommentItem(hooks.getDriver(), commentElements.get(0));
+            firstCommentItem = new CommentItem(hooks.getDriver(), commentElements.get(0));
         }
     }
 

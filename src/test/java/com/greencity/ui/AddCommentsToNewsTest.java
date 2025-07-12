@@ -2,7 +2,7 @@ package com.greencity.ui;
 
 import com.greencity.jdbc.entity.CommentEntity;
 import com.greencity.jdbc.services.CommentService;
-import com.greencity.ui.components.newsComponents.NewsCommentsComponent;
+import com.greencity.ui.components.newsComponents.CommentsComponent;
 import com.greencity.ui.pages.abstractNewsPage.NewsPage;
 import com.greencity.ui.pages.homepage.HomePage;
 import com.greencity.ui.testrunners.BaseTestRunner;
@@ -53,7 +53,7 @@ public class AddCommentsToNewsTest extends BaseTestRunner {
                 .goToEcoNews()
                 .clickFirstNewsPage();
 
-        NewsCommentsComponent comments = new NewsCommentsComponent(driver, newsPage.getCommentsRoot());
+        CommentsComponent comments = new CommentsComponent(driver, newsPage.getCommentsRoot());
 
         softAssert.assertTrue(comments.getCommentsTitleText().equals("Comments"), "Title 'Comments' should be visible");
         softAssert.assertTrue(comments.getDisplayedCommentCount() >= 0, "Comments should be displayed");
@@ -78,7 +78,7 @@ public class AddCommentsToNewsTest extends BaseTestRunner {
                 .goToEcoNews()
                 .clickFirstNewsPage();
 
-        NewsCommentsComponent comments = new NewsCommentsComponent(driver, newsPage.getCommentsRoot());
+        CommentsComponent comments = new CommentsComponent(driver, newsPage.getCommentsRoot());
 
         softAssert.assertTrue(comments.getCommentsTitleText().equals("Comments"), "Title 'Comments' should be visible");
 
