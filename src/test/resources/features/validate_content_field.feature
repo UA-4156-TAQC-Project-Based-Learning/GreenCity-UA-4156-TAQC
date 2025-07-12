@@ -32,3 +32,14 @@ Feature: Validation of "Content" field in Create News form
     And User clicks the Publish button
     Then The news is published successfully
 
+  Scenario: News is successfully published when the text in the "Content" field reaches its maximum length
+
+    When User opens the Create News page
+    And User enters 20 characters into the title field
+    And User selects the first tag
+    And User enters 63206 characters into the Content field
+    Then Content field counter message "Number of characters: 63206" is shown
+    And Publish button is enabled
+    And User clicks the Publish button
+    Then The news is published successfully
+

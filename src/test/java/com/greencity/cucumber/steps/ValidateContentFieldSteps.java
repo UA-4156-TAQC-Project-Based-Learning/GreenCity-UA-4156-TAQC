@@ -18,7 +18,7 @@ public class ValidateContentFieldSteps {
 
     public ValidateContentFieldSteps(Hooks hooks) {
         this.hooks = hooks;
-        this.softAssert=hooks.getSoftAssert();
+        this.softAssert = hooks.getSoftAssert();
     }
 
     private CreateEditNewsPage getCreateEditNewsPage() {
@@ -45,7 +45,7 @@ public class ValidateContentFieldSteps {
     }
 
     @When("User clicks the Publish button")
-    public void the_user_clicks_the_button(String string) {
+    public void clicksPublishButton() {
         createEditNewsPage.getPublishButton().click();
     }
 
@@ -81,19 +81,16 @@ public class ValidateContentFieldSteps {
 
     @Then("Publish button is disabled")
     public void isPublishButtonDisabled() {
-        softAssert.assertFalse(createEditNewsPage.getPublishButton().isEnabled());
+        softAssert.assertFalse(createEditNewsPage.getPublishButton().isEnabled(), "Publish button is not disabled");
     }
 
     @Then("Publish button is enabled")
     public void isPublishButtonEnabled() {
-        softAssert.assertTrue(createEditNewsPage.getPublishButton().isEnabled());
-        throw new io.cucumber.java.PendingException();
+        softAssert.assertTrue(createEditNewsPage.getPublishButton().isEnabled(), "Publish button is not enabled");
     }
 
     @Then("The news is published successfully")
     public void isNewsPublishedSuccesfully() {
         softAssert.assertTrue(hooks.getDriver().getCurrentUrl().contains("/news"), "EcoNews Page is not opened");
     }
-
-
 }
