@@ -42,6 +42,6 @@ public class EventPage extends BasePage {
                 break;
             }
         }
-        return new EventPage(driver);
+        return this;
     }
 }

@@ -22,14 +22,12 @@ public class CommentSteps {
     private List<WebElement> commentElements;
     private String loggedInUserName;
     private final NewsPage newsPage;
-    private final CommentItem commentItem;
     private int previousCommentCount;
 
     public CommentSteps(Hooks hooks) {
         this.hooks = hooks;
         this.softAssert = hooks.getSoftAssert();
         this.newsPage = new NewsPage(hooks.getDriver());
-        this.commentItem = new CommentItem(hooks.getDriver(), newsPage.getCommentsRoot());
     }
 
     public CommentsComponent getCommentsComponent() {
@@ -136,13 +134,15 @@ public class CommentSteps {
 
     @Then("username are displayed")
     public void isUsernameDisplayed(){
-        softAssert.assertTrue(commentItem.getAuthorName().isDisplayed(), "Username must be displayed.");
-        softAssert.assertEquals(commentItem.getAuthorNameText(), hooks.getTestValueProvider().getUserName(), "The name must be the same.");
+        CommentItem ownComment = getCommentsComponent().getOwnComment(hooks.getTestValueProvider().getUserName());
+        softAssert.assertTrue(ownComment.getAuthorName().isDisplayed(), "Username must be displayed.");
+        softAssert.assertEquals(ownComment.getAuthorNameText(), hooks.getTestValueProvider().getUserName(), "The name must be the same.");
     }
 
     @Then("avatar are displayed")
     public void isAvatarDisplayed(){
-        softAssert.assertTrue(commentItem.getCommentAvatar().isDisplayed(),"Avatar should be displayed.");
+        CommentItem ownComment = getCommentsComponent().getOwnComment(hooks.getTestValueProvider().getUserName());
+        softAssert.assertTrue(ownComment.getCommentAvatar().isDisplayed(),"Avatar should be displayed.");
     }
 
     @Then("total comment count is updated correctly")

@@ -9,10 +9,10 @@ import org.openqa.selenium.support.FindBy;
 @Getter
 public class EventComponent extends BaseComponent {
 
-    @FindBy(xpath = "//p[contains(@class, 'event-name')]")
+    @FindBy(xpath = ".//p[contains(@class, 'event-name')]")
     private WebElement title;
 
-    @FindBy(xpath = "//div[@class='btn-group']/button[contains(text(),'More')]")
+    @FindBy(xpath = ".//div[@class='btn-group']/button[contains(text(),'More')]")
     private WebElement moreButton;
 
     public EventComponent(WebDriver driver, WebElement rootElement) {
