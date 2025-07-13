@@ -2,6 +2,7 @@ package com.greencity.jdbc.dao;
 
 import com.greencity.jdbc.entity.UserEntity;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -44,5 +45,24 @@ public class UserDAO extends BaseDAO {
             ManagerDAO.closeAllStatements();
         }
         return UserEntity.parseRow(rows.get(0));
+    }
+
+    public Integer countUsers() {
+        Integer count = 0;
+        Statement statement = ManagerDAO.getInstance(url, login, password).getStatement();
+        ResultSet resultSet = null;
+
+        try {
+            resultSet = statement.executeQuery(UserEntity.COUNT_USERS);
+            if (resultSet.next()) {
+                count = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            ManagerDAO.closeAllStatements();
+        }
+
+        return count;
     }
 }

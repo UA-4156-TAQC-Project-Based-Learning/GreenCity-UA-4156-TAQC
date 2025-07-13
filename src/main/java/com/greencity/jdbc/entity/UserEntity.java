@@ -10,6 +10,7 @@ import java.util.List;
 public class UserEntity {
     public static final String SELECT_ALL = "SELECT * FROM users";
     public static final String FIND_BY_EMAIL = "SELECT * FROM users WHERE email = '%s'";
+    public static final String COUNT_USERS = "SELECT COUNT(*) FROM users";
 
     private Integer id;
     private Timestamp dateOfRegistration;

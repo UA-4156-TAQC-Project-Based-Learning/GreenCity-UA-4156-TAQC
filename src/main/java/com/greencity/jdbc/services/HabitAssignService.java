@@ -1,13 +1,11 @@
 package com.greencity.jdbc.services;
 
 import com.greencity.jdbc.dao.HabitAssignDAO;
-import com.greencity.jdbc.entity.CommentEntity;
 import com.greencity.jdbc.entity.HabitAssignEntity;
-import com.greencity.jdbc.entity.UserEntity;
 
 import java.util.List;
 
-public class HabitAssignService extends BaseServise {
+public class HabitAssignService extends BaseService {
 
     private HabitAssignDAO habitAssignDAO;
 

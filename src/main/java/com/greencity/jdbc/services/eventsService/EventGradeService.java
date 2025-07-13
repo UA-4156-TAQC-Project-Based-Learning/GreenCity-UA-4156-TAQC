@@ -2,11 +2,11 @@ package com.greencity.jdbc.services.eventsService;
 
 import com.greencity.jdbc.dao.eventsDAO.EventGradeDAO;
 import com.greencity.jdbc.entity.eventsEntity.EventGradeEntity;
-import com.greencity.jdbc.services.BaseServise;
+import com.greencity.jdbc.services.BaseService;
 
 import java.util.List;
 
-public class EventGradeService extends BaseServise {
+public class EventGradeService extends BaseService {
     private final EventGradeDAO eventGradeDAO;
 
     public EventGradeService(String login, String password, String url) {

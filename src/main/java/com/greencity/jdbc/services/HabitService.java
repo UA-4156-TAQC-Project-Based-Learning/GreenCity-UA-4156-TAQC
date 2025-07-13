@@ -5,7 +5,7 @@ import com.greencity.jdbc.entity.HabitEntity;
 
 import java.util.List;
 
-public class HabitService extends BaseServise {
+public class HabitService extends BaseService {
     private final HabitDAO habitDAO;
 
     public HabitService(String login, String password, String url, HabitDAO habitDAO) {

@@ -2,11 +2,11 @@ package com.greencity.jdbc.services.eventsService;
 
 import com.greencity.jdbc.dao.eventsDAO.EventUserLikeDAO;
 import com.greencity.jdbc.entity.eventsEntity.EventUserLikeEntity;
-import com.greencity.jdbc.services.BaseServise;
+import com.greencity.jdbc.services.BaseService;
 
 import java.util.List;
 
-public class EventUserLikeService extends BaseServise {
+public class EventUserLikeService extends BaseService {
     private final EventUserLikeDAO eventUserLikeDAO;
 
     public EventUserLikeService(String login, String password, String url) {
