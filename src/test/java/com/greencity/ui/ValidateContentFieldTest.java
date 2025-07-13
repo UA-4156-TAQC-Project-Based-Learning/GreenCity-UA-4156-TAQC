@@ -1,5 +1,7 @@
 package com.greencity.ui;
 
+import com.greencity.jdbc.entity.EcoNewsEntity;
+import com.greencity.jdbc.services.EcoNewsService;
 import com.greencity.ui.elements.NewsTags;
 import com.greencity.ui.pages.CreateEditNewsPage;
 import com.greencity.ui.pages.econewspage.EcoNewsPage;
@@ -10,12 +12,26 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Owner;
 import org.openqa.selenium.Keys;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
+import java.util.List;
 
 import static com.greencity.ui.pages.CreateEditNewsPage.generateText;
 
 public class ValidateContentFieldTest extends TestRunnerWithUser {
+
+    private EcoNewsService ecoNewsService;
+
+    @BeforeClass
+    public void init(){
+        this.ecoNewsService = new EcoNewsService(
+                testValueProvider.getJDBCGreenCityUsername(),
+                testValueProvider.getJDBCGreenCityPassword(),
+                testValueProvider.getJDBCGreenCityURL()
+        );
+    }
 
     @Issue("17")
     @Owner("Maryna Rasskazova")
@@ -101,7 +117,6 @@ public class ValidateContentFieldTest extends TestRunnerWithUser {
                 "The actual Content Info message color does not match the expected color.");
 
         softAssert.assertTrue(createEditNewsPage.getPublishButton().isEnabled(), "Publish button should be enabled");
-
         softAssert.assertAll();
     }
 
@@ -123,16 +138,20 @@ public class ValidateContentFieldTest extends TestRunnerWithUser {
                 .enterTitle(title)
                 .clickTag(NewsTags.EDUCATION_TAG)
                 .enterContent(textWithValidLength)
-                .getPublishButton().click();
+                .clickPublish()
+                .refreshPage();
 
         EcoNewsPage ecoNewsPage = new EcoNewsPage(driver);
+        List<EcoNewsEntity> ecoNewsEntities = ecoNewsService.getNewsByUserId(testValueProvider.getLocalStorageUserId());
 
-        String actualTitleOfFirstNews = ecoNewsPage.getNewsComponents().get(0).getTitle().getText();
+        String actualTitleOfFirstNews = ecoNewsPage.getNewsComponents().getFirst().getTitle().getText();
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertTrue(driver.getCurrentUrl().contains("/news"), "EcoNews Page is not opened");
 
         softAssert.assertEquals(actualTitleOfFirstNews, title);
+        softAssert.assertEquals(ecoNewsEntities.getLast().getTitle(), title);
+
         softAssert.assertAll();
     }
 }
