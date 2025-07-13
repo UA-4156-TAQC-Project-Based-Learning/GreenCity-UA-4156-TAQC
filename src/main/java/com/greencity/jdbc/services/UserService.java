@@ -21,7 +21,7 @@ public class UserService extends BaseService {
         return userDAO.selectByEmail(email);
     }
 
-    public int getUserCount() {
+    public Integer getUserCount() {
         return userDAO.countUsers();
     }
 }
