@@ -150,6 +150,7 @@ public class CreateEditNewsPage extends BasePage {
         return this;
     }
 
+    @Step("Enter text into Content field with JS")
     public CreateEditNewsPage enterContentJS(String text) {
         contentInput.clear();
         threadJs.executeScript("arguments[0].innerText = arguments[1];"
@@ -159,17 +160,20 @@ public class CreateEditNewsPage extends BasePage {
         return this;
     }
 
+    @Step("Upload image")
     public CreateEditNewsPage uploadImage(String filePath) {
         browserLink.sendKeys(filePath);
         return this;
     }
 
+    @Step("Click Submit image button")
     public CreateEditNewsPage clickSubmitImage() {
         waitUntilElementClickable(submitImgButton);
         submitImgButton.click();
         return this;
     }
 
+    @Step("Click Cancel image button")
     public CreateEditNewsPage clickCancelImgButton() {
         waitUntilElementClickable(cancelImgButton);
         cancelImgButton.click();
@@ -182,6 +186,7 @@ public class CreateEditNewsPage extends BasePage {
         return new CancelConfirmModal(driver, modalRoot);
     }
 
+    @Step("Click Preview button")
     public PreviewNewsPage clickPreview() {
         waitUntilElementClickable(previewButton);
         previewButton.click();
@@ -201,6 +206,7 @@ public class CreateEditNewsPage extends BasePage {
         return this;
     }
 
+    @Step("Publish news")
     public EcoNewsPage createNews(String title, String source, NewsTags tag, String content) {
         return this.enterTitle(title)
                 .enterSource(source)
@@ -209,6 +215,7 @@ public class CreateEditNewsPage extends BasePage {
                 .clickPublish();
     }
 
+    @Step("Click Edit news button")
     public EcoNewsPage clickEdit() {
         waitUntilElementVisible(editButton);
         editButton.click();
@@ -253,6 +260,5 @@ public class CreateEditNewsPage extends BasePage {
                 .map(WebElement::getText)
                 .collect(Collectors.toList());
     }
-
 
 }

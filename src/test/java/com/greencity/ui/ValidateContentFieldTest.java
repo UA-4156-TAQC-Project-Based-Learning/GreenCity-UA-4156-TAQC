@@ -5,6 +5,10 @@ import com.greencity.ui.pages.CreateEditNewsPage;
 import com.greencity.ui.pages.econewspage.EcoNewsPage;
 import com.greencity.ui.pages.homepage.HomePage;
 import com.greencity.ui.testrunners.TestRunnerWithUser;
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Owner;
 import org.openqa.selenium.Keys;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -13,6 +17,10 @@ import static com.greencity.ui.pages.CreateEditNewsPage.generateText;
 
 public class ValidateContentFieldTest extends TestRunnerWithUser {
 
+    @Issue("17")
+    @Owner("Maryna Rasskazova")
+    @Description("Verify the validation of Content field if less than 20 characters are entered")
+    @Feature("Create News")
     @Test
     public void verifyTooShortTextInContentField() {
 
@@ -43,6 +51,10 @@ public class ValidateContentFieldTest extends TestRunnerWithUser {
         softAssert.assertAll();
     }
 
+    @Issue("17")
+    @Owner("Maryna Rasskazova")
+    @Description("Verify the validation of Content field if more than 63206 characters are entered")
+    @Feature("Create News")
     @Test
     public void verifyTooLongTextInContentField() {
 
@@ -93,6 +105,10 @@ public class ValidateContentFieldTest extends TestRunnerWithUser {
         softAssert.assertAll();
     }
 
+    @Issue("17")
+    @Owner("Maryna Rasskazova")
+    @Description("Verify that text between 20 and 63206 characters in the Content field is accepted")
+    @Feature("Create News")
     @Test
     public void verifyValidLengthTextInContentField() {
 

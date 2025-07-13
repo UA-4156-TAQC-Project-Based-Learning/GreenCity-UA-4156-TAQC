@@ -4,6 +4,10 @@ import com.greencity.ui.elements.NewsTags;
 import com.greencity.ui.pages.CreateEditNewsPage;
 import com.greencity.ui.pages.homepage.HomePage;
 import com.greencity.ui.testrunners.TestRunnerWithUser;
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Owner;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -11,6 +15,10 @@ import static com.greencity.ui.pages.CreateEditNewsPage.generateText;
 
 public class ValidateTitleFieldTest extends TestRunnerWithUser {
 
+    @Issue("14")
+    @Owner("Maryna Rasskazova")
+    @Description("Verify the validation of an empty Title field ")
+    @Feature("Create News")
     @Test
     public void verifyEmptyTitleField(){
         CreateEditNewsPage createEditNewsPage = new HomePage(driver)
@@ -33,6 +41,10 @@ public class ValidateTitleFieldTest extends TestRunnerWithUser {
         softAssert.assertAll();
     }
 
+    @Issue("14")
+    @Owner("Maryna Rasskazova")
+    @Description("Verify the validation of the Title field with text that exceeds the maximum length")
+    @Feature("Create News")
     @Test
     public void verifyTooLongTextInTitleField() {
 
@@ -65,6 +77,10 @@ public class ValidateTitleFieldTest extends TestRunnerWithUser {
 
     }
 
+    @Issue("14")
+    @Owner("Maryna Rasskazova")
+    @Description("Verify that text between 1 and 170 characters in the Title field is accepted")
+    @Feature("Create News")
     @Test
     public void verifyValidTextLengthInTitleField() {
 
