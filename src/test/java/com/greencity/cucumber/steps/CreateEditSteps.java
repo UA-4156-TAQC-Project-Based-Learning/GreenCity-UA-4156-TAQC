@@ -6,6 +6,10 @@ import com.greencity.ui.pages.CreateEditNewsPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.qameta.allure.Owner;
+import io.qameta.allure.Step;
+
+import java.io.File;
 
 
 public class CreateEditSteps {
@@ -113,4 +117,21 @@ public class CreateEditSteps {
         hooks.getSoftAssert().assertTrue(getCreateEditNewsPage().getDescriptionWarningTextarea().isDisplayed(),"In the text area, there must be description warning");
     }
 
+    @And("the user uploads an image larger than 10MB")
+    @Step("Upload image larger than 10MB")
+    @Owner("Prykhodchenko Oleksandra")
+    public void theUserUploadsAnImageLargerThanMB() {
+        File largeImage = new File("src/test/resources/imagesForTests/15mb.jpg");
+        getCreateEditNewsPage().uploadImage(largeImage.getAbsolutePath());
+    }
+
+    @And("the user clicks \"Edit\"")
+    @Step("Click \"Edit\" button in the news post")
+    @Owner("Prykhodchenko Oleksandra")
+    public void theUserClicks() {
+        getCreateEditNewsPage()
+                .clickEdit()
+                .getHeader()
+                .goToMySpace();
+    }
 }

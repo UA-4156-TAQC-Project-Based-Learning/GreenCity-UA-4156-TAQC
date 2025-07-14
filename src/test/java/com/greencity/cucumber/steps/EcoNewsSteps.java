@@ -29,7 +29,6 @@ public class EcoNewsSteps {
     private EcoNewsPage ecoNewsPage;
     private CreateEditNewsPage createEditNewsPage;
 
-
     public EcoNewsSteps(Hooks hooks) {
         this.hooks = hooks;
         this.softAssert = hooks.getSoftAssert();
@@ -46,11 +45,6 @@ public class EcoNewsSteps {
     @Issue("192")
     public void userAIsLoggedIn() {
         loginViaLocalStorage(hooks.getDriver(), hooks.getLocalStorageJS(), hooks.getTestValueProvider());
-//        hooks.getLocalStorageJS().setItemLocalStorage("accessToken", hooks.getTestValueProvider().getLocalStorageAccessToken());
-//        hooks.getLocalStorageJS().setItemLocalStorage("userId", hooks.getTestValueProvider().getLocalStorageUserId().toString());
-//        hooks.getLocalStorageJS().setItemLocalStorage("refreshToken", hooks.getTestValueProvider().getLocalStorageRefreshToken());
-//        hooks.getLocalStorageJS().setItemLocalStorage("name", hooks.getTestValueProvider().getLocalStorageName());
-//        hooks.getDriver().navigate().refresh();
     }
 
     @And("User A creates a new news post with title {string} and tag {string}")
@@ -235,4 +229,24 @@ public class EcoNewsSteps {
         softAssert.assertTrue(header.contains(wordEn.toLowerCase()) || header.contains(wordUa.toLowerCase()),
                 "Page title doesn't contain expected text: " + header);
     }
+
+
+    @And("User creates a new news post with title {string} and tag {string}")
+    @Description("Create a news post with specified title and tag")
+    @Owner("Prykhodchenko Oleksandra")
+    public void userCreatesANewNewsPostWithTitleAndTag(String arg0, String arg1) {
+        userACreatesNews(arg0, arg1);
+    }
+
+
+    @And("user navigates to the {string} Page")
+    public void userNavigatesToThePage(String pageName) {
+        switch (pageName) {
+            case "My space":
+                    homePage.getHeader().goToMySpace();
+                    break;
+            default:
+                    throw new RuntimeException("Unsupported page: " + pageName);
+    }
+}
 }
