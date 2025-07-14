@@ -7,6 +7,7 @@ import com.greencity.ui.pages.econewspage.EcoNewsPage;
 import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -150,6 +151,7 @@ public class CreateEditNewsPage extends BasePage {
         return this;
     }
 
+    @Step("Enter text into Content field with JS")
     public CreateEditNewsPage enterContentJS(String text) {
         contentInput.clear();
         threadJs.executeScript("arguments[0].innerText = arguments[1];"
@@ -159,17 +161,20 @@ public class CreateEditNewsPage extends BasePage {
         return this;
     }
 
+    @Step("Upload image")
     public CreateEditNewsPage uploadImage(String filePath) {
         browserLink.sendKeys(filePath);
         return this;
     }
 
+    @Step("Click Submit image button")
     public CreateEditNewsPage clickSubmitImage() {
         waitUntilElementClickable(submitImgButton);
         submitImgButton.click();
         return this;
     }
 
+    @Step("Click Cancel image button")
     public CreateEditNewsPage clickCancelImgButton() {
         waitUntilElementClickable(cancelImgButton);
         cancelImgButton.click();
@@ -182,6 +187,7 @@ public class CreateEditNewsPage extends BasePage {
         return new CancelConfirmModal(driver, modalRoot);
     }
 
+    @Step("Click Preview button")
     public PreviewNewsPage clickPreview() {
         waitUntilElementClickable(previewButton);
         previewButton.click();
@@ -201,6 +207,7 @@ public class CreateEditNewsPage extends BasePage {
         return this;
     }
 
+    @Step("Publish news")
     public EcoNewsPage createNews(String title, String source, NewsTags tag, String content) {
         return this.enterTitle(title)
                 .enterSource(source)
@@ -209,6 +216,7 @@ public class CreateEditNewsPage extends BasePage {
                 .clickPublish();
     }
 
+    @Step("Click Edit news button")
     public EcoNewsPage clickEdit() {
         waitUntilElementVisible(editButton);
         editButton.click();
@@ -251,6 +259,14 @@ public class CreateEditNewsPage extends BasePage {
     public int getSelectedTagCount() {
         List<WebElement> selectedTags = driver.findElements(By.cssSelector(".global-tag.global-tag-clicked"));
         return selectedTags.size();
+    }
+    public CancelConfirmModal getCancelConfirmModal() {
+        try {
+            WebElement modalRoot = waitUntilElementPresent(CANCEL_CONFIRM_MODAL);
+            return new CancelConfirmModal(driver, modalRoot);
+        } catch (TimeoutException e) {
+            return null;
+        }
     }
 
     public boolean isTagSelected(NewsTags tag) {
