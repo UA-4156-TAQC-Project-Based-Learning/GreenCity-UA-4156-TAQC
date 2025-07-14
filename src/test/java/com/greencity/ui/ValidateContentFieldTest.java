@@ -2,6 +2,7 @@ package com.greencity.ui;
 
 import com.greencity.jdbc.entity.EcoNewsEntity;
 import com.greencity.jdbc.services.EcoNewsService;
+import com.greencity.ui.components.baseComponents.CancelConfirmModal;
 import com.greencity.ui.elements.NewsTags;
 import com.greencity.ui.pages.CreateEditNewsPage;
 import com.greencity.ui.pages.econewspage.EcoNewsPage;
@@ -12,6 +13,7 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Owner;
 import org.openqa.selenium.Keys;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -25,13 +27,14 @@ public class ValidateContentFieldTest extends TestRunnerWithUser {
     private EcoNewsService ecoNewsService;
 
     @BeforeClass
-    public void init(){
+    public void init() {
         this.ecoNewsService = new EcoNewsService(
                 testValueProvider.getJDBCGreenCityUsername(),
                 testValueProvider.getJDBCGreenCityPassword(),
                 testValueProvider.getJDBCGreenCityURL()
         );
     }
+
 
     @Issue("17")
     @Owner("Maryna Rasskazova")
@@ -64,7 +67,9 @@ public class ValidateContentFieldTest extends TestRunnerWithUser {
                 "The actual Content Info message text does not match the expected text.");
         softAssert.assertTrue(createEditNewsPage.getContentInfoMessage().getAttribute("class").contains("warning"));
         softAssert.assertFalse(createEditNewsPage.getPublishButton().isEnabled());
+        driver.navigate().back();
         softAssert.assertAll();
+
     }
 
     @Issue("17")
@@ -107,8 +112,8 @@ public class ValidateContentFieldTest extends TestRunnerWithUser {
         String actualContentCounterText = createEditNewsPage.getContentCounter().getText();
         String expectedContentCounterText = "Number of characters: 63206";
 
-       String actualContentCounterColor = createEditNewsPage.getContentCounter().getCssValue("color");
-       String expectedContentCounterColor = "rgba(100, 114, 125, 1)";
+        String actualContentCounterColor = createEditNewsPage.getContentCounter().getCssValue("color");
+        String expectedContentCounterColor = "rgba(100, 114, 125, 1)";
 
         softAssert.assertEquals(actualContentCounterText, expectedContentCounterText,
                 "The actual Content counter text does not match the expected text.");
@@ -117,7 +122,9 @@ public class ValidateContentFieldTest extends TestRunnerWithUser {
                 "The actual Content Info message color does not match the expected color.");
 
         softAssert.assertTrue(createEditNewsPage.getPublishButton().isEnabled(), "Publish button should be enabled");
+        driver.navigate().back();
         softAssert.assertAll();
+
     }
 
     @Issue("17")
@@ -154,4 +161,13 @@ public class ValidateContentFieldTest extends TestRunnerWithUser {
 
         softAssert.assertAll();
     }
+    @AfterMethod
+    public void closeCancelModalIfPresent() {
+        CreateEditNewsPage createEditNewsPage=new CreateEditNewsPage(driver);
+        CancelConfirmModal modal = createEditNewsPage.getCancelConfirmModal();
+        if (modal != null && modal.isDisplayed()) {
+            modal.clickYesCancel();
+        }
+    }
+
 }

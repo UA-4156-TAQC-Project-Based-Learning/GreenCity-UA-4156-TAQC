@@ -1,5 +1,6 @@
 package com.greencity.ui;
 
+import com.greencity.ui.components.baseComponents.CancelConfirmModal;
 import com.greencity.ui.elements.NewsTags;
 import com.greencity.ui.pages.CreateEditNewsPage;
 import com.greencity.ui.pages.homepage.HomePage;
@@ -8,6 +9,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Owner;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -38,6 +40,7 @@ public class ValidateTitleFieldTest extends TestRunnerWithUser {
         softAssert.assertEquals(actualTitleBorderColor, expectedTitleBorderColor,
                 "The actual title border color does not match the expected color.");
         softAssert.assertFalse(createEditNewsPage.getPublishButton().isEnabled());
+        driver.navigate().back();
         softAssert.assertAll();
     }
 
@@ -73,6 +76,7 @@ public class ValidateTitleFieldTest extends TestRunnerWithUser {
                 "The actual title border color does not match the expected color.");
         softAssert.assertEquals(actualTitleCounterText, expectedTitleCounterText);
         softAssert.assertFalse(createEditNewsPage.getPublishButton().isEnabled());
+        driver.navigate().back();
         softAssert.assertAll();
 
     }
@@ -113,4 +117,12 @@ public class ValidateTitleFieldTest extends TestRunnerWithUser {
         softAssert.assertAll();
     }
 
+    @AfterMethod
+    public void closeCancelModalIfPresent() {
+        CreateEditNewsPage createEditNewsPage=new CreateEditNewsPage(driver);
+        CancelConfirmModal modal = createEditNewsPage.getCancelConfirmModal();
+        if (modal != null && modal.isDisplayed()) {
+            modal.clickYesCancel();
+        }
+    }
 }

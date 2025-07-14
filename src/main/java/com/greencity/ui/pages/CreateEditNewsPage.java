@@ -7,6 +7,7 @@ import com.greencity.ui.pages.econewspage.EcoNewsPage;
 import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -260,5 +261,14 @@ public class CreateEditNewsPage extends BasePage {
                 .map(WebElement::getText)
                 .collect(Collectors.toList());
     }
+    public CancelConfirmModal getCancelConfirmModal() {
+        try {
+            WebElement modalRoot = waitUntilElementPresent(CANCEL_CONFIRM_MODAL);
+            return new CancelConfirmModal(driver, modalRoot);
+        } catch (TimeoutException e) {
+            return null;
+        }
+    }
+
 
 }

@@ -68,5 +68,8 @@ public abstract class BasePage extends Base {
         return wait.until(ExpectedConditions.invisibilityOf(element));
     }
 
+        public WebElement waitUntilElementPresent(By locator) {
+        return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+    }
 
 }
