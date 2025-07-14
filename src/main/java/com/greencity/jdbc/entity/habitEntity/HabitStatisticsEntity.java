@@ -21,7 +21,7 @@ public class HabitStatisticsEntity {
             SELECT
                 amount_of_items,
             FROM
-                comments
+                habit_statistics
             WHERE
                 habit_assign_id = '%d'""";
 
