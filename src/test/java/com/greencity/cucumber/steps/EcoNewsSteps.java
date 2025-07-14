@@ -240,9 +240,13 @@ public class EcoNewsSteps {
 
 
     @And("user navigates to the {string} Page")
-    public void userNavigatesToThePage(String arg0) {
-        homePage
-                .getHeader()
-                .goToMySpace();
+    public void userNavigatesToThePage(String pageName) {
+        switch (pageName) {
+            case "My space":
+                    homePage.getHeader().goToMySpace();
+                    break;
+            default:
+                    throw new RuntimeException("Unsupported page: " + pageName);
     }
+}
 }
