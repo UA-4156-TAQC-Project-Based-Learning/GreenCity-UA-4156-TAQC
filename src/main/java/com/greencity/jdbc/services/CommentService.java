@@ -7,7 +7,7 @@ import com.greencity.jdbc.entity.UserEntity;
 
 import java.util.List;
 
-public class CommentService extends BaseServise {
+public class CommentService extends BaseService {
     private final CommentDAO commentDAO;
     private final UserDAO userDAO;
 

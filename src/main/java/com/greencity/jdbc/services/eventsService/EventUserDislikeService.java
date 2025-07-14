@@ -2,11 +2,11 @@ package com.greencity.jdbc.services.eventsService;
 
 import com.greencity.jdbc.dao.eventsDAO.EventUserDislikeDAO;
 import com.greencity.jdbc.entity.eventsEntity.EventUserDislikeEntity;
-import com.greencity.jdbc.services.BaseServise;
+import com.greencity.jdbc.services.BaseService;
 
 import java.util.List;
 
-public class EventUserDislikeService extends BaseServise {
+public class EventUserDislikeService extends BaseService {
     private final EventUserDislikeDAO eventUserDislikeDAO;
 
     public EventUserDislikeService(String login, String password, String url) {

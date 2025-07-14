@@ -1,5 +1,7 @@
 package com.greencity.ui.homePageTests;
 
+import com.greencity.jdbc.services.CommentService;
+import com.greencity.jdbc.services.UserService;
 import com.greencity.ui.components.homePageComponents.statsSection.StatsSectionComponent;
 import com.greencity.ui.components.homePageComponents.statsSection.statsSubsections.StatsSectionCupsComponent;
 import com.greencity.ui.components.homePageComponents.statsSection.statsSubsections.StatsSectionEcoBagsComponent;
@@ -8,6 +10,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Owner;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -17,9 +20,20 @@ import org.testng.asserts.SoftAssert;
 public class StatisticsSectionTest extends BaseTestRunner {
 
    private StatsSectionComponent statsSectionComponent;
+    private UserService userService;
+
+   @BeforeClass
+   public void init(){
+       this.userService = new UserService(
+               testValueProvider.getJDBCGreenCityUsername(),
+               testValueProvider.getJDBCGreenCityPassword(),
+               testValueProvider.getJDBCGreenCityURL()
+       );
+   }
 
     @BeforeMethod
     public void scrollToStatisticsSection() {
+       homePage.waitUntilPageLouder();
         statsSectionComponent = homePage.goToStatisticsSection();
     }
 
@@ -29,7 +43,8 @@ public class StatisticsSectionTest extends BaseTestRunner {
     public void testStatisticsSectionTitleVisible() {
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertTrue(statsSectionComponent.getStatisticsTitle().isDisplayed(), "Statistics title is not displayed");
-        softAssert.assertTrue(statsSectionComponent.getStatisticsTitle().getText().contains("There are"),
+        softAssert.assertEquals(statsSectionComponent.getStatisticsTitle().getText(),
+                "There are "+userService.getUserCount()+" of us and today we",
                 "Statistics title text is incorrect or missing");
         softAssert.assertAll();
     }
