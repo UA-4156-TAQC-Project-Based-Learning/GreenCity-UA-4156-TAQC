@@ -94,5 +94,18 @@ public class NewsPage extends AbstractNewsPage {
         driver.findElement(deleteButton).click();
         return new WarningModalDialog(driver, driver.findElement(dialogPopUpRoot));
     }
+
+    public void clickButtonByText(String text) {
+        switch (text) {
+            case "Edit":
+                clickEditNewsButton();
+                break;
+            case "Delete":
+                clickDeleteButton();
+                break;
+            default:
+                throw new RuntimeException("Unsupported text: " + text);
+        }
+    }
 }
 
