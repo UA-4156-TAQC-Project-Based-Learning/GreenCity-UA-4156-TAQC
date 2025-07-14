@@ -1,7 +1,7 @@
 package com.greencity.ui;
 
-import com.greencity.ui.components.newsComponents.NewsCommentItem;
-import com.greencity.ui.components.newsComponents.NewsCommentsComponent;
+import com.greencity.ui.components.newsComponents.CommentItem;
+import com.greencity.ui.components.newsComponents.CommentsComponent;
 import com.greencity.ui.pages.abstractNewsPage.NewsPage;
 import com.greencity.ui.pages.homepage.HomePage;
 import com.greencity.ui.testrunners.TestRunnerWithUser;
@@ -30,7 +30,7 @@ public class CommentEditIconVisibilityTest extends TestRunnerWithUser {
                 .goToEcoNews()
                 .clickFirstNewsPage();
 
-        NewsCommentsComponent commentsComponent = new NewsCommentsComponent(driver, newsPage.getCommentsRoot());
+        CommentsComponent commentsComponent = new CommentsComponent(driver, newsPage.getCommentsRoot());
         List<WebElement> commentElements = commentsComponent.getCommentItems();
 
         softAssert.assertTrue(commentElements.size() > 1, "There should be multiple comments to test.");
@@ -41,7 +41,7 @@ public class CommentEditIconVisibilityTest extends TestRunnerWithUser {
         boolean foundOtherComment = false;
 
         for (WebElement commentElement : commentElements) {
-            NewsCommentItem commentItem = new NewsCommentItem(driver, commentElement);
+            CommentItem commentItem = new CommentItem(driver, commentElement);
 
             String authorName = commentItem.getAuthorNameText().trim();
             boolean editButtonVisible = commentItem.isEditButtonVisible();

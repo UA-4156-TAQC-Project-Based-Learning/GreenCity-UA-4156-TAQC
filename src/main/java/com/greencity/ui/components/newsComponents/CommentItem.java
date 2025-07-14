@@ -10,9 +10,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 @Getter
-public class NewsCommentItem extends BaseComponent {
+public class CommentItem extends BaseComponent {
     @FindBy(xpath = ".//*[@class='author-name']")
     private WebElement authorName;
+
+    @FindBy(xpath = "//div[@class='comment-avatar']")
+    private WebElement commentAvatar;
 
     @FindBy(xpath = ".//*[contains(@class,'comment-date-month')]")
     private WebElement commentDate;
@@ -35,7 +38,7 @@ public class NewsCommentItem extends BaseComponent {
     @FindBy(xpath = ".//button[contains(@class,'reply')]")
     private WebElement replyButton;
 
-    public NewsCommentItem(WebDriver driver, WebElement rootElement) {
+    public CommentItem(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 

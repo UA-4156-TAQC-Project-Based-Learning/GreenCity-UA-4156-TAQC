@@ -1,7 +1,7 @@
 package com.greencity.ui;
 
-import com.greencity.ui.components.newsComponents.NewsCommentItem;
-import com.greencity.ui.components.newsComponents.NewsCommentsComponent;
+import com.greencity.ui.components.newsComponents.CommentItem;
+import com.greencity.ui.components.newsComponents.CommentsComponent;
 import com.greencity.ui.pages.abstractNewsPage.NewsPage;
 import com.greencity.ui.pages.homepage.HomePage;
 import com.greencity.ui.testrunners.TestRunnerWithUser;
@@ -28,13 +28,13 @@ public class CommentVisualElementsDisplayedTest extends TestRunnerWithUser {
                 .goToEcoNews()
                 .clickFirstNewsPage();
 
-        NewsCommentsComponent comments = new NewsCommentsComponent(driver, newsPage.getCommentsRoot());
+        CommentsComponent comments = new CommentsComponent(driver, newsPage.getCommentsRoot());
 
         int commentCount = comments.getDisplayedCommentCount();
         softAssert.assertTrue(commentCount > 0, "There should be at least one comment");
 
         WebElement commentElement = comments.getCommentItems().get(0);
-        NewsCommentItem commentItem = new NewsCommentItem(driver, commentElement);
+        CommentItem commentItem = new CommentItem(driver, commentElement);
 
         softAssert.assertFalse(commentItem.getCommentText().isEmpty(), "Comment text should be displayed");
         softAssert.assertFalse(commentItem.getAuthorNameText().isEmpty(), "Username should be displayed");

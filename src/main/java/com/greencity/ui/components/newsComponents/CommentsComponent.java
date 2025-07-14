@@ -13,11 +13,11 @@ import java.time.Duration;
 import java.util.List;
 
 @Getter
-public class NewsCommentsComponent extends BaseComponent {
+public class CommentsComponent extends BaseComponent {
 
     @FindBy(xpath = "//div[contains(@class,'comment-textarea') and @contenteditable='true']")
     private WebElement commentInput;
-    @FindBy(xpath = "//button[contains(@class,'primary-global-button')]")
+    @FindBy(xpath = "//button[contains(text(), 'Comment')]")
     private WebElement commentButton;
     @FindBy(xpath = "//app-comments-list//div[contains(@class,'comment-body-wrapper')]")
     private List<WebElement> commentItems;
@@ -26,7 +26,7 @@ public class NewsCommentsComponent extends BaseComponent {
     @FindBy(xpath = "//*[contains(@class,'total-count')]")
     private WebElement totalCommentsCount;
 
-    public NewsCommentsComponent(WebDriver driver, WebElement rootElement) {
+    public CommentsComponent(WebDriver driver, WebElement rootElement) {
         super(driver, rootElement);
     }
 
@@ -71,6 +71,20 @@ public class NewsCommentsComponent extends BaseComponent {
         new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds))
                 .until(d -> getDisplayedCommentCount() > initialCount);
     }
+
+    public List<CommentItem> getComments() {
+        return commentItems.stream().map(el -> new CommentItem(driver, el)).toList();
+    }
+
+    public CommentItem getOwnComment(String name){
+        List<CommentItem> commentList = this.getComments();
+        for(CommentItem comments : commentList){
+            if(comments.getAuthorName().equals(name));
+            break;
+        }
+        return new CommentItem(driver,rootElement);
+    }
+
 
     @Step("Scroll to element")
     public void scrollToElement(WebElement element) {

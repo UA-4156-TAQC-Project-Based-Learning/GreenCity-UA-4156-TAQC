@@ -2,13 +2,11 @@ package com.greencity.ui.ecoNewsTests.createNewsTests;
 
 import com.greencity.ui.pages.CreateEditNewsPage;
 import com.greencity.ui.testrunners.TestRunnerWithUser;
-import io.qameta.allure.Description;
-import io.qameta.allure.Feature;
-import io.qameta.allure.Issue;
-import io.qameta.allure.Owner;
+import io.qameta.allure.*;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+@Epic("EcoNews UI")
 public class CreateNewsCorrectlyFormDisplayedTest extends TestRunnerWithUser {
 
     @Feature("Create news")

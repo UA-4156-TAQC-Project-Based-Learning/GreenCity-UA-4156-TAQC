@@ -1,6 +1,6 @@
 package com.greencity.ui;
 
-import com.greencity.ui.components.newsComponents.NewsCommentsComponent;
+import com.greencity.ui.components.newsComponents.CommentsComponent;
 import com.greencity.ui.pages.abstractNewsPage.NewsPage;
 import com.greencity.ui.pages.homepage.HomePage;
 import com.greencity.ui.pages.notificationPage.NotificationPage;
@@ -27,7 +27,7 @@ public class CommentsNotificationTest extends TestRunnerWithUsers {
                 .goToEcoNews()
                 .clickFirstNewsPage();
 
-        NewsCommentsComponent comments = new NewsCommentsComponent(driver, newsPage.getCommentsRoot());
+        CommentsComponent comments = new CommentsComponent(driver, newsPage.getCommentsRoot());
         int initialCommentCount = comments.getDisplayedCommentCount();
 
         cleanLocalStorage();
@@ -38,7 +38,7 @@ public class CommentsNotificationTest extends TestRunnerWithUsers {
                 .goToEcoNews()
                 .clickFirstNewsPage();
 
-        comments = new NewsCommentsComponent(driver, newsPage.getCommentsRoot());
+        comments = new CommentsComponent(driver, newsPage.getCommentsRoot());
 
         String commentText = "Notification test comment " + System.currentTimeMillis();
         comments.addComment(commentText);
