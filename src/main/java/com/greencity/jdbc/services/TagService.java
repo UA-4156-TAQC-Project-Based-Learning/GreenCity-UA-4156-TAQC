@@ -6,7 +6,7 @@ import com.greencity.jdbc.enums.TagType;
 
 import java.util.List;
 
-public class TagService extends BaseServise {
+public class TagService extends BaseService {
     private final TagDAO tagDAO;
 
     public TagService(String login, String password, String url) {

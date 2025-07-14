@@ -2,11 +2,11 @@ package com.greencity.jdbc.services.eventsService;
 
 import com.greencity.jdbc.dao.eventsDAO.EventDateLocationDAO;
 import com.greencity.jdbc.entity.eventsEntity.EventDateLocationEntity;
-import com.greencity.jdbc.services.BaseServise;
+import com.greencity.jdbc.services.BaseService;
 
 import java.util.List;
 
-public class EventDateLocationService extends BaseServise {
+public class EventDateLocationService extends BaseService {
     private final EventDateLocationDAO eventDateLocationDAO;
 
     public EventDateLocationService(String login, String password, String url) {

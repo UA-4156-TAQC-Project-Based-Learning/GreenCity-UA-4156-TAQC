@@ -6,7 +6,7 @@ import com.greencity.jdbc.entity.EcoNewsEntity;
 
 import java.util.List;
 
-public class EcoNewsService extends BaseServise {
+public class EcoNewsService extends BaseService {
 
     private final EcoNewsDAO ecoNewsDAO;
     private final UserDAO userDAO;
