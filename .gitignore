@@ -66,4 +66,4 @@ config.properties
 # Allure build artifacts
 .allure/
 allure-report/
-allure-results
+allure-results__pycache__/
